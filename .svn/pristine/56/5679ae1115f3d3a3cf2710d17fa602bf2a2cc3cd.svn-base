@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=2,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>手机版-金茂凯悦</title>
+<meta name="keywords" content="酒店介绍 ,金茂凯悦">
+<meta name="description" content="酒店介绍 -金茂凯悦">
+<link rel="stylesheet" type="text/css" href="../css/common.css" />
+<link rel="stylesheet" type="text/css" href="../css/index.css" />
+<!-- <script type="text/javascript" src="/Public/Js/jquery-1.9.0.min.js"></script> -->
+<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../js/zepto.min.js"></script>
+<script type="text/javascript" src="../js/index.js"></script>
+<script type="text/javascript" src="../js/fx.js"></script>
+<script type="text/javascript" src="../js/touch.js"></script>
+<script type="text/javascript" src="../js/TouchSlide.1.1.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/jquery.form.js"></script>
+<script language="JavaScript" src="../../../js/request.js"></script>
+<script language="JavaScript" src="../../../js/json.js"></script>
+<script type="text/javascript">
+    TouchSlide({
+        slideCell:"#slideBox",
+        titCell:".hd ul",
+        mainCell:".bd ul",
+        autoPage:true,
+        effect:"leftLoop",
+        endFun: function(i){
+            var bh = $("#slideBox .bd li").eq(i + 1).find('img').height();
+            // alert(bh)
+            $("#slideBox .bd").animate({'height':bh},200);
+        }
+
+    });
+</script>
+<!-- 房型样式 -->
+<style type="text/css">
+    .tlist{margin-top: -1em;width: 96%;}
+    .tlist li{background: #fff;border: 1px solid #d7d7d7;box-shadow: 0 2px 2px #cacaca;padding: .5em .8em;border-radius: 5px;}
+    .tlist li a{color: #666;}
+    .tlist_t{border-bottom: 1px solid #d1d1d1;}
+    .tlist_v{padding: .7em 0;}
+    .tlist_box{width: 40%;}
+    .tlist_d{width: 57%;font-size: .8em;line-height: 1.5;text-indent: 2em;}
+    .tlist_a{border-top: 1px solid #d7d7d7;padding-top: .5em;}
+</style>
+</head>
+<body class="pa welbg">
+  <div class="main1">
+  <!--焦点图开始-->
+	  <div id="slideBox" class="slideBox">
+	      <div class="bd">
+	          <ul>
+	                </ul>
+	      </div>
+	      <div class="hd">
+	          <ul></ul>
+	      </div>
+	  </div>
+      <div class="tintro">
+          	上海崇明金茂凯悦酒店致力为全球旅人和游客提供一个探索身心的世外桃源，诠释无可复制的旅行体验。酒店位于中国第三大岛崇明岛的东部，坐拥235间现代中式风格的客房和套房，5家餐厅和酒吧，16间会议室包括一间面积达630平方米的凯悦会议厅，设备先进齐全的健身房和25米长室内游泳池。
+      </div>
+       <div class="th3">
+           	崇明金茂凯悦房型介绍
+       </div>
+
+       <ul class="tlist">
+		<li>
+           <a href="guestRoom.html" title="凯悦客房">
+               <div class="tlist_t">凯悦客房</div>
+               <div class="tlist_v clearfix">
+                   <div class="tlist_box fl">
+                       <img src="../images/20150309100754_10596.jpg" alt="" />
+                   </div>
+                   <div class="tlist_d fr">别致典雅的47平方米客房内设有一张豪华大床，配备阳台，宽敞明亮。现代中式风格的室内设计风格与窗外的自然风景相应成趣，室内免费提供高速无线网，首轮迷你吧小吃和饮料</div>
+               </div>
+               <div class="tlist_a clearfix">
+                   <div class="fr">查看更多><i></i></div>
+               </div>
+           </a>
+         </li>
+         <li>
+            <a href="petHouse.html" title="凯悦宠物犬房">
+                <div class="tlist_t">凯悦宠物犬房</div>
+                <div class="tlist_v clearfix">
+                    <div class="tlist_box fl">
+                        <img src="../images/20150312084611_29967.png" alt="" />
+                    </div>
+                    <div class="tlist_d fr">独特设计的宠物犬房位于一楼，配备私人花园供主人与萌犬在花园嬉戏。宽敞明亮的宠物犬房内设有一张豪华大床，现代中式风格的室内设计风格与窗外的自然风景相应成趣。室内免费提供高速无线上网，首轮迷你吧小吃和饮料。除此之外，宠物犬房内配备专业宠物犬用品如宠物犬专用床、食盆和零食。</div>
+                </div>
+                <div class="tlist_a clearfix">
+                    <div class="fr">查看更多><i></i></div>
+                </div>
+            </a>
+           </li>                
+       </ul>
+       <div class="paging"></div>
+		<div class="copy">
+		    <div>
+		    <i>Copyright2014 崇明金茂凯悦 All Rights Reserved</i>
+		    </div>
+		</div>
+	</div>
+</body>
+</html>

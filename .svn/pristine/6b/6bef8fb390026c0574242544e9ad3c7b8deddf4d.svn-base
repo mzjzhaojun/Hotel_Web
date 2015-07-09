@@ -1,0 +1,99 @@
+.have>img{height:0.7rem;margin-right: 3%}
+.have{text-align:center;}
+.chose{display: -webkit-box;-webkit-box-orient:horizontal;margin:4% 0 2%;}
+.son{-webkit-box-flex:1;border: 1px solid #e4e4e4;border-left: 0;padding: 2%;
+		background: url(../images/right_arrow.png);background-position: 95% center;background-repeat:no-repeat; 
+		background-size: 0.6rem}
+.textcenter{text-align: center;width: 80%;font-size: 0.8em;color:black}
+.down{width: 90%;overflow: hidden;font-size: 0.7em}
+.down>div{width: 50%}
+.down>div>p{margin:3% 0;}
+.date{font-size: 1.5rem}
+.down2{text-align: center;padding-top:0.3rem ;width: 90%;font-size: 0.8em}
+.weather{text-align: center;margin:3% 0;}
+.weather img{width:95%;}
+
+/*房间列表*/
+.roomlist>li{padding: 4% 4%;overflow: hidden;}
+.roompc{width:20%;}
+.roomdetail{width: 75%;margin-left:5% }
+.own2{margin-top: 2%;}
+.own2>img{float: left;width:1rem;margin-right: 3%}
+.lastline>span{padding: 2% 0}
+.few{background: #f34a00}
+.no{background: #c4c4c4}
+.order{background: #689DAC}
+.lastline>span.status{padding: 2% 4%;border-radius: 5px}
+.jun{height: 1.3em;padding-top:2% }
+.more{text-align: center;}
+.padd{padding: 2% 6%}
+.footer{font-size: 0.8rem;margin:5% 0 0 0;}
+.footer img{height: 2rem}
+/*房型紧缺弹层*/
+
+.list>li{padding: 2% 4%;display: -webkit-box;-webkit-box-orient:horizontal;}
+.list>li>div{-webkit-box-flex:1;text-align: center;}
+/*房价明细弹层*/
+/*房型明细弹层*/
+.main{height:80%;overflow-y: scroll;}
+.goods{width: 100%;}
+.goods td{width:50%;padding: 2% 0}
+.goods img{height:1rem;vertical-align: top;margin-right: 8%}
+.detail{}
+.dat{margin:0 5%;}
+.pinlun{margin:0 0 10%;}
+.serimgs{float:left}
+.serimgs img{height: 0.8rem;}
+
+.loaddetail{
+text-align: center;
+display: none; 
+margin: 70% auto;color:white
+}
+.loadavg{
+text-align:center;
+margin:50% auto}
+.loadavg img{width:32px;}
+.loadimg{width:32px;}
+.cwrapc{height:100%;width: 100%;position: fixed;background: rgba(0,0,0,0.5);top:0;display: none;z-index:10}
+.htlintro{
+font-family:'微软雅黑';
+text-align:left;
+font-size:16px;
+padding:14px;
+}
+.introscroll{
+overflow-y:scroll;
+height:80%;
+}
+.addre{width:70%}
+/*日历*/
+.cwrap{background: #f8f8f8;position: fixed;width:100%;height: 100%;top:0;display: none}
+.cwrap>p{text-align: center;width: 100%;position: absolute;bottom: 0px;color: #D3D3D3; font-size:0.6rem}
+.choosecal{ width:96%; margin:0% auto; overflow:hidden}
+/*.ccaltop{ width:99%; border-radius:5px; border:1px solid #000;display: none}
+.caltline1,.caltline2{ width:94%; background-color:#F90; overflow:hidden; padding:2% 3%;display: none;}
+.caltline1 p,.caltline2 p{ float:left; width:10%; font-weight:700; text-align:right;}
+.caltline1 .bookdate{ width:90%; text-align:left;display:none;}
+.caltline2{ background-color:#FFF; display:none;}
+.caltline2 p{ width:20%;}
+.caltline2 .datetext{ width:35%; border:1px solid #000; background-color:#FFF; font-weight:700;}*/
+.calender{ width:100%; margin-top:20%; /*overflow:hidden;*/ /*display:none;*/}
+.selectmouth{ background-color:#f34a00; width:94%; overflow:hidden;padding:2% 2.9%;border-radius:5px 5px 0 0;}
+.selectmouth p{ float:left; width:33%; color:#FFF; font-weight:700; cursor:pointer;}
+.selectmouth .selectdate{ width:100%; background-color:#f34a00; border:none; color:#FFF; font-weight:700; text-align:center;font-size: 1rem}
+.data_table{ width:100%;border-collapse:collapse; }
+.data_table thead{ background-color:#333;}
+.usedate{background: white}
+.data_table thead td{ color:white;background:#f39800 ; text-align:center;border-collapse:collapse; padding:3% 0;}
+.data_table tbody td{border-collapse:collapse; text-align:center;color:#0C6;padding:3% 0;}
+.data_table tbody td.orderdate{ color:#000;background: #f8f8f8;opacity: 0.2}
+.data_table tbody td.tdselect{ color:#fff;background-color:#f39800}
+.data_table tbody td,.data_table tfoot td{cursor:pointer;}
+.data_table tfoot td{color:#0C6;}
+
+
+/*房间数*/
+#yudinglists{text-align: center;overflow-y:scroll;height:90%;padding: 0 6%}
+#yudinglists>li{border-bottom: 1px solid #f8f8f8;word-spacing: 1rem}
+.olist{display:block;width:100%;text-align:center}

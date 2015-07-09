@@ -1,0 +1,47 @@
+	G = function(objId) {
+		return document.getElementById(objId)
+	};
+	Gn = function(objName) {
+		return document.getElementsByName(objName)
+	};
+	window.onload = function() {
+	};
+
+	function init() {
+
+	}
+
+	function submitForm() {
+
+		var name = $("#name").val();
+		var number = $("#number").val();
+		var type = $("#type").val();
+		var babychair = $("#babychair").val();
+		var status = $("#status").val();
+		var maxdinernum = $("#maxdinernum").val();
+		var detail = $("#detail").val();
+		var deposit = $("#deposit").val();
+		var lowest = $("#lowest").val();
+		var axf = $("#axf").val();
+		var remark = $("#remark").val();
+
+		var parameter = "name:'" + name + "',number:'" + number + "',type:'"
+				+ type + "',babychair:'" + babychair + "',status:'"
+				+ status + "',maxdinernum:'"
+				+ maxdinernum + "',detail:'" + detail + "',deposit:'" + deposit
+				+ "',lowest:'" + lowest + "',axf:'" + axf + "',remark:'"
+				+ remark + "'";
+
+		url = "/Hotel/rest/restaurant";
+		RemoteUtil.send(url, "POST", parameter, callSubmitBack);
+
+	}
+
+	function callSubmitBack(data) {
+		if (data.succeed) {
+			if (data.result.statusCode == "200") {
+				window.location.href = "list.html";
+			}
+		}
+
+	}

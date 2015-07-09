@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta content="target-densitydpi=device-dpi,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+	<title>崇明金茂凯悦酒店-优惠卷</title>
+	<link rel="stylesheet" href="css/index.css" type="text/css">
+	<link rel="stylesheet" href="css/common.css" type="text/css">
+	<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="js/touch-0.2.14.min.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="js/request.js"></script>
+	<script type="text/javascript" src="../../../js/json.js"></script>
+	<script src="js/jweixin-1.0.0.js"></script>
+	<script type="text/javascript" src="js/calendar.js"></script>
+	</head>
+	<script type="text/javascript">
+		G = function(objId){return document.getElementById(objId)};
+		Gn = function(objName){return document.getElementsByName(objName)};
+		var couponData = "";
+		window.onload=function(){
+			initdata();
+		};
+		var indatetime;
+		var outdatetime;
+		function initdata(){
+			var parameter = "";
+			url = "/Hotel/rest/coupon";
+			RemoteUtil.send(url, "GET", parameter, couponBack);
+		}
+		
+		function doQuery(sdatetime,edatetime){
+			var parameter = "";
+			url = "/Hotel/rest/coupon";
+			RemoteUtil.send(url, "GET", parameter, couponBack);
+		}
+		
+		function couponBack(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					couponData = data.result.successMsg;
+					$("#coupon").html("");
+					var list = data.result.successMsg;
+					var len = list.length;
+					for(var i=0;i<len;i++){
+						
+						var li = $("<li class='bac_white border_bottom many'><img src='img/sellcoupon.png' alt='"+list[i].coupontype_name+"' class='roompc float_left' style='max-height: 248px;'>"+					 
+							"<div class='roomdetail float_right'>"+
+							"<p class='roomname overflow'>"+
+							"<span onclick=\"tdetail('"+list[i].rowid+"')\" id='roomname'>"+list[i].coupontype_name+"</span>"+
+							"<span class='price color_orange float_right'>￥"+list[i].sellprice+"<span style='font-size:0.7em'></span></span></p>"+
+							"<div class='lastline own2 overflow root_title'><label style=\"color:#000\">剩余：</label>"+list[i].surplus+
+							"<br><label style=\"color:#000\">抵用金额：</label>"+list[i].price+
+							"<br><label style=\"color:#000\">使用条件：进店消费抵用</label>"+
+							"</div>"+
+							"<div class=\"tlist_a clearfix\" align=\"right\">"+
+			                    "<span class='status order small f_r color_white btn' onclick=\"sub(&#39;"+list[i].coupontype_name+"&#39;,&#39;"+list[i].surplus+"&#39;,&#39;"+list[i].price+"&#39;,&#39;"+list[i].sellprice+"&#39;,&#39;"+list[i].detall+"&#39;,&#39;"+list[i].instructions+"&#39;)\">购买</span>"+
+			                "</div>");
+						$("#coupon").append(li);	
+					}
+					
+				}
+			}
+			
+		}
+		
+	</script>		
+	<style>
+	.p_d {
+		clear: both;
+		padding: 6px 20px;
+		font-size: 0.9em;
+		overflow: hidden;
+		display: none;
+	}
+	
+	.s_d_o {
+		font-size: 0.7em;
+		background: #689DAC url(img/sanjiao_03.png) no-repeat right center;
+		padding: 5px 22px 5px 5px;
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
+		float: right;
+		bottom: 0;
+		right: 20px;
+		color: white;
+	}
+	
+	.s_d_c {
+		border: 1px solid #efefef;
+		border-bottom: none;
+		background-color: white;
+		color: #689DAC;
+		background-image: url(img/sanjiao_04.png);
+	}
+	
+	.p_d>li {
+		padding: 5px 0px;
+		font-size: 0.9em;
+		border-bottom: 1px solid #efefef;
+		overflow: hidden;
+		height: 2em;
+		line-height: 1.5em;
+	}
+	
+	.p_d>li .price {
+		float: right;
+		line-height: 24px;
+		margin-right: 10px;
+		color: #689DAC;
+	}
+	
+	.p_d>li .btn {
+		float: right;
+		padding: 1% 2%;
+		border-radius: 5px;
+	}
+	.root_title{
+		font-size: 0.8em;
+		color:#689DAC;
+	}
+	.ul_details{margin:0px;padding:0px;}
+	.li_details{border:solid 0px;}
+	.status{padding: 1% 2%;border-radius: 5px}
+    .order{background: #689DAC}
+    .small{font-size: 0.9rem;font-weight: bold;}
+    .color_white{color: #fff}
+	</style>
+	<script>
+		var count = 1;
+	    function sub(name,surplus,price,sellprice,detall,instructions) {
+	        window.location.href = "sellcoupon_schedule.html?name="+name+"&surplus="+surplus+"&price="+price+"&sellprice="+sellprice+"&detall="+detall+"&instructions="+instructions;
+	    }
+	
+	    function hidewin(obj) {
+	        $('body').css('overflow', 'scroll');
+	        $(obj).hide();
+	    }
+	    var allroom = 0;
+	
+	   
+		
+	
+	    function tdetail(id) {
+	       if(couponData!=undefined){
+	       		var len = couponData.length;
+	       		for(var i=0;i<len;i++){
+	       			
+	       			if(couponData[i].rowid==id){
+	       				$("#lunbo").html("");
+	       				$("#lunbo_1").html("");
+	       				
+	       				$("#name").html("");
+	       				$("#surplus").html("");
+	       				$("#price").html("");
+	       				$("#sellprice").html("");
+	       				$("#detall").html("");
+	       				$("#instructions").html("");
+	       				$("#speclalty_name").html("");
+	       				$("#speclalty_name_1").html("");
+	       				var lunboHtml="";
+	       				lunboHtml += "<img class=\"roomkind_slideson slideson about_slideson1\" src=\"img/sellcoupon.png\" alt=\""+couponData[i].name+"\" style=\"width: 1349px;\"/>";
+	       				$("#lunbo").html(lunboHtml);
+	       				
+	       				$("#name").html(couponData[i].coupontype_name);
+	       				$("#surplus").html(couponData[i].surplus);
+	       				$("#price").html("￥"+couponData[i].price);
+	       				$("#sellprice").html("￥"+couponData[i].sellprice);
+	       				$("#detall").html(couponData[i].detall);
+	       				$("#instructions").html(couponData[i].instructions);
+	       				$("#speclalty_name").html(couponData[i].coupontype_name);
+	       				$("#speclalty_name_1").html(couponData[i].coupontype_name);
+	       			}
+	       			
+	       		}
+	       }
+	       $('body').css('overflow', 'hidden');
+	       $('#roomkind').show('200');
+	       
+	       var oHeader=$('#roomkind_header');
+			var oWidth=$(window).width();                  
+			var oSlide=$('.roomkind_headerslide');
+			var oSlideson=$('.roomkind_slideson');
+			var oDisc=$('.roomkind_disc');
+			oSlideson.width(oWidth);
+			var count=0;
+			touch.on(oHeader,'swipeleft',function()
+			{
+				count++;
+				if(count>2)
+				{
+					count=0;
+				}
+				oSlide.stop().animate({'left':-count*oWidth+'px'}, 500);
+				oDisc.removeClass('disc_show');
+				oDisc.eq(count).addClass('disc_show');
+			});
+			touch.on(oHeader,'swiperight',function()
+			{
+				count--;
+				if(count<0)
+				{
+					count=2;
+				}
+				oSlide.stop().animate({'left':-count*oWidth+'px'}, 500);
+				oDisc.removeClass('disc_show');
+				oDisc.eq(count).addClass('disc_show');
+			})
+	       
+	    }
+	    var comon = 1;
+	
+	    function judhide(flag) {
+	        if (flag == 0) {
+	            comon = 0;
+	            return;
+	        } else if (flag == 1 && comon == 1) {
+	            $('body').css('overflow', 'scroll');
+	            $('#roomkind').hide();
+	        }
+	        comon = 1;
+	    }
+	</script>
+<body>
+	<form id="form1" action="" method="post" style="height:100%;">
+		<div class="header">
+			<img src="img/left_arrow.png" alt="" class="back float_left" id="back">
+		</div>
+		<!-- 餐厅列表 -->
+		<ul class="roomlist" id="coupon">
+			
+		</ul>
+		<!-- 餐厅明细 弹层-->
+		<div class="tanwrap" id="roomkind" onclick="judhide(1);">
+			<div class="big bac_white" id="truedetail" onclick="judhide(0);">
+				<div class="big_head bac_orange overflow color_white">
+					<span id="speclalty_name"></span>
+					<img src="img/remove.png" alt="" class="remove float_right">
+				</div>
+				<p id="loaddetail" class="loaddetail"></p>
+				<div class="main" id="roomkind_main"  style="margin:0px;padding:0px;">
+					<div class="headers" id="roomkind_header" style="height: 192.6px;">
+						<div class="roomkind_headerslide headerslide" id="lunbo">
+								<!-- <img class="roomkind_slideson slideson about_slideson1" src="../../../img/upload/1.jpg" alt="高级房(双)" style="width: 1349px;">
+								<img class="roomkind_slideson slideson about_slideson1" src="../../../img/upload/2.jpg" alt="高级房(双)" style="width: 1349px;">
+								<img class="roomkind_slideson slideson about_slideson1" src="../../../img/upload/3.jpg" alt="高级房(双)" style="width: 1349px;">
+								<img class="roomkind_slideson slideson about_slideson1" src="../../../img/upload/4.jpg" alt="高级房(双)" style="width: 1349px;"> -->
+						</div>
+						<div class="banner">
+							<span class="tex flo_le" id="speclalty_name_1"></span>
+							<div class="circle flo_ri" id="lunbo_1">
+								<!-- <span class="roomkind_disc disc disc_show"></span>
+								<span class="roomkind_disc disc"></span>
+								<span class="roomkind_disc disc"></span>
+								<span class="roomkind_disc disc"></span> -->
+							</div>
+						</div>
+					</div>
+
+					<h4 class="padd color_black" style="background:#f8f8f8;clear: both;">名称</h4>
+					<ul class="pinlun bac_white small color_black ul_details">
+						<li class="padd border_bottom li_details"><span id="name"></span></li>
+					</ul>
+					<h4 class="padd color_black" style="background:#f8f8f8;clear: both;">库存</h4>
+					<ul class="pinlun bac_white small color_black ul_details">
+						<li class="padd border_bottom li_details"><span id="surplus"></span></li>
+					</ul>
+					<h4 class="padd color_black" style="background:#f8f8f8;clear: both;">优惠卷面值金额</h4>
+					<ul class="pinlun bac_white small color_black ul_details">
+						<li class="padd border_bottom li_details"><span id="price"></span></li>
+					</ul>
+					<h4 class="padd color_black" style="background:#f8f8f8;clear: both;">优惠卷售卖金额</h4>
+					<ul class="pinlun bac_white small color_black ul_details">
+						<li class="padd border_bottom li_details"><span id="sellprice"></span></li>
+					</ul>
+					<h4 class="padd color_black" style="background:#f8f8f8;clear: both;">优惠卷内容</h4>
+					<ul class="pinlun bac_white small color_black ul_details">
+						<li class="padd border_bottom li_details"><span id="detall"></span></li>
+					</ul>
+					<h4 class="padd color_black" style="background:#f8f8f8;clear: both;">说明</h4>
+					<ul class="pinlun bac_white small color_black ul_details" style="margin-bottom:60px;">
+						<li class="padd border_bottom li_details"><span id="instructions"></span></li>
+					</ul>
+					
+				</div>
+				<script type="text/javascript">var oRoomkindheader=$('#roomkind_header');var oBig=$('.big');oRoomkindheader.height($(window).height()*0.3);</script>
+				<div class="yuding overflow">
+					<!-- <span class="float_left color_orange" id='totalprice'></span><span class="float_right order color_white" id="qbook">←.←</span> -->
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var oHeader=$('#roomkind_header');
+			var oWidth=$(window).width();                  
+			var oSlide=$('.roomkind_headerslide');
+			var oSlideson=$('.roomkind_slideson');
+			var oDisc=$('.roomkind_disc');
+			oSlideson.width(oWidth);
+			var count=0;
+			touch.on(oHeader,'swipeleft',function()
+			{
+				count++;
+				if(count>2)
+				{
+					count=0;
+				}
+				oSlide.stop().animate({'left':-count*oWidth+'px'}, 500);
+				oDisc.removeClass('disc_show');
+				oDisc.eq(count).addClass('disc_show');
+			});
+			touch.on(oHeader,'swiperight',function()
+			{
+				count--;
+				if(count<0)
+				{
+					count=2;
+				}
+				oSlide.stop().animate({'left':-count*oWidth+'px'}, 500);
+				oDisc.removeClass('disc_show');
+				oDisc.eq(count).addClass('disc_show');
+			})
+		</script>
+		<script type="text/javascript">$('.roompc').height($('.roompc').width());</script>
+	</form>
+</body>
+</html>

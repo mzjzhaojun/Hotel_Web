@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>新增</title>
+
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="this is my page">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="../../css/list.css">
+<script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+<script language="JavaScript" src="../../js/request.js"></script>
+<script language="JavaScript" src="../../js/json.js"></script>
+
+<script language="JavaScript" type="text/javascript">
+	G = function(objId) {
+		return document.getElementById(objId)
+	};
+	Gn = function(objName) {
+		return document.getElementsByName(objName)
+	};
+	var id = getQueryStr("id");
+	var type = getQueryStr("type");
+	window.onload = function() {
+
+		init();
+	};
+	function init() {
+		url = "/Hotel/rest/orderinfo/" + id;
+		RemoteUtil.send(url, "GET", null, callSubmitBack2);
+	}
+
+	var is_top;
+	function callSubmitBack2(data) {
+		if (data.succeed) {
+			if (data.result.statusCode == "200") {
+				$(".form_box").html("");
+				var table = $("<table width='100%' border='0' class='table'>");
+				var tr1;
+				if (type == "1") {//特产
+					tr1 = $("<tr>"
+							+ "<td class='td' >订单名称：</td>"
+							+ "<td ><span id='title'></span></td>"
+							+ "<td class='td' >订单编号：</td>"
+							+ "<td ><span id='no'></span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>是否发货：</td>"
+							+ "<td><input type='text' class='input_text' id='status'/></td>"
+							+ " <td class='td'>订购数量：</td>"
+							+ "<td><span id='count'></span></td>"	
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>商品单价：</td>"
+							+ "<td><span id='new_price'></span></td>"
+							+ " <td class='td'>实付款：</td>"
+							+ "<td><span id='sumamounts'></span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>购买人：</td>"
+							+ "<td><span id='add_user'></span></td>"
+							+ " <td class='td'>购买时间：</td>"
+							+ "<td><span id='indatetime'></span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>手机号码：</td>"
+							+ "<td colspan='3'><span id='mobile_phone'></span></td>"
+							+ "</tr>"
+							+ "<tr>"
+							+ " <td class='td2'>备注：</td>"
+							+ "<td colspan='3'>"
+							+ "<textArea name='remark' id='remark' cols='90%' rows='7' readonly='readonly' ></textArea>"
+							+ "</td>"
+							+ "</tr>"
+							+ "<tr>"
+							+ "<td colspan='4' class='td3' align='center'>"
+							+ "<button type='button' class='button1' onclick='submitForm()'>保存提交</button>"
+							+ "<button type='button' class='button2' onclick='history.go(-1)'>取消返回</button>"
+							+ " </td>" + "</tr>" + "</table>");
+				}
+				if (type == "2") {//餐厅
+					tr1 = $("<tr>"
+							+ "<td class='td' >订单名称：</td>"
+							+ "<td ><span id='title'></span></td>"
+							+ "<td class='td' >订单编号：</td>"
+							+ "<td ><span id='no'></span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>是否发货：</td>"
+							+ "<td><input type='text' class='input_text' id='status'></td>"
+							+ " <td class='td'>就餐人数：</td>"
+							+ "<td><span id='inperson'></span></td>"	
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>就餐时间：</td>"
+							+ "<td><span id='indatetime'></span></td>"
+							+ " <td class='td'>实付款：</td>"
+							+ "<td><span id='sumamounts'></span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>购买人：</td>"
+							+ "<td><span id='add_user'></span></td>"
+							+ " <td class='td'>购买时间：</td>"
+							+ "<td><span id='indatetime'></span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>手机号码：</td>"
+							+ "<td colspan='3'><span id='mobile_phone'></span></td>"
+							+ "</tr>"
+							+ "<tr>"
+							+ " <td class='td2'>备注：</td>"
+							+ "<td colspan='3'>"
+							+ "<textArea name='remark' id='remark' cols='90%' rows='7' readonly='readonly'></textArea>"
+							+ "</td>"
+							+ "</tr>"
+							+ "<tr>"
+							+ "<td colspan='4' class='td3' align='center'>"
+							+ "<button type='button' class='button1' onclick='submitForm()'>保存提交</button>"
+							+ "<button type='button' class='button2' onclick='history.go(-1)'>取消返回</button>"
+							+ " </td>" + "</tr>" + "</table>");
+				}
+				if (type == "3") {//房间
+					tr1 = $("<tr>"
+							+ "<td class='td' >订单名称：</td>"
+							+ "<td ><span id='title'></span></td>"
+							+ "<td class='td' >订单编号：</td>"
+							+ "<td ><span id='no'></span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>是否发货：</td>"
+							+ "<td><input type='text' class='input_text' id='status'></td>"
+							+ " <td class='td'>入住人数：</td>"
+							+ "<td><span id='inperson'></span></td>"	
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>入住时间：</td>"
+							+ "<td><span id='indatetime'></span></td>"
+							+ " <td class='td'>退房时间：</td>"
+							+ "<td><span id='outdatetime'></span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>购买人：</td>"
+							+ "<td><span id='add_user'></span></td>"
+							+ " <td class='td'>购买时间：</td>"
+							+ "<td><span id='indatetime'></span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>手机号码：</td>"
+							+ "<td><span id='mobile_phone'></span></td>"
+							+ "<td class='td'>实付款：</td>"
+							+ "<td><span id='sumamounts'></span></td>"
+							+ "</tr>"
+							+ "<tr>"
+							+ " <td class='td2'>备注：</td>"
+							+ "<td colspan='3'>"
+							+ "<textArea name='remark' id='remark' cols='90%' rows='7' readonly='readonly'></textArea>"
+							+ "</td>"
+							+ "</tr>"
+							+ "<tr>"
+							+ "<td colspan='4' class='td3' align='center'>"
+							+ "<button type='button' class='button1' onclick='submitForm()'>保存提交</button>"
+							+ "<button type='button' class='button2' onclick='history.go(-1)'>取消返回</button>"
+							+ " </td>" + "</tr>" + "</table>");
+				}
+
+				table.append(tr1);
+				$(".form_box").append(table);
+				$("#title").html(data.result.successMsg.orderdetail.title);
+				$("#no").html(data.result.successMsg.no);
+				$("#sumamounts").html(data.result.successMsg.sumamounts);
+				$("#status").val(data.result.successMsg.status);
+				$("#add_date").html(data.result.successMsg.add_date);
+				$("#add_user").html(data.result.successMsg.add_user);
+				$("#mobile_phone").html(data.result.successMsg.mobile_phone);
+				$("#count").html(data.result.successMsg.orderdetail.count);
+				$("#price").html(data.result.successMsg.orderdetail.price);
+				$("#new_price").html(data.result.successMsg.orderdetail.new_price);
+				$("#inperson").html(data.result.successMsg.orderdetail.inperson);
+				$("#name").html(data.result.successMsg.orderdetail.name);
+				$("#is_coupon").html(data.result.successMsg.orderdetail.is_coupon);
+				$("#remark").html(data.result.successMsg.orderdetail.remark);
+				$("#indatetime").html(data.result.successMsg.orderdetail.indatetime);
+				$("#outdatetime").html(data.result.successMsg.orderdetail.outdatetime);
+				$("#card").html(data.result.successMsg.orderdetail.card);
+				$("#subnum").html(data.result.successMsg.orderdetail.subnum);
+
+				
+
+			}
+		}
+		//var url2 = "/Hotel/rest/dictionaries/type/104";
+		//RemoteUtil.send(url2, "GET", null, callResultBack);
+	}
+
+	function callResultBack(data) {
+		if (data.succeed) {
+			if (data.result.statusCode == "200") {
+				var list = data.result.successMsg;
+				var len = list.length;
+				$("#is_top").html("");
+				for ( var i = 0; i <= len; i++) {
+					if (is_top == list[i].code) {
+						$("#is_top")
+								.append(
+										$("<option value='"+list[i].code+"' selected='selected'>"
+												+ list[i].name + "</option>"));
+					} else {
+						$("#is_top").append(
+								$("<option value='"+list[i].code+"'>"
+										+ list[i].name + "</option>"));
+					}
+				}
+			}
+		}
+	}
+
+	function submitForm() {
+
+		var status = $("#status").val();
+
+		var parameter = "status:'" + status  +"',rowid:'"+id+"'";
+
+		url = "/Hotel/rest/orderinfo/" + id;
+		RemoteUtil.send(url, "POST", parameter, callSubmitBack);
+
+	}
+
+	function callSubmitBack(data) {
+		if (data.succeed) {
+			if (data.result.statusCode == "200") {
+				window.location.href = "list.html?type="+type;
+			}
+		}
+	}
+	
+	  
+</script>
+
+</head>
+
+<body>
+
+	<div class="form_box"></div>
+
+</body>
+</html>

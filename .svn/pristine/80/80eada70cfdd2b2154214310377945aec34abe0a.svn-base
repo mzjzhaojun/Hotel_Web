@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+	<meta content="target-densitydpi=device-dpi,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+	<link rel="stylesheet" href="../reservation/css/common.css" type="text/css">
+	<link rel="stylesheet" href="../reservation/css/orderwrite.css" type="text/css">
+	<title>崇明金茂凯悦酒店-订单详情</title>
+	<script type="text/javascript" src="../reservation/js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="../reservation/js/touch-0.2.14.min.js"></script>
+	<script type="text/javascript" src="../reservation/js/index.js"></script>
+	<script type="text/javascript" src="../reservation/js/request.js"></script>
+	<script type="text/javascript" src="../reservation/js/json.js"></script>
+	<script type="text/javascript" src="../reservation/js/getUrlParam.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			
+			var no=UrlParm.parm("no");
+			var parameters = "";
+		  	var url = "/Hotel/rest/orderinfo/selectOrderInfo/"+no;
+		  	RemoteUtil.send(url, "GET", parameters, lectOrderInfoBack);
+			
+		});
+		
+		function lectOrderInfoBack(data){
+			
+			if (data.succeed) {
+				if (data.result.statusCode == "200") {
+					var detall = data.result.successMsg;
+					var indatetime = detall.indatetime;
+					indatetime = indatetime.split("-");
+					var outdatetime = detall.outdatetime;
+					outdatetime = outdatetime.split("-");
+					$("#title").html(detall.title);
+					$("#sumamounts").html("￥"+detall.sumamounts);
+					$("#in").html(indatetime[1]+"月"+indatetime[2]+"日入住 ");
+					$("#out").html(outdatetime[1]+"月"+outdatetime[2]+"日离店");
+					$("#no").html(detall.no);
+					$("#subnum").html(detall.subnum);
+					$("#count").html(detall.count);
+					$("#statusname").html(detall.statusname);
+					$("#createdate").html(detall.createdate);
+					$("#custname").html(detall.custname);
+					$("#mobilephone").html(detall.mobilephone);
+					$("#passport").html(detall.passport);
+				}
+			}
+			
+		}
+		
+	</script>
+</head>
+
+
+<body id="body">
+	<div class="headers" id="headers">
+			<div class="headerslide">
+				<img class="slideson" src="../images/20150309100754_10596.jpg" alt="高级房(双)" style="width: 1349px;">
+			</div>
+			<div class="banner">
+				<span class="tex flo_le">崇明金茂凯悦酒店</span>
+			</div>
+	</div>
+	<div class="pad title overflow">
+		<span class="roomname float_left middle" id="title">标间大床房</span>
+		<span class="total parice float_right color_orange" id="sumamounts"></span>
+	</div>
+		<ul class="detail middle">
+			<li class="bac_white border_bottom">
+				<span id="in" class="in mar_rig">6月08日入住</span>
+				<span id="out" class="out mar_rig">6月09日离店</span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>订单号</span>
+				<span class="absolute le" id="no"></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>预定码</span>
+				<span class="absolute le" id="subnum"></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>房间数</span>
+				<span class="absolute le" id="count"></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>是否支付</span>
+				<span class="le absolute ch1" id="statusname"></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>预定时间</span>
+				<span class="absolute le" id="createdate"></span>
+			</li>
+			<li class="Abb">
+				<p id="booktips" class="booktip">&nbsp;</p></li>
+			<li class="bac_white border_bottom ">
+				<span>入住人</span>
+				<span class="le absolute" style="font-size:0.9em" name="custname" id="custname"></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>手机号</span>
+				<span class="le absolute" style="font-size:0.9em" name="mobilephone" id="mobilephone"></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>凯悦金护照</span>
+				<span class="le absolute" style="font-size:0.9em" name="passport" id="passport"></span>
+			</li>
+		</ul>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>main.html</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
+	<script language="JavaScript" src="../js/jquery-1.9.1.min.js"></script>
+	<script language="JavaScript" src="../js/request.js"></script>
+	<script language="JavaScript" src="../js/json.js"></script>
+	<script type="text/javascript">
+		$(function(){	
+			submitForm();
+			
+		})
+		
+		function submitForm(){
+			var parameter = "";
+			url = "/Hotel/system/rolemodule/menu";
+			RemoteUtil.send(url, "GET", parameter, callSubmitBack);
+		}
+		
+		function callSubmitBack(data){
+			//var data = {"succeed":true,"result":{"statusCode":200,"successMsg":[{"children":[{"module_code":"H0101","module_name":"客房管理","role_code":"R01","role_name":"管理员","url":"list.html","user_code":"U01"},{"module_code":"H0102","module_name":"客房类型管理","role_code":"R01","role_name":"管理员","url":"1","user_code":"U01"}],"module_code":"H01","module_name":"客房管理","role_code":"R01","role_name":"管理员","url":"list.html","user_code":"U01"},{"children":[{"module_code":"H0201","module_name":"餐厅管理","role_code":"R01","role_name":"管理员","url":"1","user_code":"U01"},{"module_code":"H0202","module_name":"餐厅套餐卷管理","role_code":"R01","role_name":"管理员","url":"1","user_code":"U01"},{"module_code":"H0203","module_name":"套餐卷类型","role_code":"R01","role_name":"管理员","url":"1","user_code":"U01"}],"module_code":"H02","module_name":"餐厅管理","role_code":"R01","role_name":"管理员","url":"1","user_code":"U01"},{"children":[{"module_code":"H0301","module_name":"特产管理","role_code":"R01","role_name":"管理员","url":"1","user_code":"U01"}],"module_code":"H03","module_name":"特产管理","role_code":"R01","role_name":"管理员","url":"1","user_code":"U01"},{"children":[{"module_code":"H0401","module_name":"发布旅游信息","role_code":"R01","role_name":"管理员","url":"1","user_code":"U01"}],"module_code":"H04","module_name":"旅游信息发布","role_code":"R01","role_name":"管理员","url":"1","user_code":"U01"},{"children":[{"module_code":"H0501","module_name":"特产订单管理","role_code":"R01","role_name":"管理员","url":"1","user_code":"U01"},{"module_code":"H0502","module_name":"餐厅订单管理","role_code":"R01","role_name":"管理员","url":"1","user_code":"U01"},{"module_code":"H0503","module_name":"客房预定订单管理","role_code":"R01","role_name":"管理员","url":"1","user_code":"U01"}],"module_code":"H05","module_name":"订单管理","role_code":"R01","role_name":"管理员","url":"1","user_code":"U01"},{"children":[{"module_code":"H0601","module_name":"优惠卷类型管理","role_code":"R01","role_name":"管理员","url":"1","user_code":"U01"},{"module_code":"H0602","module_name":"优惠卷管理","role_code":"R01","role_name":"管理员","url":"1","user_code":"U01"}],"module_code":"H06","module_name":"优惠卷管理","role_code":"R01","role_name":"管理员","url":"1","user_code":"U01"},{"children":[{"module_code":"H0701","module_name":"客户信息管理","role_code":"R01","role_name":"管理员","url":"1","user_code":"U01"}],"module_code":"H07","module_name":"客户管理","role_code":"R01","role_name":"管理员","url":"1","user_code":"U01"},{"children":[{"module_code":"H0801","module_name":"用户管理","role_code":"R01","role_name":"管理员","url":"1","user_code":"U01"},{"module_code":"H0802","module_name":"权限管理","role_code":"R01","role_name":"管理员","url":"1","user_code":"U01"},{"module_code":"H0803","module_name":"功能模块管理","role_code":"R01","role_name":"管理员","url":"1","user_code":"U01"},{"module_code":"H0804","module_name":"字典管理","role_code":"R01","role_name":"管理员","url":"1","user_code":"U01"},{"module_code":"H0805","module_name":"角色管理","role_code":"R01","role_name":"管理员","url":"1","user_code":"U01"}],"module_code":"H08","module_name":"系统管理","role_code":"R01","role_name":"管理员","url":"1","user_code":"U01"}]}};
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					var module_1 = data.result.successMsg;
+					var len = module_1.length;
+					var html = "";
+					for(var i=0;i<len;i++){
+						html = $("<div class='module' name='"+module_1[i].url+"'><span><img src='../img/leftico01.png' /></span>"+module_1[i].module_name+"</div>");
+						$(".main_LeftContent").append(html);
+						var module_2 = module_1[i].children;
+						var len2 = module_2.length;
+						var html2 = "";
+						if(i==0){
+							html2+="<div class=\"module2\"><ul class=\"menuson\">";
+							$("#module_1").html(module_1[i].module_name);
+							$("#user_name").html(module_1[i].role_name);
+							$("#main").attr("src",module_1[i].url);
+						}else{
+							html2+="<div class=\"module3\"><ul class=\"menuson\">";
+						}
+						for(var y=0;y<len2;y++){
+							if(y==0){
+								html2+="<li class=\"active\" onclick=\"onClickNavigation('"+module_2[y].url+"','"+module_2[y].module_name+"')\"><cite></cite><a target=\"rightFrame\">"+module_2[y].module_name+"</a><i></i></li>";
+							}else{
+								html2+="<li onclick=\"onClickNavigation('"+module_2[y].url+"','"+module_2[y].module_name+"')\"><cite></cite><a target=\"rightFrame\">"+module_2[y].module_name+"</a><i></i></li>";
+							}
+							if(i==0 && y==0){
+								$("#module_2").html(module_2[y].module_name);
+							}
+						}
+						html2+="</ul></div>";
+						$(".main_LeftContent").append(html2);
+					}
+					
+				}
+			}
+			//导航切换
+			$(".menuson li").click(function(){
+				$(".menuson li.active").removeClass("active")
+				$(this).addClass("active");
+			});
+			
+			$('.module').click(function(){
+				$("#main").attr("src",$(this).attr("name"));
+				$("#module_1").html(this.innerText);
+				$("#module_2").html($(this).next('div').children('ul').children('li')[0].innerText);
+				//$(this).next('div').children('ul').children('li').next().addClass("active");
+				var div = $(this).next('div');
+				$("li:first", div).addClass("active");
+				var classname = $(this).next('div').attr('class');
+				if(classname!="module2"){
+					$('.module2').slideUp();
+					$('.module2').removeClass("module2");
+					$('.module2').addClass("module3");
+					$(this).next('div').slideDown();
+					$(this).next('div').removeClass("module3");
+					$(this).next('div').addClass("module2");
+				}
+			});
+		}
+		
+		function onClickNavigation(url,module_name){
+			$("#main").attr("src",url);
+			$("#module_2").html(module_name);
+		}
+		
+		//左菜单缩进
+		function onClickIndent(){
+			$(".main_Left").animate({left:'-265px'});
+			$(".main_Content").animate({left:'0px'});
+			document.getElementById("retractable").style.display="none";
+			document.getElementById("retractable2").style.display="block";
+			$(".retractable").animate({left:'0px'});
+		}
+		//左菜单在展开
+		function onClickLaunch(){
+			$(".main_Left").animate({left:'0px'});
+			$(".main_Content").animate({left:'187px'});
+			document.getElementById("retractable").style.display="block";
+			document.getElementById("retractable2").style.display="none";
+			$(".retractable").animate({left:'187px'});
+		}
+		function onClickExit(){
+			var se=confirm("您确定要退出系统吗!");
+			if (se==true)
+		    {
+		    	var parameter = "";
+				url = "/Hotel/system/user/loginOut";
+				RemoteUtil.send(url, "GET", "", callSubmitBackExit);
+		    }
+			
+		}
+		function callSubmitBackExit(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					window.location.href = "../login.html";
+				}
+			}
+		}
+	</script>
+
+  </head>
+  
+  <body>
+    
+    <!-- 头 -->
+    <div class="main_Top">
+    	<div class="main_TopLeft"></div>
+    	<div class="main_TopRight">
+    		欢迎您！<span id="user_name"></span><span class="spanexit" onclick="onClickExit()">退出</span>
+    	</div>
+    </div>
+    <!-- 左菜单 -->
+    <div class="main_Left">
+    	<div class="main_LeftTitle">
+    		<span></span>后台管理
+    	</div>
+    	
+    	<div class="main_LeftContent">
+    		<!-- <div class="module">
+		    	<span><img src="../img/leftico01.png" /></span>系统设置
+		    </div>
+		    
+		    <div class="module2">
+		    	<ul class="menuson">
+			        <li><cite></cite><a href="javascript:" target="rightFrame">首页模版</a><i></i></li>
+			        <li class="active"><cite></cite><a href="javascript:" target="rightFrame">数据列表</a><i></i></li>
+			        <li><cite></cite><a href="javascript:" target="rightFrame">图片数据表</a><i></i></li>
+			        <li><cite></cite><a href="javascript:" target="rightFrame">添加编辑</a><i></i></li>
+			        <li><cite></cite><a href="javascript:" target="rightFrame">图片列表</a><i></i></li>
+			        <li><cite></cite><a href="javascript:" target="rightFrame">自定义</a><i></i></li>
+			        <li><cite></cite><a href="javascript:" target="rightFrame">常用工具</a><i></i></li>
+			        <li><cite></cite><a href="javascript:" target="rightFrame">信息管理</a><i></i></li>
+			        <li><cite></cite><a href="javascript:" target="rightFrame">Tab页</a><i></i></li>
+			        <li><cite></cite><a href="javascript:" target="rightFrame">404页面</a><i></i></li>
+		        </ul> 
+		    </div> -->
+		    
+    	</div>
+    	
+    </div>
+    
+    <!-- 左菜单缩进按钮 -->
+    <div class="retractable">
+    	<img class="retractable_1" id="retractable" src="../img/indent.png" onclick="onClickIndent()" onmousemove="this.src='../img/indent1.png'" onmouseout="this.src='../img/indent.png'" title="缩进">
+    	<img class="retractable_2" id="retractable2" src="../img/launch.png" onclick="onClickLaunch()" onmousemove="this.src='../img/launch1.png'" onmouseout="this.src='../img/launch.png'" title="展开">
+    </div>
+    
+    <!-- 内容 -->
+    <div class="main_Content">
+    	<div class="place">
+    		<span>位置：</span>
+		    <ul class="placeul">
+		    <li><a href="#">首页</a></li>
+		    <li><a href="#" id="module_1"></a></li>
+		    <li><a href="#" id="module_2"></a></li>
+		    </ul>
+    	</div>
+    	
+    	<div class="main_Content2">
+    		<iframe id="main" name="main" src="http://www.baidu.com" frameborder=0></iframe>
+    	</div>
+    	
+    </div>
+    
+  </body>
+</html>

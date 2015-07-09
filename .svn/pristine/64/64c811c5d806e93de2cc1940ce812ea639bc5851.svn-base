@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=2,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>手机版-金茂凯悦</title>
+<meta name="keywords" content=",金茂凯悦">
+<meta name="description" content="-金茂凯悦">
+<link rel="stylesheet" type="text/css" href="../css/common.css" />
+<link rel="stylesheet" type="text/css" href="../css/index.css" />
+<!-- <script type="text/javascript" src="/Public/Js/jquery-1.9.0.min.js"></script> -->
+<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../js/zepto.min.js"></script>
+<script type="text/javascript" src="../js/index.js"></script>
+<script type="text/javascript" src="../js/fx.js"></script>
+<script type="text/javascript" src="../js/touch.js"></script>
+<script type="text/javascript" src="../js/TouchSlide.1.1.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/jquery.form.js"></script>
+<script type="text/javascript">
+    ;(function($){
+        var ti = $(".tabs_on").index();
+        $(".coupon").children().eq(ti).show().siblings().hide();
+        $(".tabs_t > div").tap(function(){
+            var tindex = $(this).index();
+            $(this).addClass('tabs_on').siblings().removeClass('tabs_on');
+            $(".coupon").children().eq(tindex).show().siblings().hide();
+        })
+    })(Zepto);
+</script>
+</head>
+<body class="pa welbg">
+    
+    <div class="main1">
+       <!-- 使用情况 -->
+       <div class="tabs">
+           <div class="tabs_t clearfix">
+               <div class="tabs_on">未使用</div>
+               <div>已使用</div>
+               <div>已过期</div>
+           </div>
+           <div class="coupon">
+               <!-- 未使用列表 -->
+               <ul>
+               	<div class="coupon_no">暂无相关数据！</div>                                          
+               </ul>
+
+               <!-- 已使用列表 -->
+               <ul>
+               	<div class="coupon_no">暂无相关数据！</div>                                        
+               </ul>
+
+               <!-- 已过期列表 -->
+               <div class="coupon_no">暂无相关数据！</div>                        
+               <ul></ul>
+           </div>
+       </div>
+   </div>
+	
+</body>
+</html>

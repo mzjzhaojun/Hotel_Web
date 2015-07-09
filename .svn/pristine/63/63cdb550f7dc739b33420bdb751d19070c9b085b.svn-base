@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>demo</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+	<script language="JavaScript" src="js/jquery-1.9.1.min.js"></script>
+	<script language="JavaScript" src="js/cloud.js"></script>
+	<script language="JavaScript" src="js/request.js"></script>
+	<script language="JavaScript" src="js/json.js"></script>
+	<script language="JavaScript" type="text/javascript">
+		G = function(objId){return document.getElementById(objId)};
+		Gn = function(objName){return document.getElementsByName(objName)};
+		window.onload=function(){
+			alert("114.221.79.156");
+		};
+	</script>
+
+  </head>
+  
+  <body>
+    
+  </body>
+</html>

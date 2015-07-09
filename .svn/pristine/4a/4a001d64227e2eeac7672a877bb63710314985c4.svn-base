@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>特产新增</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../css/list.css">
+    <link rel="stylesheet" type="text/css" href="../../css/date.css">
+    <link rel="stylesheet" type="text/css" href="../../css/validate.css">
+    <script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+    <script language="JavaScript" src="../../js/request.js"></script>
+	<script language="JavaScript" src="../../js/json.js"></script>
+	<script language="JavaScript" src="../../js/eap.core.js"></script>
+	<script language="JavaScript" src="../../js/eap.util.date.js"></script>
+	<script language="JavaScript" src="../../js/eap.simpleDatepicker.js"></script>
+	<script language="JavaScript" src="../../js/eap.lang-zh_CN.js"></script>
+	<script type="text/javascript" src="../../js/eap.tip.js"></script>
+	<script language="JavaScript" src="../../js/eap.validate.js"></script>
+	
+	<script language="JavaScript" language="JavaScript" type="text/javascript">
+	<!--
+		G = function(objId){return document.getElementById(objId)};
+		Gn = function(objName){return document.getElementsByName(objName)};
+		window.onload=function(){
+			init();
+			$("#issuedate").simpleDatepicker({
+				pattern:"yyyy-MM-dd"
+		 	});
+		 	$("#duedate").simpleDatepicker({
+				pattern:"yyyy-MM-dd"
+		 	});
+		};
+		
+		
+		function init(){
+			/* url = "/Hotel/rest/dictionaries/type/D__7h6bs45rlpuy";
+			 RemoteUtil.send(url, "GET", null, callResultBack1);*/
+			url = "/Hotel/rest/dictionaries/type/D__1u3h8r0jke78";
+			RemoteUtil.send(url, "GET", null, callResultBack2);
+		}
+		
+		/* function callResultBack1(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					var list = data.result.successMsg;
+					var len = list.length;
+						$("#is_top").html("");
+						for(var i=0;i<len;i++){
+							$("#is_top").append($("<option value='"+list[i].code+"'>"+list[i].name+"</option>"));
+						}
+				}
+			}
+		} */
+		
+		function callResultBack2(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					var list = data.result.successMsg;
+					var len = list.length;
+						$("#is_add").html("");
+						for(var i=0;i<len;i++){
+							$("#is_add").append($("<option value='"+list[i].code+"'>"+list[i].name+"</option>"));
+						}
+				}
+			}
+		}
+		
+					
+	    function submitForm(){
+	    	var isValid = $("#form").valid();
+			if (!isValid)
+				return;
+			var title = $("#title").val();
+			var name = $("#name").val();
+			var type = $("#type").val();
+			var count = $("#count").val();
+			var price = $("#price").val();
+			var new_price = $("#new_price").val();
+			var context = $("#context").val();
+			var is_top = $("#is_top").val();
+			var is_add = $("#is_add").val();
+			var remark = $("#remark").val();
+			var parameter = "title:'"+title+"',name:'"+name+"',type:'"+type+"',count:'"+count+
+			"',price:'"+price+"',new_price:'"+new_price+"',context:'"+context+"',is_top:'"+is_top+"',is_add:'"+
+			is_add+"',remark:'"+remark+"'";
+			url = "/Hotel/rest/specialtyinfo/save";
+			RemoteUtil.send(url, "POST", parameter, callSubmitBack);
+			
+		}
+		
+		function callSubmitBack(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					window.location.href = "list.html";
+				}
+			}
+			
+		}
+	//-->
+	</script>
+	
+  </head>
+  
+  <body>
+   <form name="form" method="post" action="" enctype="multipart/form-data"
+		id="form">
+   	<div class="form_box">
+    	<table width="100%" border="0" class="table">
+		  <tr>
+		    <td class="td">标题：</td>
+		    <td><input type="text" class="input_text required" id="title"><span
+						class="span">*</span></td>
+		     <td class="td">商品名称：</td>
+		    <td><input type="text" class="input_text required" id="name"><span
+						class="span">*</span></td>
+		  </tr>
+		  <tr>
+		    <td class="td">商品价格：</td>
+		    <td><input type="text" class="input_text required" id="price"><span
+						class="span">*</span></td>
+		    <td class="td">优惠后价格：</td>
+		    <td><input type="text" class="input_text required" id="new_price"><span
+						class="span">*</span></td>
+		  </tr>
+		  
+		   <tr>
+		   	<td class="td">状态：</td>
+		    <td><select name="is_add" id="is_add"></select></td>
+		    <td class="td">商品数量：</td>
+		    <td><input type="text" class="input_text required" id="count"><span
+						class="span">*</span></td>
+		  </tr>
+		   <tr>
+		    <td class="td2">商品描述：</td>
+		    <td colspan="3">
+		    	<textArea name="context" id="context" cols="90%" rows="7" ></textArea><span
+						class="span">*</span>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td class="td2">备注：</td>
+		    <td colspan="3">
+		    	<textArea name="remark" id="remark" cols="90%" rows="7" ></textArea>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td colspan="4" class="td3" align="center">
+		    	<button type="button" class="button1" onclick="submitForm()">保存提交</button>
+    			<button type="button" class="button2" onclick="history.go(-1)">取消返回</button>
+		    </td>
+		  </tr>
+		</table>
+    </div>
+   </form>
+  </body>
+</html>

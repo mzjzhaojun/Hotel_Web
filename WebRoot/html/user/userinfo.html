@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>用户管理-查看</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../css/list.css">
+    <script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+    <script language="JavaScript" src="../../js/request.js"></script>
+	<script language="JavaScript" src="../../js/json.js"></script>
+	
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		G = function(objId){return document.getElementById(objId)};
+		Gn = function(objName){return document.getElementsByName(objName)};
+		window.onload=function(){
+			 var thisURL = document.URL;    
+ 			 var  getval =thisURL.split('?')[1];  
+  			 id= getval.split("=")[1]; 
+  			 init();
+		};
+		var id;
+		function init(){
+			url = "/Hotel/rest/user/selectUserAndRole?rowid="+id;
+			RemoteUtil.send(url, "GET", null, callSubmitBack2);
+		}
+		
+		function callSubmitBack2(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					$("#user_name").html(data.result.successMsg.user_name);
+					$("#password").html(data.result.successMsg.password);
+					$("#phone").html(data.result.successMsg.phone);
+					$("#email").html(data.result.successMsg.email);
+					$("#vname").html(data.result.successMsg.vname);
+					$("#tel").html(data.result.successMsg.tel);
+					$("#sex").html(data.result.successMsg.sex);
+					$("#age").html(data.result.successMsg.age);
+					$("#cardtype").html(data.result.successMsg.cardtype);
+					$("#cardnum").html(data.result.successMsg.cardnum);
+					$("#remarks").html(data.result.successMsg.remarks);
+					var role_names="";
+					var listrole=data.result.successMsg.listRole;
+					for ( var i = 0; i < listrole.length; i++) {
+						role_names=role_names+listrole[i].role_name+"  ";
+					}
+					$("#role_name").html(role_names);
+				}
+			}
+		}
+		
+	//-->
+	</script>
+	
+  </head>
+  
+  <body>
+   
+   	<div class="form_box">
+    	<table width="100%" border="0" class="table">
+		  <tr>
+		    <td class="td">用户名称：</td>
+		    <td><span id="user_name"></span></td>
+		    <td class="td">用户密码：</td>
+		    <td><span id="password"></span></td>
+		  </tr>
+		  <tr>
+		    <td class="td">移动电话：</td>
+		    <td><span id="phone"></span></td>
+		    <td class="td">注册邮箱：</td>
+		    <td><span id="email"></span></td>
+		  </tr>
+		  <tr>
+		    <td class="td">真实姓名：</td>
+		    <td><span id="vname"></span></td>
+		    <td class="td">联系电话：</td>
+		    <td><span id="tel"></span></td>
+		  </tr>
+		  <tr>
+		    <td class="td">性别：</td>
+		    <td>
+		    	<span id="sex"></span>
+		    </td>
+		    <td class="td">年龄：</td>
+		    <td><span id="age"></span></td>
+		  </tr>
+		  <tr>
+		    <td class="td">证件类型：</td>
+		    <td><span id="cardtype"></span></td>
+		    <td class="td">证件号码：</td>
+		    <td><span id="cardnum"></span></td>
+		  </tr>
+		   <tr>
+		    <td class="td2">角色：</td>
+		    <td colspan="3">
+		    	<span id="role_name"></span>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td class="td2">备注：</td>
+		    <td colspan="3">
+		    	<textArea name="remarks" id="remarks" cols="90%" rows="7" id="remarks" readonly="readonly"></textArea>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td colspan="4" class="td3" align="center">
+    			<button type="button" class="button2" onclick="history.go(-1)">取消返回</button>
+		    </td>
+		  </tr>
+		</table>
+    </div>
+   
+  </body>
+</html>

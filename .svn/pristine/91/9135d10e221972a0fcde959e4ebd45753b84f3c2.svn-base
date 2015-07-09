@@ -1,0 +1,191 @@
+RemoteUtil = new function() {
+	this.send = function(url, method, param, callFunction) {
+		var request = new XMLHttpRequest();
+		var _param = "";
+		if (param != null && param != "") {
+			_param = "json={" + param + "}";
+			_param = this.replesestr(_param);
+			if (method != "POST") {
+				url += "?" + _param;
+			}
+		}
+		request.open(method, url, true);
+		request.setRequestHeader("Content-Type",
+				"application/x-www-form-urlencoded; charset=UTF-8");
+		request.onreadystatechange = function() {
+			if (request.readyState == 4) {
+				if (request.status == 200) {
+					if (request.responseText) {
+						var data = JSON.decode(request.responseText);
+						if (data.succeed) {
+							if (data.result.statusCode == 401)
+								window.location.href = "../login.html";
+						}
+						callFunction(data);
+					}
+				} else if (request.status == 404) {
+					callFunction(null);
+					alert("404");
+				} else if (request.status == 500) {
+					callFunction(null);
+					alert("500");
+				}
+			}
+		};
+		if (method == "POST") {
+			request.send(_param);
+		} else {
+			request.send();
+		}
+	};
+	
+	this.sendObj = function(url, method, param, callFunction) {
+		var request = new XMLHttpRequest();
+		if (param != null && param != "") {
+			if (method != "POST") {
+				url += "?" + param;
+			}
+		}
+		url = encodeURI(url);
+		request.open(method, url, true);
+		request.setRequestHeader("Content-Type",
+				"application/x-www-form-urlencoded; charset=UTF-8");
+		request.onreadystatechange = function() {
+			if (request.readyState == 4) {
+				if (request.status == 200) {
+					if (request.responseText) {
+						var data = JSON.decode(request.responseText);
+						if (data.succeed) {
+							if (data.result.statusCode == 401)
+								window.location.href = "../" +
+										"-o!-" +
+										"";
+						}
+						callFunction(data);
+					}
+				} else if (request.status == 404) {
+					callFunction(null);
+					alert("404");
+				} else if (request.status == 500) {
+					callFunction(null);
+					alert("500");
+				}
+			}
+		};
+		if (method == "POST") {
+			request.send(param);
+		} else {
+			request.send();
+		}
+	};
+
+	this.init = function(url, method, module, callFunction) {
+		var request = new XMLHttpRequest();
+		request.open(method, url, true);
+		request.setRequestHeader("Content-Type",
+				"application/x-www-form-urlencoded; charset=UTF-8");
+		request.onreadystatechange = function() {
+			if (request.readyState == 4) {
+				if (request.status == 200) {
+					if (request.responseText) {
+						callFunction(JSON.decode(request.responseText), module);
+					}
+				} else if (request.status == 404) {
+					callFunction(null, null);
+					alert("404");
+				} else if (request.status == 500) {
+					callFunction(null, null);
+					alert("500");
+				}
+			}
+		};
+		request.send();
+	};
+
+	this.replesestr = function(content) {
+		if (content == null) {
+			return "";
+		}
+		content = content.replaceAll("&", "#1#");
+		content = content.replaceAll("<", "#2#");
+		content = content.replaceAll(">", "#3#");
+		content = content.replaceAll("\"", "#4#");
+		content = content.replaceAll("\n", "#5#");
+		content = content.replaceAll("\r", "#6#");
+		content = content.replaceAll(" ", "#7#");
+		content = content.replaceAll("!", "#8#");
+		content = content.replaceAll("/", "#9#");
+		content = content.replaceAll("　", "#10#");
+		return content;
+	};
+
+	String.prototype.replaceAll = function(s1, s2) {
+		return this.replace(new RegExp(s1, "gm"), s2);
+	};
+
+	this.replesecode = function(content) {
+		if (content == null) {
+			return "";
+		}
+		content = content.replaceAll("#1#", "&");
+		content = content.replaceAll("#2#", "<");
+		content = content.replaceAll("#3#", ">");
+		content = content.replaceAll("#4#", "\"");
+		content = content.replaceAll("#5#", "\n");
+		content = content.replaceAll("#6#", "\r");
+		content = content.replaceAll("#7#", " ");
+		content = content.replaceAll("#8#", "!");
+		content = content.replaceAll("#9#", "/");
+		content = content.replaceAll("#10#", "　");
+		return content;
+	};
+
+	this.toParam = function(obj) {
+		var query = '';
+		var name = null, value, fullSubName, subName = null, subValue, innerObj, i;
+		for (name in obj) {
+			value = obj[name];
+			if (value instanceof Array) {
+				for (i = 0; i < value.length; ++i) {
+					subValue = value[i];
+					fullSubName = name + '[' + i + ']';
+					innerObj = {};
+					innerObj[fullSubName] = subValue;
+					query += param(innerObj) + '&';
+				}
+			} else if (value instanceof Object) {
+				for (subName in value) {
+					subValue = value[subName];
+					fullSubName = name + '[' + subName + ']';
+					innerObj = {};
+					innerObj[fullSubName] = subValue;
+					query += param(innerObj) + '&';
+				}
+			} else if (value !== undefined && value !== null) {
+				query += encodeURIComponent(name) + '='
+						+ encodeURIComponent(value) + '&';
+			}
+		}
+		return query.length ? query.substr(0, query.length - 1) : query;
+	};
+};
+
+function generateRandomAlphaNum(len, value) {
+	var rdmString = "";
+	// toSting接受的参数表示进制，默认为10进制。36进制为0-9 a-z
+	for (; rdmString.length < len; rdmString += Math.random().toString(36)
+			.substr(2))
+		;
+	var values = value + "_" + rdmString.substr(0, len);
+	return values;
+}
+var LocString = document.URL;
+// 通过url获取参数值
+function getQueryStr(str) {
+	var rs = new RegExp("(^|)" + str + "=([^&]*)(&|$)", "gi").exec(LocString), tmp;
+	if (tmp = rs) {
+		return tmp[2];
+	}
+	// parameter cannot be found
+	return "";
+}

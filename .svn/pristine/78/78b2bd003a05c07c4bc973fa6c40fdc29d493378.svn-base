@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>新增</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../css/list.css">
+    <script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+    <script language="JavaScript" src="../../js/request.js"></script>
+	<script language="JavaScript" src="../../js/json.js"></script>
+	
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		G = function(objId){return document.getElementById(objId)};
+		Gn = function(objName){return document.getElementsByName(objName)};
+		window.onload=function(){
+			 var thisURL = document.URL;    
+ 			 var  getval =thisURL.split('?')[1];  
+  			 id= getval.split("=")[1]; 
+  			 init();
+		};
+		var id;
+		function init(){
+			url = "/Hotel/rest/newsinfo/"+id;
+			RemoteUtil.send(url, "GET", null, callSubmitBack2);
+		}
+		
+		var is_top; 
+		function callSubmitBack2(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					$("#title").val(data.result.successMsg.title);
+					$("#is_top").val(data.result.successMsg.is_top);
+					$("#context").val(data.result.successMsg.context);
+					$("#remark").val(data.result.successMsg.remark);
+					
+					is_top = data.result.successMsg.is_top;
+					
+					
+				}
+			}
+			var url2 = "/Hotel/rest/dictionaries/type/D__7h6bs45rlpuy";
+			RemoteUtil.send(url2, "GET", null, callResultBack);
+		}
+		
+		function callResultBack(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					var list = data.result.successMsg;
+					var len = list.length;
+						$("#is_top").html("");
+						for(var i=0;i<len;i++){
+							if(is_top==list[i].code){
+								$("#is_top").append($("<option value='"+list[i].code+"' selected='selected'>"+list[i].name+"</option>"));
+							}else{
+								$("#is_top").append($("<option value='"+list[i].code+"'>"+list[i].name+"</option>"));
+							}
+						}
+				}
+			}
+		}
+		
+	    function submitForm(){
+			
+			var title = $("#title").val();
+			var is_top = $("#is_top").val();
+			var status = $("#status").val();
+			var context = $("#context").val();
+			var remark = $("#remark").val();
+			
+			var parameter = "title:'"+title+"',status:'"+status+"',is_top:'"+is_top+
+			"',context:'"+context+"',remark:'"+remark+"',rowid:'"+id+"'";
+			
+			url = "/Hotel/rest/newsinfo/"+id;
+			RemoteUtil.send(url, "POST", parameter, callSubmitBack);
+			
+		}
+		
+		function callSubmitBack(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					window.location.href = "list.html";
+				}
+			}
+		}
+	//-->
+	</script>
+	
+  </head>
+  
+  <body>
+   
+   	<div class="form_box">
+    	<table width="100%" border="0" class="table">
+    	
+    	 <tr>
+		    <td class="td" >标题：</td>
+		    <td><input type="text" class="input_text" id="title"></td>
+		     <td class="td">是否置顶：</td>
+		    <td><select name="is_top" id="is_top"></select></td>
+		  </tr>
+		  <tr>
+		    <td class="td2">内容：</td>
+		    <td colspan="3">
+		    	<textArea name="context" id="context" cols="90%" rows="7" ></textArea>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td class="td2">备注：</td>
+		    <td colspan="3">
+		    	<textArea name="remark" id="remark" cols="90%" rows="7" ></textArea>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td colspan="4" class="td3" align="center">
+		    	<button type="button" class="button1" onclick="submitForm()">保存提交</button>
+    			<button type="button" class="button2" onclick="history.go(-1)">取消返回</button>
+		    </td>
+		  </tr>
+		</table>
+    </div>
+   
+  </body>
+</html>

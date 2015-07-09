@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+content="width=device-width, minimum-scale=1, maximum-scale=2,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>手机版-金茂凯悦</title>
+<meta name="keywords" content="酒店介绍 ,金茂凯悦">
+<meta name="description" content="酒店介绍 -金茂凯悦">
+<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="js/touch-0.2.14.min.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/request.js"></script>
+<script type="text/javascript" src="js/json.js"></script>
+<script type="text/javascript" src="js/getUrlParam.js"></script>
+<script language="JavaScript" type="text/javascript">
+	G = function(objId) {
+		return document.getElementById(objId)
+	};
+	Gn = function(objName) {
+		return document.getElementsByName(objName)
+	};
+	$(function(){
+		$("#sub").click(function(){//点击按钮提交
+	        /* var req_url = $("#req_url").val();
+			var version = $("#version").val();
+			var service = $("#service").val();
+			var partner_id = $("#partner_id").val();
+			var sec_id = $("#sec_id").val();
+			var key = $("#key").val();
+			var call_back_url = $("#call_back_url").val();
+			var out_trade_no = $("#out_trade_no").val();
+			var subject = $("#subject").val();
+			var total_fee = $("#total_fee").val();
+			var seller_account_name = $("#seller_account_name").val();
+			var out_user = $("#out_user").val();
+			var notify_url = $("#notify_url").val();
+			var merchant_url = $("#merchant_url").val(); 
+			
+			var parameter = "req_url="+req_url+"&version="+version+"&service="+service+"&partner_id="+partner_id+"&sec_id="+sec_id+"&key="+key+"&call_back_url="+call_back_url+"&out_trade_no="+out_trade_no+"&subject="+subject+"&total_fee="+total_fee+"&seller_account_name="+seller_account_name+"&out_user="+out_user+"&notify_url="+notify_url+"&merchant_url="+merchant_url;
+			*/	
+			
+			var WIDout_trade_no = $("#WIDout_trade_no").val();
+			var WIDsubject = $("#WIDsubject").val();
+			var WIDtotal_fee = $("#WIDtotal_fee").val(); 
+			
+			var parameter = "WIDout_trade_no="+WIDout_trade_no+"&WIDsubject="+WIDsubject+"&WIDtotal_fee="+WIDtotal_fee
+			RemoteUtil.sendObj("/Hotel/rest/pay/paymoney", "GET", parameter,getlogincustomerBack); 
+			              //要提交的表单id为form1
+	   });
+ 	});
+
+
+	function getlogincustomerBack(data) {
+		alert(data);
+		if (data.succeed) {
+			if (data.result.statusCode == "200") {
+				$("#body").html(data.result.successMsg);
+			}
+		}
+	}
+</script>
+</head>
+<body id="body" class="pa welbg">
+	<form name="adminFrom" action="servlet/Md5Trade" method="Post">
+		<table width="760" style="margin: 10px auto; padding: 0px;" border="0"
+			cellpadding="5" cellspacing="0">
+			<tr height="30">
+				<td colspan="2" align="center"><font size="12">支付请求</font></td>
+			</tr>
+			<tr height="20">
+				<td></td>
+				<td></td>
+			</tr>
+
+			<tr>
+				<td colspan="2"><b>常规参数</b></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<hr />
+				</td>
+			</tr>
+
+			<tr>
+				<td width="200"><span>订单号</span>
+					<td><input name="WIDout_trade_no" id="WIDout_trade_no"  type="text"
+						value="http://wappaygw.alipay.com/service/rest.htm" size="50" />固定值</td>
+			</tr>
+
+			<tr>
+				<td width="200"><span>名称</span>
+					<td><input name="WIDsubject" id="WIDsubject" type="text" value="2.0" size="50" />固定值</td>
+			</tr>
+
+			<tr>
+				<td width="200"><span>金额</span>
+					<td><input id="WIDtotal_fee" type="text"
+						value="alipay.wap.trade.create.direct" size="50" />固定值</td>
+			</tr>
+			<tr>
+					<td colspan="2" align="center">
+						<input name="sub" id="sub" type="button" value="保存提交" />
+					</td>
+				</tr>
+		</table>
+	</form>
+</body>
+</html>

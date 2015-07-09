@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>新增</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../css/list.css">
+    <script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+    <script language="JavaScript" src="../../js/request.js"></script>
+	<script language="JavaScript" src="../../js/json.js"></script>
+	
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		G = function(objId){return document.getElementById(objId)};
+		Gn = function(objName){return document.getElementsByName(objName)};
+		window.onload=function(){
+			 var thisURL = document.URL;    
+ 			 var  getval =thisURL.split('?')[1];  
+  			 id= getval.split("=")[1]; 
+  			 init();
+		};
+		var id;
+		function init(){
+			url = "/Hotel/system/conpon/"+id;
+			RemoteUtil.send(url, "GET", null, callSubmitBack2);
+			
+		}
+		
+		function callSubmitBack2(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					$("#name").html(data.result.successMsg.name);
+					$("#detail").html(data.result.successMsg.detail);
+					$("#coupontype").html(data.result.successMsg.coupontype);
+					$("#instructions").html(data.result.successMsg.instructions);
+					$("#count").html(data.result.successMsg.count);
+					$("#price").html(data.result.successMsg.price);
+					$("#sellprice").html(data.result.successMsg.sellprice);
+					$("#remark").html(data.result.successMsg.remark);
+				}
+			}
+		}
+		
+	    function submitForm(){
+			
+			var name = $("#name").val();
+			var detail = $("#detail").val();
+			var coupontype = $("#coupontype").val();
+			var instructions = $("#instructions").val();
+			var count = $("#count").val();
+			var price = $("#price").val();
+			var sellprice = $("#sellprice").val();
+			var remark = $("#remark").val();
+			
+			var parameter = "name:'"+name+"',detail:'"+detail+"',instructions:'"+instructions+"',count:'"+count+"',price:'"+price+
+			"',sellprice:'"+sellprice+"',remark:'"+remark+"',coupontype:'"+coupontype+"'";
+			url = "/Hotel/system/conpon/"+id;
+			RemoteUtil.send(url, "POST", parameter, callSubmitBack);
+			
+		}
+		
+		function callSubmitBack(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					window.location.href = "list.html";
+				}
+			}
+		}
+	//-->
+	</script>
+	
+  </head>
+  
+  <body>
+   
+   	<div class="form_box">
+    	<table width="100%" border="0" class="table">
+		  <tr>
+		    <td class="td">优惠卷名称：</td>
+		    <td><input type="text" class="input_text" id="name"></td>
+		    <td class="td">优惠卷类型：</td>
+		    <td><input type="text" class="input_text" id="coupontype"></td>
+		  </tr>
+		  <tr>
+		    <td class="td">优惠卷内容：</td>
+		    <td><input type="text" class="input_text" id="detail"></td>
+		    <td class="td">总数量：</td>
+		    <td><input type="text" class="input_text" id="count"></td>
+		  </tr>
+		  <tr>
+		    <td class="td">优惠卷面值金额：</td>
+		    <td><input type="text" class="input_text" id="price"></td>
+		    <td class="td">优惠卷售卖金额：</td>
+		    <td><input type="text" class="input_text" id="sellprice"></td>
+		  </tr>
+		   <tr>
+		    <td class="td2">说明：</td>
+		    <td colspan="3">
+		    	<textArea name="instructions" id="instructions" cols="90%" rows="7"></textArea>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td class="td2">备注：</td>
+		    <td colspan="3">
+		    	<textArea name="remark" id="remark" cols="90%" rows="7" ></textArea>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td colspan="4" class="td3" align="center">
+		    	<button type="button" class="button1" onclick="submitForm()">保存提交</button>
+    			<button type="button" class="button2" onclick="history.go(-1)">取消返回</button>
+		    </td>
+		  </tr>
+		</table>
+    </div>
+   
+  </body>
+</html>

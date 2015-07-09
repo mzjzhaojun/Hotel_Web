@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>详情</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../css/list.css">
+    <script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+    <script language="JavaScript" src="../../js/request.js"></script>
+	<script language="JavaScript" src="../../js/json.js"></script>
+	
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		G = function(objId){return document.getElementById(objId)};
+		Gn = function(objName){return document.getElementsByName(objName)};
+		window.onload=function(){
+			 var thisURL = document.URL;    
+ 			 var  getval =thisURL.split('?')[1];  
+  			 id= getval.split("=")[1]; 
+  			 init();
+		};
+		var id;
+		function init(){
+			url = "/Hotel/rest/specialtyinfo/"+id;
+			RemoteUtil.send(url, "GET", null, callSubmitBack2);
+		}
+		
+		var status,badtype; 
+		function callSubmitBack2(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					status = data.result.successMsg.status;
+					badtype = data.result.successMsg.badtype;
+					$("#title").html(data.result.successMsg.title);
+					$("#name").html(data.result.successMsg.name);
+					$("#type").html(data.result.successMsg.type);
+					$("#count").html(data.result.successMsg.count);
+					$("#price").html(data.result.successMsg.count);
+					$("#new_price").html(data.result.successMsg.new_price);
+					$("#context").html(data.result.successMsg.context);
+					$("#is_top").html(data.result.successMsg.is_top_name);
+					$("#is_add").html(data.result.successMsg.is_add_name);
+					$("#remark").html(RemoteUtil.replesecode(data.result.successMsg.remark));
+					$("#add_date").html(data.result.successMsg.add_date);
+					$("#add_user").html(data.result.successMsg.add_user);
+					$("#remark").val(data.result.successMsg.remark);
+				}
+			}
+		}
+		
+	//-->
+	</script>
+	
+  </head>
+  
+  <body>
+   
+   		<div class="form_box">
+    	<table width="100%" border="0" class="table">
+		  <tr>
+		    <td class="td">标题：</td>
+		    <td><span id="title"></span></td>
+		      <td class="td">商品名称：</td>
+		    <td><span id="name"></span></td>
+		  </tr>
+		  <tr>
+		    <td class="td">状态：</td>
+		    <td><span id="is_add"></span></td>
+		    <td class="td">数量：</td>
+		    <td><span id="count"></span></td>
+		  </tr>
+		  <tr>
+		    <td class="td">原价：</td>
+		    <td><span id="price"></span></td>
+		    <td class="td">现价：</td>
+		    <td><span id="new_price"></span></td>
+		  </tr>
+		  <tr>
+		   	<td class="td">创建时间：</td>
+		    <td><span id="add_date"></span></td>
+		    <td class="td">创建人：</td>
+		    <td><span id="add_user"></span></td>
+		  </tr>
+		   <tr>
+		    <td class="td2">商品介绍：</td>
+		    <td colspan="3">
+		    	<textArea name="context" id="context" cols="90%" rows="7" readonly="readonly"></textArea>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td class="td2">备注：</td>
+		    <td colspan="3">
+		    	<textArea name="remark" id="remark" cols="90%" rows="7" readonly="readonly"></textArea>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td colspan="4" class="td3" align="center">
+    			<button type="button" class="button2" onclick="history.go(-1)">取消返回</button>
+		    </td>
+		  </tr>
+		</table>
+    </div>
+   
+  </body>
+</html>

@@ -1,0 +1,45 @@
+body{ font-size:12px; font-family:"微软雅黑";}
+/*列表*/
+.list{border:solid 0px;position: absolute;left:0px;right:0px;top:0px;bottom:0px;}
+.list .list_title{position: absolute;height:50px;left:0px;right:0px;border-bottom:solid 1px #DBDBDB;background:#EEEEEE;line-height: 50px;font-size:12px;font-family: 微软雅黑;color:#616161;}
+.list .list_title > label{margin-left:20px;}
+.list .list_title .input_text{width:150px;height: 25px;border:solid 1px #D4D4D6;background:#F6F5F5;line-height: 25px;}
+.list .list_title > select{width:120px;height: 26px;border:solid 1px #D4D4D6;background:#F6F5F5;line-height: 26px;}
+.list .list_title .input_date{width:110px;height: 25px;border:solid 1px #D4D4D6;background:#F6F5F5;line-height: 25px;background:url(../img/calendar.png);background-position:95%;background-repeat: no-repeat;cursor: pointer;}
+.list .list_title .button_search{width:70px;height:25px;background:#00B1E4;border:solid 0px;border-radius: 5px;margin-left:20px;vertical-align:middle;line-height: 23px;color:#ffffff;font-family: 微软雅黑;cursor: pointer;font-size:12px;}
+.list .list_title .operating{position: absolute;right:10px;height:50px;border:solid 0px;width:200px;top:0px;line-height: 50px;}
+.list .list_title .operating > button{width:70px;height:25px;background:#DC2400;border:solid 0px;border-radius: 5px;margin-left:20px;vertical-align:middle;line-height: 23px;color:#ffffff;font-family: 微软雅黑;cursor: pointer;float: right;margin-top:13px;font-size:12px;}
+.list .list_centent{position: absolute;left:0px;right:0px;top:60px;bottom:39px;border:solid 0px #D8D8D8;}
+.list .list_centent .table,.table td,.table th{border:solid 1px #DBDBDB;border-collapse:collapse;}
+.list .list_centent .table .operation_img{cursor: pointer;}
+.list .list_centent .table .operation_button{width:70px;height:25px;background:#DC2400;border:solid 0px;border-radius: 5px;margin-left:20px;vertical-align:middle;line-height: 23px;color:#ffffff;font-family: 微软雅黑;cursor: pointer;font-size:12px;}
+.list .list_centent table tr:nth-child(odd){height:35px;background:#E8E8E8;font-family: 微软雅黑;color:#616161;font-size:12px;}
+.list .list_centent table tr:nth-child(even){height:35px;background:#FFFFFF;font-family: 微软雅黑;color:#616161;font-size:12px;}
+.list .list_centent table tr:hover{background:#FFFED5;}
+.list .list_centent .table .a{color:#FF6767;}
+.list .list_centent .table .input1{width:30px;border:solid 1px #DBDBDB;}
+.list .list_centent .table .input2{width:120px;border:solid 1px #DBDBDB;}
+.list .list_centent .table .tr1{height:35px;background:#F0F5F7;font-family: 微软雅黑;color:#000000;font-size:12px;}
+.list .list_centent .table .img{cursor: pointer;}
+.list .list_centent .tr2{height:35px;background:#F5F8FA;font-family: 微软雅黑;color:#616161;font-size:12px;}
+.list .list_centent .tr2:hover{background:#E5EBEE;}
+.list .list_centent .tr3{height:35px;background:#FFFFFF;font-family: 微软雅黑;color:#616161;font-size:12px;}
+.list .list_centent .tr3:hover{background:#E5EBEE;}
+.list .result_page{position: absolute;left:0px;right:0px;bottom: 0px;height:38px;border-left:solid 1px #D8D8D8;background:#E8E8E8;line-height: 38px;font-size:12px;font-family: 微软雅黑;}
+.list .result_page .page_info{float:left;border:solid 0px; padding-left:20px;color:#6D6D6D;}
+.list .result_page .page_ctrl{float:right;border:solid 0px;padding-right:20px;color:#6D6D6D;}
+.list .result_page .page_ctrl > select{border:solid 1px #D8D8D8;color:#6D6D6D;}
+/*增删改*/
+.form_box{position: absolute;left:0px;right:0px;top:0px;bottom:10px;border:solid 0px #DBDBDB;}
+.form_box .table,.table td,.table th{border:solid 1px #DBDBDB;border-collapse:collapse;font-size:12px;font-family: 微软雅黑;}
+.form_box .table td{padding-left:10px;}
+.form_box .table td > input{width:180px;height: 25px;border:solid 1px #D4D4D6;line-height: 25px;border-radius: 5px;}
+.form_box .table td > select{width:180px;height: 26px;	border:solid 1px #D4D4D6;line-height: 26px;border-radius: 5px;}
+.form_box .table td > textArea{border:solid 1px #D4D4D6;border-radius: 5px;overflow-y:hidden;}
+.form_box .table .td{height:42px;width:120px;background:#EFEFEF;color:#616161;}
+.form_box .table .td2{height:150px;width:120px;background:#EFEFEF;color:#616161;}
+.form_box .table .td3{height:65px;background:#F4F4F4;color:#616161;}
+.form_box .table .td4{height:25px;background:#DC2400;color:#ffffff;line-height: 25px;text-align: center;}
+.form_box .table .td5{height:42px;width:120px;color:#616161;}
+.form_box .table .td3 .button1{width:70px;height:25px;background:#DC2400;border:solid 0px;border-radius: 5px;margin-left:20px;vertical-align:middle;line-height: 23px;color:#ffffff;font-family: 微软雅黑;cursor: pointer;margin-top:13px;font-size:12px;}
+.form_box .table .td3 .button2{width:70px;height:25px;background:#AAAAAA;border:solid 0px;border-radius: 5px;margin-left:20px;vertical-align:middle;line-height: 23px;color:#ffffff;font-family: 微软雅黑;cursor: pointer;margin-top:13px;font-size:12px;}

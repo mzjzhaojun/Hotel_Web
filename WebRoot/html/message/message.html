@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>详情</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../css/list.css">
+    <script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+    <script language="JavaScript" src="../../js/request.js"></script>
+	<script language="JavaScript" src="../../js/json.js"></script>
+	<script language="JavaScript" src="../../js/code.js"></script>
+	
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		G = function(objId){return document.getElementById(objId)};
+		Gn = function(objName){return document.getElementsByName(objName)};
+		window.onload=function(){
+			 var thisURL = document.URL;    
+ 			 var  getval =thisURL.split('?')[1];  
+  			 id= getval.split("=")[1]; 
+  			 init();
+		};
+		var id;
+		function init(){
+			url = "/Hotel/rest/message/"+id;
+			RemoteUtil.send(url, "GET", null, callSubmitBack2);
+			
+		}
+		
+		function callSubmitBack2(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					$("#account").html(data.result.successMsg.account);
+					$("#type").html(data.result.successMsg.typename);
+					$("#no").html(data.result.successMsg.no);
+					$("#content").val(data.result.successMsg.content);
+					$("#request_time").html(data.result.successMsg.request_time);
+					$("#request_message").html(data.result.successMsg.request_message);
+					$("#response_message").val(data.result.successMsg.response_message);
+					var status=data.result.successMsg.status;
+					getmes(status);
+					$("#status").html(mes);
+					$("#response_time").html(data.result.successMsg.response_time);
+					$("#sendtype").html(data.result.successMsg.sendtype);
+					$("#total").html(data.result.successMsg.total);
+					$("#code").html(data.result.successMsg.code);
+				}
+			}
+		}
+		
+	//-->
+	</script>
+	
+  </head>
+  
+  <body>
+   		<div class="form_box">
+    	<table width="100%" border="0" class="table">
+		   <tr>
+		    <td class="td">用户帐号：</td>
+		    <td><span id="account"></span></td>
+		     <td class="td">短信类型：</td>
+		    <td><span id="type"></span></td>
+		    
+		  </tr>
+		  <tr>
+		    <td class="td">发送结果：</td>
+		    <td><span id="status"></span></td>
+		     <td class="td">接收号码：</td>
+		    <td><span id="no"></span></td>
+		    
+		  </tr>
+		  <tr>
+		    <td class="td2">短信内容：</td>
+		    <td colspan="3">
+		    	<textArea name="content" id="content" cols="90%" rows="7" readonly="readonly"></textArea>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td class="td2">请求报文：</td>
+		    <td colspan="3">
+		    <textArea name="request_message" id="request_message" cols="90%" rows="7" readonly="readonly"></textArea>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td class="td2">响应报文：</td>
+		    <td colspan="3">
+		    <textArea name="response_message" id="response_message" cols="90%" rows="7" readonly="readonly"></textArea>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td class="td">发送时间：</td>
+		    <td><span id="request_time"></span></td>
+		     <td class="td">响应时间：</td>
+		    <td><span id="response_time"></span></td>
+		    
+		  </tr>
+		  <tr>
+		    <td colspan="4" class="td3" align="center">
+    			<button type="button" class="button2" onclick="history.go(-1)">取消返回</button>
+		    </td>
+		  </tr>
+		</table>
+    </div>
+   
+  </body>
+</html>

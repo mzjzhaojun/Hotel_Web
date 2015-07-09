@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=2,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>手机版-金茂凯悦</title>
+<meta name="keywords" content=",金茂凯悦">
+<meta name="description" content="-金茂凯悦">
+<link rel="stylesheet" type="text/css" href="../css/common.css" />
+<link rel="stylesheet" type="text/css" href="../css/index.css" />
+<!-- <script type="text/javascript" src="/Public/Js/jquery-1.9.0.min.js"></script> -->
+<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../js/zepto.min.js"></script>
+<script type="text/javascript" src="../js/index.js"></script>
+<script type="text/javascript" src="../js/fx.js"></script>
+<script type="text/javascript" src="../js/touch.js"></script>
+<script type="text/javascript" src="../js/TouchSlide.1.1.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/jquery.form.js"></script>
+<script type="text/javascript">
+	TouchSlide({
+        slideCell:"#slideBox",
+        titCell:".hd ul",
+        mainCell:".bd ul",
+        autoPage:true,
+        effect:"leftLoop",
+        endFun: function(i){
+            var bh = $("#slideBox .bd li").eq(i + 1).find('img').height();
+            // alert(bh)
+            $("#slideBox .bd").animate({'height':bh},200);
+        }
+    });
+</script>
+</head>
+<body class="pa welbg">
+	<div class="main1">
+        <div class="details">
+            <!--详情页焦点图开始-->
+            <div id="slideBox" class="slideBox">
+                <div class="bd">
+                    <ul>
+                                        </ul>
+                </div>
+                <div class="hd">
+                    <ul></ul>
+                </div>
+            </div>
+            <!--焦点图结束-->
+        </div>
+	
+		<!-- 客房详情 -->
+		<div class="ywtj">
+		    <div class="ywtj_t">凯悦客房</div>
+		    <div class="ywtj_c">
+		        <p><span style="font-family: Times New Roman;"></span>&nbsp;</p><p><span style="font-family: 宋体;">别致典雅的</span><span style="font-family: Calibri;">47</span><span style="font-family: 宋体;">平方米客房内设有一张豪华大床，配备阳台，宽敞明亮。现代中式风格的室内设计风格与窗外的自然风景相应成趣，室内免费提供高速无线网，首轮迷你吧小吃和饮料</span></p><p>&nbsp;</p>    </div>
+		</div>
+	
+		<div class="copy">
+		    <div>
+		    <i>Copyright2014 崇明金茂凯悦 All Rights Reserved</i>
+		    </div>
+		</div>
+	</div>
+</body>
+</html>

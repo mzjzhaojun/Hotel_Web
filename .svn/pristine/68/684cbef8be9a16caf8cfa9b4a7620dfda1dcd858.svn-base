@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+	<meta content="target-densitydpi=device-dpi,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+	<link rel="stylesheet" href="../reservation/css/common.css" type="text/css">
+	<link rel="stylesheet" href="../reservation/css/orderwrite.css" type="text/css">
+	<title>崇明金茂凯悦酒店-优惠券订单详情</title>
+	<script type="text/javascript" src="../reservation/js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="../reservation/js/touch-0.2.14.min.js"></script>
+	<script type="text/javascript" src="../reservation/js/index.js"></script>
+	<script type="text/javascript" src="../reservation/js/request.js"></script>
+	<script type="text/javascript" src="../reservation/js/json.js"></script>
+	<script type="text/javascript" src="../reservation/js/getUrlParam.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			
+			var rowid=UrlParm.parm("rowid");
+			var parameters = "";
+		  	var url = "/Hotel/rest/sellcoupon/"+rowid;
+		  	RemoteUtil.send(url, "GET", parameters, sellcouponBack);
+			
+		});
+		
+		function sellcouponBack(data){
+			
+			if (data.succeed) {
+				if (data.result.statusCode == "200") {
+					var detall = data.result.successMsg;
+					$("#title").html(detall.coupontype_name);
+					$("#title_1").html(detall.coupontype_name);
+					$("#buyprice").html("￥"+detall.buyprice);
+					
+					$("#code").html(detall.code);
+					$("#buycount").html(detall.buycount);
+					$("#status_name").html(detall.status_name);
+					$("#buydate").html(detall.buydate);
+					$("#price").html("￥"+detall.price);
+					$("#issuedate").html(detall.issuedate);
+					$("#duedate").html(detall.duedate);
+					$("#exchangedate").html(detall.exchangedate);
+				}
+			}
+			
+		}
+		
+	</script>
+</head>
+
+
+<body id="body">
+	<div class="headers" id="headers">
+			<div class="headerslide">
+				<img class="slideson" src="../reservation/img/sellcoupon.png" alt="特产" style="width: 1349px;">
+			</div>
+			<div class="banner">
+				<span class="tex flo_le" id="title_1"></span>
+			</div>
+	</div>
+	<div class="pad title overflow">
+		<span class="roomname float_left middle" id="title"></span>
+		<span class="total parice float_right color_orange" id="buyprice"></span>
+	</div>
+		<ul class="detail middle">
+			<li class="bac_white border_bottom">
+				<span>优惠卷编码</span>
+				<span class="absolute le" id="code"></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>数量</span>
+				<span class="absolute le" id="buycount"></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>优惠卷状态</span>
+				<span class="le absolute ch1" id="status_name"></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>购买时间</span>
+				<span class="absolute le" id="buydate"></span>
+			</li>
+			<li class="Abb">
+				<p id="booktips" class="booktip">&nbsp;</p></li>
+			<li class="bac_white border_bottom ">
+				<span>优惠卷抵用金额</span>
+				<span class="le absolute" style="font-size:0.9em" name="price" id="price"></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>优惠卷发放日期</span>
+				<span class="le absolute" style="font-size:0.9em" name="issuedate" id="issuedate"></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>优惠卷到期日期</span>
+				<span class="le absolute" style="font-size:0.9em" name="duedate" id="duedate"></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>兑换日期</span>
+				<span class="le absolute" style="font-size:0.9em" name="exchangedate" id="exchangedate"></span>
+			</li>
+		</ul>
+</form>
+
+</body>
+</html>

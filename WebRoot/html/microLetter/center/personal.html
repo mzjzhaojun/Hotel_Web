@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=2,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>手机版-金茂凯悦</title>
+<meta name="keywords" content=",金茂凯悦">
+<meta name="description" content="-金茂凯悦">
+<link rel="stylesheet" type="text/css" href="../css/common.css" />
+<link rel="stylesheet" type="text/css" href="../css/index.css" />
+<!-- <script type="text/javascript" src="/Public/Js/jquery-1.9.0.min.js"></script> -->
+<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../js/zepto.min.js"></script>
+<script type="text/javascript" src="../js/index.js"></script>
+<script type="text/javascript" src="../js/fx.js"></script>
+<script type="text/javascript" src="../js/touch.js"></script>
+<script type="text/javascript" src="../js/TouchSlide.1.1.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/jquery.form.js"></script>
+<script type="text/javascript">
+;(function($){
+    /*$(".info_ul li").tap(function(){
+        var ht = $(this).find('em').text();
+        $(".infobomb").show(500);
+        $(".header_b").children('a').removeAttr('href').addClass('infohb');
+        $(".logo").text(ht);
+        $(".header_n").html('<a href=javascript:; class=info_safe>保存</a>');
+    })*/
+
+    /*修改手机号码*/
+    var rwait = 180;
+    function rtime(o){
+        if (rwait == 0) {
+            $("#time_box").hide();
+            $("#resend").show();
+            rwait = 180;
+        } 
+        else {
+            rwait--;
+            $("#time_box").html(rwait + "s后可重新获取");
+            setTimeout(function() {
+                rtime(o);
+            }, 1000)
+        }
+    }
+    $(document).coffee({
+        tap: {
+            /*个人 资料修改*/
+            '.info_ul li': function(){
+                var ht = $(this).find('em').text();
+                // $(".infobomb").show(500);
+                $(".header_b").children('a').removeAttr('href').addClass('infohb');
+                $(".logo").text(ht);
+                $(".header_n").html('<a href=javascript:; onclick="S()" class=info_safe>保存</a>');
+                var paindx = $(this).parents('.info_ul').index();
+                var lindx = 0;
+                if(paindx > 0){
+                    lindx = $(this).index()+4;
+                }else{
+                    lindx = $(this).index();
+                }
+                $(".infobomb").show().find('.infobomb_b').eq(lindx).show().siblings('.infobomb_b').hide();
+            },
+            /*发送验证码*/
+            '#resend': function(){
+                // 发送成功
+                $(this).hide().siblings('.btn02').show();
+                rtime($(this));
+            }
+        },
+
+    });
+
+    $(".header_b").delegate('.infohb', 'tap', function(){
+        $(".infobomb").hide(500);
+        $(".logo").text("个人资料");
+        $(".header_n").html('<a href=javascript:; class=cover_mem>&#xe60d;</a>');
+    })
+})(Zepto)
+</script>
+<script type="text/javascript">
+     $(function(){
+		$('#logoutbtn').click(function()
+		{
+			 commonAjaxSubmit("/center/loginOut.html",'');
+		})
+		})
+		function S(){
+			$($('#nickname').val()!='')
+			{
+				var reg=/^[u0391-uffe5]+$/; 
+				if(reg.test($('#nickname').val()))
+				{
+					$(document).layer('昵称不能出现中文');
+					return false;
+				}
+			}
+			var data=$("#pform").serialize();
+			commonAjaxSubmit("/center/personal.html",data);
+			return false;
+			
+		}
+</script>
+</head>
+<body class="pa welbg">
+    <div class="main1">
+                <div class="info">
+                    <ul class="info_ul">
+                        <li>
+                            <a href="#" title="">
+                                <em>昵称</em>
+                                <!-- span里放已保存的值，未填写则为空 -->
+                                <span>jmky_15151861474</span>
+                                <i></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" title="">
+                                <em>姓名</em>
+                                <span></span>
+                                <i></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" title="">
+                                <em>性别</em>
+                                <span></span>
+                                <i></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" title="">
+                                <em>出生日期</em>
+                                <span></span>
+                                <i></i>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="btn-box"><button class="g_btn_s" id="logoutbtn">退出登录</button></div>
+                </div>
+
+
+                <!-- 弹出层 -->
+                <div class="infobomb">
+                    <form id="pform">
+                        <!-- 修改昵称 -->
+                        <div class="infobomb_b">
+                            <ul class="info_form">
+                                <li class="clear-input-box pr">
+                                    <input type="text" placeholder="昵称" name="info[nickname]" value="jmky_15151861474"  id="nickname"/>
+                                    <a class="clear-input " href="javascript:;">
+                                        <span></span>
+                                    </a>
+                                    <span class="clear-input">
+                                        <span></span>
+                                    </span>
+                                </li>
+                            </ul>
+                            <p class="info_note">4-30个字符，可由中英文字母、数字、"-"、"_"组成。</p>
+                        </div>
+
+                        <!-- 修改姓名 -->
+                        <div class="infobomb_b">
+                            <ul class="info_form">
+                                <li class="clear-input-box">
+                                    <input type="text" placeholder="姓名" name="info[truename]" value="" id="truename" /><a class="clear-input " href="javascript:;" style="display: none;"><span></span></a>
+                                    <span class="clear-input"><span></span></span>
+                                </li>
+                            </ul>
+                            <p class="info_note">不超过10个汉字或20个英文字符。</p>
+                        </div>
+
+
+                        <!-- 修改性别 -->
+                        <div class="infobomb_b">
+                            <select name="info[sex]">
+                                <option value="请选择">请选择</option>
+                                <option value="男"  >男</option>
+                                <option value="女"  >女</option>
+                            </select>
+                        </div>
+
+
+
+                        <!-- 修改出生日期 -->
+                        <div class="infobomb_b">
+                        <ul class="info_form">
+                                <li class="clear-input-box">
+                              <input type="text" placeholder="格式：2014-01-01" name="info[birthday]" value="" id="birthday" />
+<a class="clear-input " href="javascript:;" style="display: none;"><span></span></a>
+                                    <span class="clear-input"><span></span></span>
+                                </li>
+                            </ul>
+                            <p class="info_note">格式：2014-01-01</p>
+                        </div>
+                        <script type="text/javascript" src="/Home/Tpl/default/Public/js/birthdays.js"></script>
+                    </form>
+                </div>
+                
+        <!-- 主体部分结束 -->
+        <!-- 底部部分 -->
+        
+	<div class="copy">
+	    <div>
+	    <i>Copyright2014 崇明金茂凯悦 All Rights Reserved</i>
+	    </div>
+	</div>
+</div>
+</body>
+</html>

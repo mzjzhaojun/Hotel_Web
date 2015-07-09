@@ -1,0 +1,27 @@
+.detail li{padding: 4% 3%;position: relative;}
+.detail .Abb{padding: 2% 3% !important}
+.mar_rig{margin-right: 8%}
+.le{left:30%;}
+.le2{right:5%;}
+.quanimg{height: 1rem}
+.mar_top{margin-top: 9%}
+.submit{width:94%;margin: 5% auto;border-radius: 8px;text-align: center;padding: 2.5% 0;font-size: 1.3rem}
+/*.box{position: relative;z-index: 2;opacity: 0;margin-right: 7%}
+.box2{position: relative;z-index: 2;opacity: 0;margin-right: 7%}*/
+.check2{height:1rem;vertical-align: -0.2rem;margin-right: 7%}
+.check{height:1rem;vertical-align: -0.2rem;margin-right: 0%}
+.padd{padding: 3% 5%}
+/*.padd span{width: 50%}*/
+.content{margin-top: 7%;padding: 4% 0 4% 1%;opacity: 1;width: 99%;height:61%;overflow-y: scroll;}
+.content>div{float: left;margin-right: 1%;;margin-bottom:1%;width:32%;position: relative;
+				text-align: center;font-size: 1rem;}
+.haha{position: absolute;width: 100%;height: 100%;top:0;left:0;}
+.bottom_info{bottom: 0}
+.mask{background: rgba(255,255,255,0.6);width:100%;height: 100%;top:0;display: none}
+.circle2{border-radius: 100%;width:40%;text-align: center;margin:10% auto;line-height: 2.5rem}
+.circle2 img{width: 70%;}
+.used .bottom_info{background: #778899}
+.shi{width: 100%;height: 100%;background: rgba(0,0,0,0.4);line-height: 3rem}
+.vouck{display:none}
+.booktip{color:red;text-align:center;font-family:'微软雅黑';line-height:9%; font-size:0.6rem}
+.select{width:40%;height:40%;border:solid 0px;}

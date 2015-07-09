@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>新闻列表</title>
+
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="this is my page">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="../../css/list.css">
+<script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+<script language="JavaScript" src="../../js/request.js"></script>
+<script language="JavaScript" src="../../js/json.js"></script>
+<script language="JavaScript" type="text/javascript">		
+		G = function(objId){return document.getElementById(objId)};
+		Gn = function(objName){return document.getElementsByName(objName)};
+		
+		var type= getQueryStr("type");
+
+		window.onload=function(){
+			init();
+			url = "/Hotel/rest/dictionaries/type/D__vsk6jpsgbjof";
+			RemoteUtil.send(url, "GET", null, callResultBack2);
+		};
+		
+		function init(){
+			url = "/Hotel/rest/orderinfo/"+page+"/"+pageSize;
+			var parameter = "title:'"+title+"',type:'"+type+"',no:'"+no+"',status:'"+status+"'";
+			RemoteUtil.send(url, "GET", parameter, callSubmitBack);
+			
+		}
+		function callResultBack2(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					var list = data.result.successMsg;
+					var len = list.length;
+						$("#status").html("");
+						$("#status").append($("<option value=''>--请选择--</option>"));
+						for(var i=0;i<len;i++){
+							$("#status").append($("<option value='"+list[i].code+"'>"+list[i].name+"</option>"));
+						}
+				}
+			}
+		}
+		function callSubmitBack(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					$(".list_centent").html("");
+					var table = $("<table width='100%' border='1' class='table'></table>");
+					//特产
+					var tr1 = $("<tr class='tr1'>"+
+						    "<td width='5%'><div align='center'>序号</div></td>"+
+						    "<td width='15%'><div align='center'>标题</div></td>"+
+						    "<td width='7%'><div align='center'>订单编号</div></td>"+
+						    "<td width='7%'><div align='center'>总额</div></td>"+
+						    "<td width='7%'><div align='center'>买家</div></td>"+
+						    "<td width='7%'><div align='center'>交易状态</div></td>"+
+						    "<td width='7%'><div align='center'>交易时间</div></td>"+
+						    "<td width='10%'><div align='center'>操作</div></td>"+
+						  "</tr>");
+					
+					table.append(tr1);
+					var list = data.result.successMsg.pageElements;
+					var len = list.length;
+					for(var i=0;i<len;i++){
+						var className = "tr3";
+						var tr2="";
+						if(i%2==0){
+							className = "tr3";
+						}else{
+							className = "tr2";
+						}
+						
+						tr2 = $("<tr class='"+className+"'>"+
+						    "<td width='7%'><div align='center'>"+(i+1)+"</div></td>"+
+						    "<td width='15%'><div align='center'>"+list[i].orderdetail.title+"</div></td>"+
+						    "<td width='15%'><div align='center'>"+list[i].no+"</div></td>"+
+						    "<td width='7%'><div align='center'>"+list[i].sumamounts+"</div></td>"+
+						    "<td width='7%'><div align='center'>"+list[i].add_user+"</div></td>"+
+						    "<td width='7%'><div align='center'>"+list[i].statusname+"</div></td>"+
+						    "<td width='7%'><div align='center'>"+list[i].add_date+"</div></td>"+
+						    "<td width='10%'><div align='center'>"+
+						    "<img src='../../img/lnk_detail.gif' title='查看' class='img' onclick=\"onclickCheck('"+list[i].rowid+"')\">"+
+							"<img src='../../img/lnk_edit.gif' title='修改' class='img' onclick=\"onclickUpdate('"+list[i].rowid+"')\"></div></td>"+
+						  "</tr>");
+						 table.append(tr2); 
+					}
+					
+					$(".list_centent").append(table);
+					$("#totalCount").html("&nbsp;"+data.result.successMsg.totalCount+"&nbsp;");
+					$("#pageNo").html("&nbsp;"+data.result.successMsg.pageNo+"&nbsp;");
+					var pageCount = data.result.successMsg.pageCount;
+					$("#select").html("");
+					for(var i=1;i<=pageCount;i++){
+						if(i==page){
+							$("#select").append($("<option value='"+i+"' selected='selected'>第"+i+"页</option>"));
+						}else{
+							$("#select").append($("<option value='"+i+"'>第"+i+"页</option>"));
+						}
+					}
+				}
+			}
+			
+		}
+		var title = "";
+		var no=""
+		var status="";
+		var page = 1;
+		var pageSize = 20;
+		//搜索
+		function onClickSearch(){
+			title = $("#title").val();
+			no = $("#no").val();
+			status= $("#status").val();
+			page = 1;
+			init();
+			
+		}
+		function onChange(select){
+			page = select.value;
+			init();
+		}
+		//查看
+		function onclickCheck(id){
+			window.location.href = "orderinfo.html?rowid="+id+"&type="+type;
+		}
+		//修改
+		function onclickUpdate(id){
+			window.location.href = "update.html?rowid="+id+"&type="+type;
+		}
+		//新增
+		function onClickExamine(){
+			window.location.href = "add.html?type="+type;
+	
+		}
+		
+	</script>
+
+</head>
+
+<body>
+
+	<div class="list">
+
+		<div class="list_title">
+
+			<label>标题：</label> <input type="text" class="input_text" id="title"
+				placeholder="请输入标题">
+			<label>订单编号：</label> <input type="text" class="input_text" id="no"
+				placeholder="订单编号">
+			<label>订单 状态：</label>
+			<select name='status' id='status'>
+			</select>
+			<button type="button" class="button_search" onclick="onClickSearch()">搜&nbsp;
+				索</button>
+			<div class="operating">
+    			<button type="button" onclick="onClickExamine()">新增</button>
+    		</div>
+		</div>
+
+		<div class="list_centent"></div>
+
+		<div class="result_page">
+			<div class="page_info">
+				当前第<span style="color:#0000FF;" id="pageNo"> </span>页，共<span
+					style="color:#0000FF;" id="totalCount"> 10 </span>条记录
+			</div>
+			<div class="page_ctrl">
+				<select name="select" id="select" onchange="onChange(this)">
+
+				</select>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

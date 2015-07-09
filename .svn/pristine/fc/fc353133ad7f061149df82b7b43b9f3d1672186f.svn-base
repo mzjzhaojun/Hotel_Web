@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=2,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>手机版-金茂凯悦</title>
+<meta name="keywords" content=",金茂凯悦">
+<meta name="description" content="-金茂凯悦">
+<link rel="stylesheet" type="text/css" href="../css/common.css" />
+<link rel="stylesheet" type="text/css" href="../css/index.css" />
+<!-- <script type="text/javascript" src="/Public/Js/jquery-1.9.0.min.js"></script> -->
+<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../js/zepto.min.js"></script>
+<script type="text/javascript" src="../js/index.js"></script>
+<script type="text/javascript" src="../js/fx.js"></script>
+<script type="text/javascript" src="../js/touch.js"></script>
+<script type="text/javascript" src="../js/TouchSlide.1.1.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/jquery.form.js"></script>
+<script language="JavaScript" src="../../../js/request.js"></script>
+<script language="JavaScript" src="../../../js/json.js"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+	G = function(objId){return document.getElementById(objId)};
+	Gn = function(objName){return document.getElementsByName(objName)};
+	window.onload=function(){
+		RemoteUtil.send("/Hotel/rest/orderinfo/order/3", "GET", "", roomorderBack);
+	};
+	function roomorderBack(data){
+		if(data.succeed){
+			if(data.result.statusCode == "200"){
+				if(data.result.successMsg!=null && data.result.successMsg!="null"){
+					var len = data.result.successMsg.length;
+					for(var i=0;i<len;i++){
+						var detall = data.result.successMsg[i];
+						var indatetime = detall.indatetime;
+						indatetime = indatetime.split("-");
+						var outdatetime = detall.outdatetime;
+						outdatetime = outdatetime.split("-");
+						if(detall.status=="D__2of73r764hb2"){
+							var html =$("<li><a href=\"javascript:onOrderDetaile('"+detall.no+"')\" title=\"凯悦客房\">"+
+						               "<div class=\"tlist_t\"><label style=\"font-weight: bolder;\">"+detall.createdate+"</label>&nbsp; 订单号："+detall.no+"</div>"+
+						               "<div class=\"tlist_v clearfix\">"+
+						                   "<div class=\"tlist_box fl\">"+
+						                       "<img src=\"../images/20150309100754_10596.jpg\" alt=\"\" class=\"img_1\"/>"+
+						                   "</div>"+
+						                   "<div class=\"tlist_d fr\" align=\"left\">"+
+						                   	"<label class=\"label_1\">"+detall.title+"</label><br>"+
+						                   	""+indatetime[1]+"月"+indatetime[2]+"日入住 "+outdatetime[1]+"月"+outdatetime[2]+"日离店<br>"+
+						                   	""+detall.statusname+"<br>"+
+						                   	""+detall.count+"间<br>"+
+						                   	"总金额：<label class=\"label_1\">￥"+detall.sumamounts+"</label>"+
+						                   "</div>"+
+						               "</div>"+
+						               "<div class=\"tlist_a clearfix\" align=\"right\">"+
+						                    "<div class=\"fr\">实付款：<label class=\"label_1\">￥"+detall.sumamounts+"</label><i></i></div>"+
+						                "</div>"+
+						           "</a></li>");//detall.sumamounts实付款
+							$(".tlist").append(html);
+						}else if(detall.status=="D__9c6n1rjkdstf"){
+							var html =$("<li><a href=\"javascript:onOrderDetaile('"+detall.no+"')\" title=\"凯悦客房\">"+
+						               "<div class=\"tlist_t\"><label style=\"font-weight: bolder;\">"+detall.createdate+"</label>&nbsp; 订单号："+detall.no+"</div>"+
+						               "<div class=\"tlist_v clearfix\">"+
+						                   "<div class=\"tlist_box fl\">"+
+						                       "<img src=\"../images/20150309100754_10596.jpg\" alt=\"\" class=\"img_1\"/>"+
+						                   "</div>"+
+						                   "<div class=\"tlist_d fr\" align=\"left\">"+
+						                   	"<label class=\"label_1\">"+detall.title+"</label><br>"+
+						                   	""+indatetime[1]+"月"+indatetime[2]+"日入住 "+outdatetime[1]+"月"+outdatetime[2]+"日离店<br>"+
+						                   ""+detall.statusname+"<br>"+
+						                   	""+detall.count+"间<br>"+
+						                   	"总金额：<label class=\"label_1\">￥"+detall.sumamounts+"</label>"+
+						                   "</div>"+
+						               "</div>"+
+						               "<div class=\"tlist_a clearfix\" align=\"right\">"+
+						                    "<span class='status order small f_r color_white btn' onclick=\"onClickPayment('"+detall.rowid+"','"+detall.title+"','"+detall.sumamounts+"')\">付款</span>"+
+						                "</div>"+
+						           "</a></li>");//detall.sumamounts实付款
+							$(".tlist").append(html);
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	function onClickPayment(rowid,subject,total_fee){
+		
+		/* var rowid = "45";
+		var subject = "subject";
+		var total_fee = "0.3"; */
+		var parameter = "rowid="+rowid+"&subject="+subject+"&total_fee="+total_fee;
+		url = "/Hotel/rest/pay/paymoney";
+		RemoteUtil.sendObj(url, "GET", parameter, callSubmitBack);
+		
+	}
+	
+	function callSubmitBack(data) {
+		if (data.succeed) {
+			parent.onOrder(data);
+		}
+
+	}
+	
+	function onOrderDetaile(no){
+		
+		window.location.href = "orderDetails.html?no="+no;
+		
+	}
+	
+//-->
+</script>
+<style type="text/css">
+    .tlist{margin-top: -1em;width: 96%;}
+    .tlist li{background: #fff;border: 1px solid #d7d7d7;box-shadow: 0 2px 2px #cacaca;padding: .5em .8em;border-radius: 5px;}
+    .tlist li a{color: #666;}
+    .tlist_t{border-bottom: 1px solid #d1d1d1;}
+    .tlist_v{padding: .7em 0;}
+    .tlist_box{width: 40%;}
+    .tlist_d{width: 57%;font-size: .8em;line-height: 1.5;text-align: left;}
+    .tlist_a{border-top: 1px solid #d7d7d7;padding-top: .5em;}
+    .label_1{color:#689DAC;}
+    .img_1{max-height: 150px;max-width: 150px;}
+    
+    .status{padding: 1% 2%;border-radius: 5px}
+    .order{background: #689DAC}
+    .small{font-size: 0.9rem;font-weight: bold;}
+    .color_white{color: #fff}
+</style>
+</head>
+<body class="pa welbg">
+    
+	<div class="main1">
+         <!-- 消费记录 -->
+	        <div class="th3">
+	           	我的订单
+	       </div>
+             <!-- 未使用列表 -->
+             <ul class="tlist">
+				<!--<li>
+		            <a href="javascript:#" title="凯悦客房">
+		               <div class="tlist_t"><label style="font-weight: bolder;">2015-08-09</label>&nbsp; 订单号：1076039539037827</div>
+		               <div class="tlist_v clearfix">
+		                   <div class="tlist_box fl">
+		                       <img src="../images/20150309100754_10596.jpg" alt="" class="img_1"/>
+		                   </div>
+		                   <div class="tlist_d fr" align="left">
+		                   	<label class="label_1">大床房</label><br>
+		                   	123-123123-大床房<br>
+		                   	6月11日入住 6月12日离店<br>
+		                   	已预定<br>
+		                   	<label class="label_1">￥123123</label>
+		                   </div>
+		               </div>
+		               <div class="tlist_a clearfix">
+		                    <div class="fr">实付款：<label class="label_1">￥123123</label><i></i></div>
+		                </div>
+		           </a>
+		         </li>  -->              
+		       </ul>
+         
+		<div class="copy">
+		    <div>
+		    <i>Copyright2014 崇明金茂凯悦 All Rights Reserved</i>
+		    </div>
+		</div>
+	</div>
+	
+</body>
+</html>

@@ -1,0 +1,75 @@
+*{margin:0;padding:0;}
+ul li{list-style: none; margin:0;padding:0}
+a{text-decoration: none;}
+body,html{height: 100%;font-family: Helvetica Neue,sans;font-size: 16px;background: #f8f8f8;}
+body{overflow-x:hidden;}
+.header{padding: 3% 4%;overflow: hidden;background:#689DAC;
+
+}
+.float_left{float:left;}
+.float_right{float: right;}
+.color_white{color: #fff}
+.color_gray{color:#999;}
+.color_black{color: #696969}
+.color_orange{color:#689DAC;}
+.color_red{color:#be3333;}
+.bac_white{background: white}
+.bac_orange{background:#689DAC;}
+.bac_gray{background: #f8f8f8}
+.back{height: 1.5rem;margin-right: 1%}
+.no_outline{border: 0;outline: none;font-size: 0.8em;font-family: 'Î¢ÈíÑÅºÚ'}
+.border_bottom{border-bottom: 1px solid #e4e4e4}
+.small{font-size: 0.8rem}
+.middle{font-size: 0.9rem}
+.overflow{overflow: hidden;}
+.absolute{position: absolute;}
+.relative{position: relative;}
+textarea{outline: none;font-size: 1rem}
+.myorder{margin-top: 0.5%}
+/*´óÍ¼¹ö¶¯*/
+.headers{width:100%;height:35%;background-size:cover;background-repeat: no-repeat;overflow: hidden;position: relative;}
+.headerslide{width:9000px;height: 100%;position: absolute;}
+.about_slideson1{}
+.about_slideson2{}
+.about_slideson3{}
+.slideson{float: left;height: 100%;background-size:cover }
+.banner{position: absolute;bottom: 0;padding: 2% 4%;background: rgba(0,0,0,0.4);width: 92%;color: white;
+		overflow: hidden;}
+.flo_le{float: left;}
+.flo_ri{float: right;}
+.circle{overflow: hidden;}
+.circle span{display:inline-block;width:0.8rem;height:0.8rem;border-radius: 100%;background: rgba(255,255,255,0.7);}
+.circle span.disc_show{background:#00ffff;opacity: 0.7}
+/*end*/
+/*µ¯²ã*/
+.tanwrap{height:100%;width: 100%;position: fixed;top:0;display: none;z-index:10}
+.big{width:90%;height:80%;margin:20% auto 0;border-radius: 10px;position: relative;}
+.remove{height: 1.2em}
+.big_head{padding: 3% 5%;border-radius: 10px 10px 0 0}
+
+.yuding{position:absolute;bottom: 0;width:94%;padding: 3%;background: #f8f8f8}
+.yuding>span{padding: 3%}
+.yuding>span.order{padding: 3% 6%;border-radius: 8px}
+.pad{padding: 2% 5%}
+.scolldiv{overflow-x: hidden;
+overflow-y: scroll;
+height: 72%;}
+
+
+@media screen and (min-width: 321px) and (max-width: 470px)
+{
+	body,html{font-size: 18px}
+}
+@media screen and (min-width: 471px) and (max-width:539px)
+{
+	body,html{font-size: 24px}
+}
+@media screen and (min-width: 540px) and (max-width: 719px)
+{
+	body,html{font-size:30px}
+}
+@media screen and (min-width: 720px)
+{
+	body,html{font-size: 38px}
+}
+

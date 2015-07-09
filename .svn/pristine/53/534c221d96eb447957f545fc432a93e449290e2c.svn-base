@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>凯悦酒店后台管理登录</title>
+
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="this is my page">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+<script language="JavaScript" src="../js/jquery-1.9.1.min.js"></script>
+<script language="JavaScript" src="../js/request.js"></script>
+<script language="JavaScript" src="../js/json.js"></script>
+<script language="JavaScript">
+	G = function(objId) {
+		return document.getElementById(objId)
+	};
+	Gn = function(objName) {
+		return document.getElementsByName(objName)
+	};
+	window.onload = function() {
+
+	};
+	$(function() {
+		$('.loginbox').css({
+			'position' : 'absolute',
+			'left' : ($(window).width() - 692) / 2
+		});
+		$(window).resize(function() {
+			$('.loginbox').css({
+				'position' : 'absolute',
+				'left' : ($(window).width() - 692) / 2
+			});
+		})
+	});
+	function submitForm() {
+		var param = $("#userName").val();
+		var password = $("#password").val();
+		if (param == "") {
+			$(".span").html("用户名不能为空！");
+			return;
+		}
+		if (password == "") {
+			$(".span").html("密码不能为空！");
+			return;
+		}
+		var parameter = "type:'D__1q1b8nb3y5ez',no:'no',status:'status',sumamounts:'90',custname:'custname',mobilephone:'17602509185',title:'title',count:'count',"+
+		"price:'89',newprice:'89',inperson:'inperson',indatetime:'2015/6/12',outdatetime:'2015/6/15',card:'card',subnum:'subnum',passport:'passport',need:'need',otherneed:'otherneed',predict:'predict'";
+		url = "/Hotel/rest/orderinfo/submitorder";
+		RemoteUtil.send(url, "GET", parameter, callSubmitBack);
+	}
+
+	function callSubmitBack(data) {
+		if (data.succeed) {
+		}
+
+	}
+</script>
+
+</head>
+
+<body>
+
+	<div class="mainBody">
+		<div id="cloud1" class="cloud"></div>
+		<div id="cloud2" class="cloud"></div>
+	</div>
+
+	<div class="logintop">
+		<span>欢迎登录后台管理界面平台</span>
+	</div>
+
+	<div class="loginbody">
+
+		<span class="restlogo"></span>
+
+		<div class="loginbox">
+			<ul>
+				<li><input id="userName" type="text" class="loginuser"
+					value="admin" placeholder="用户名" /></li>
+				<li><input id="password" type="password" class="loginpwd"
+					value="123" placeholder="密码" /></li>
+				<li><span class="span"></span> <input name="" type="button"
+					class="loginbtn" value="登 &nbsp;录" onclick="submitForm()" /> <label><a
+						href="#">忘记密码？</a> </label> <!-- <label><input name="" type="checkbox" value="" checked="checked" />记住密码</label>
+				    <label><a href="#">忘记密码？</a></label> -->
+				</li>
+			</ul>
+		</div>
+
+	</div>
+
+	<!-- 底 -->
+	<div class="loginbm">凯悦酒店 &nbsp;版权所有</div>
+
+</body>
+</html>

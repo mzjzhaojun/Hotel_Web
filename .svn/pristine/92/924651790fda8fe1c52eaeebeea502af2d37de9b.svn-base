@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>新增</title>
+
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="this is my page">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="../../css/list.css">
+<link rel="stylesheet" type="text/css" href="../../css/date.css">
+<script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+<script language="JavaScript" src="../../js/request.js"></script>
+<script language="JavaScript" src="../../js/json.js"></script>
+<script language="JavaScript" src="../../js/eap.core.js"></script>
+<script language="JavaScript" src="../../js/eap.util.date.js"></script>
+<script language="JavaScript" src="../../js/eap.simpleDatepicker.js"></script>
+<script language="JavaScript" src="../../js/eap.lang-zh_CN.js"></script>
+<script language="JavaScript" src="../../js/restaurant/restaurant.js"></script>
+
+</head>
+
+<body>
+	<div class="form_box">
+		<table width="100%" border="0" class="table">
+			<tr>
+				<td class="td">餐桌名称：</td>
+				<td><input type="text" class="input_text" id="name">
+				</td>
+				<td class="td">餐桌号：</td>
+				<td><input type="text" class="input_text" id="number">
+				</td>
+			</tr>
+			<tr>
+				<td class="td">餐桌类型：</td>
+				<td><input type="text" class="input_text" id="type">
+				</td>
+				<td class="td">是否有宝宝椅子：</td>
+				<td><input type="text" class="input_text" id="babychair">
+				</td>
+			</tr>
+			<tr>
+				<td class="td">建议用餐人数：</td>
+				<td><input type="text" class="input_text" id="maxdinernum">
+				</td>
+				<td class="td">状态：</td>
+				<td><input type="text" class="input_text" id="status">
+				</td>
+			</tr>
+			<tr>
+				<td class="td">预定押金：</td>
+				<td><input type="text" class="input_text" id="deposit">
+				</td>
+				<td class="td">最低消费金额：</td>
+				<td><input type="text" class="input_text" id="lowest">
+				</td>
+			</tr>
+			<tr>
+				<td class="td">人均消费：</td>
+				<td><input type="text" class="input_text" id="axf">
+				</td>
+			</tr>
+			<tr>
+				<td class="td2">餐桌说明：</td>
+				<td colspan="3"><textArea name="detail" id="detail" cols="90%"
+						rows="7"></textArea></td>
+			</tr>
+			<tr>
+				<td class="td2">备注：</td>
+				<td colspan="3"><textArea name="remark" id="remark" cols="90%"
+						rows="7"></textArea></td>
+			</tr>
+			<tr>
+				<td colspan="4" class="td3" align="center">
+					<button type="button" class="button1" onclick="submitForm()">保存提交</button>
+					<button type="button" class="button2" onclick="history.go(-1)">取消返回</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+</body>
+</html>

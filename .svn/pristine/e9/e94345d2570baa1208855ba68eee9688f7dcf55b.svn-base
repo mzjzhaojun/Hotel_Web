@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>新增</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../css/list.css">
+    <script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+    <script language="JavaScript" src="../../js/request.js"></script>
+	<script language="JavaScript" src="../../js/json.js"></script>
+	
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		G = function(objId){return document.getElementById(objId)};
+		Gn = function(objName){return document.getElementsByName(objName)};
+		window.onload=function(){
+			 var thisURL = document.URL;    
+ 			 var  getval =thisURL.split('?')[1];  
+  			 id= getval.split("=")[1]; 
+  			 init();
+		};
+		var id;
+		function init(){
+			url = "/Hotel/rest/newsinfo/"+id;
+			RemoteUtil.send(url, "GET", null, callSubmitBack2);
+			
+		}
+		
+		function callSubmitBack2(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					$("#title").html(data.result.successMsg.title);
+					$("#is_top_name").html(data.result.successMsg.is_top_name);
+					$("#context").html(RemoteUtil.replesecode(data.result.successMsg.context));
+					$("#remark").html(data.result.successMsg.remark);
+				}
+			}
+		}
+		
+	//-->
+	</script>
+	
+  </head>
+  
+  <body>
+   
+   		<div class="form_box">
+    	<table width="100%" border="0" class="table">
+		  <tr>
+		    <td class="td" >标题：</td>
+		    <td colspan="3"><span id="title"></td>
+		  </tr>
+		  <tr>
+		    <td class="td2">内容：</td>
+		    <td colspan="3">
+		    <span id="context"></span>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td class="td2">备注：</td>
+		    <td colspan="3">
+		    	<textArea name="remark" id="remark" cols="90%" rows="7" readonly="readonly"></textArea>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td colspan="4" class="td3" align="center">
+    			<button type="button" class="button2" onclick="history.go(-1)">取消返回</button>
+		    </td>
+		  </tr>
+		</table>
+    </div>
+   
+  </body>
+</html>

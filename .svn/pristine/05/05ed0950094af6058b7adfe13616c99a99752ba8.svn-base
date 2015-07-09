@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>新增</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../css/list.css">
+    <script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+    <script language="JavaScript" src="../../js/request.js"></script>
+	<script language="JavaScript" src="../../js/json.js"></script>
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		G = function(objId){return document.getElementById(objId)};
+		Gn = function(objName){return document.getElementsByName(objName)};
+		window.onload=function(){
+			init();
+		};
+		
+		
+		function init(){
+			url = "/Hotel/rest/dictionaries/type/101";
+			RemoteUtil.send(url, "GET", null, callResultBack);
+			
+		}
+		
+		function callResultBack(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					var list = data.result.successMsg;
+					var len = list.length;
+						$("#coupontype").html("");
+						for(var i=0;i<=len;i++){
+							$("#coupontype").append($("<option value='"+list[i].code+"'>"+list[i].name+"</option>"));
+						}
+				}
+			}
+		}
+		
+					
+	    function submitForm(){
+			
+			var name = $("#name").val();
+			var code = $("#code").val();
+			var coupontype = $("#coupontype").val();
+			var price = $("#price").val();
+			var buyprice = $("#buyprice").val();
+			var status = $("#status").val();
+			var buycount = $("#buycount").val();
+			var remark = $("#remark").val();
+			
+			var parameter = "name:'"+name+"',code:'"+code+"',price:'"+price+"',buyprice:'"+buyprice+"',status:'"+status+
+			"',buycount:'"+buycount+"',remark:'"+remark+"',coupontype:'"+coupontype+"'";
+			url = "/Hotel/rest/sellcoupon";
+			RemoteUtil.send(url, "POST", parameter, callSubmitBack);
+			
+		}
+		
+		function callSubmitBack(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					window.location.href = "list.html";
+				}
+			}
+			
+		}
+	//-->
+	</script>
+	
+  </head>
+  
+  <body>
+   
+   	<div class="form_box">
+    	<table width="100%" border="0" class="table">
+		  <tr>
+		    <td class="td">优惠卷名称：</td>
+		    <td><input type="text" class="input_text" id="name"></td>
+		    <td class="td">优惠卷编码：</td>
+		    <td><input type="text" class="input_text" id="code"></td>
+		  </tr>
+		  <tr>
+		    <td class="td">发放日期：</td>
+		    <td><input type="text" class="input_text" id="issuedate"></td>
+		    <td class="td">到期日期：</td>
+		    <td><input type="text" class="input_text" id="dudate"></td>
+		  </tr>
+		  <tr>
+		    <td class="td">优惠卷总金额：</td>
+		    <td><input type="text" class="input_text" id="price"></td>
+		    <td class="td">优惠卷购买金额：</td>
+		    <td><input type="text" class="input_text" id="buyprice"></td>
+		  </tr>
+		   <tr>
+		   	<td class="td">状态：</td>
+		    <td><input type="text" class="input_text" id="status"></td>
+		    <td class="td">购买数量：</td>
+		    <td><input type="text" class="input_text" id="buycount"></td>
+		  </tr>
+		  <tr>
+		   	<td class="td">优惠卷类型：</td>
+		    <td><select name="coupontype" id="coupontype"></select></td>
+		  </tr>
+		  <tr>
+		    <td class="td2">备注：</td>
+		    <td colspan="3">
+		    	<textArea name="remark" id="remark" cols="90%" rows="7" ></textArea>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td colspan="4" class="td3" align="center">
+		    	<button type="button" class="button1" onclick="submitForm()">保存提交</button>
+    			<button type="button" class="button2" onclick="history.go(-1)">取消返回</button>
+		    </td>
+		  </tr>
+		</table>
+    </div>
+   
+  </body>
+</html>

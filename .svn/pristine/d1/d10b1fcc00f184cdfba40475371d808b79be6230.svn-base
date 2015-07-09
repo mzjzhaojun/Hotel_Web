@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>list列表</title>
+
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="this is my page">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="../../css/list.css">
+<script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+<script language="JavaScript" src="../../js/request.js"></script>
+<script language="JavaScript" src="../../js/json.js"></script>
+<script language="JavaScript" type="text/javascript">
+	G = function(objId) {
+		return document.getElementById(objId)
+	};
+	Gn = function(objName) {
+		return document.getElementsByName(objName)
+	};
+	window.onload = function() {
+		init();
+		url = "/Hotel/rest/dictionaries/type/D__dl7d7sdx8z39";
+		RemoteUtil.send(url, "GET", null, callResultBack1);
+	};
+
+	function callResultBack1(data) {
+		if (data.succeed) {
+			if (data.result.statusCode == "200") {
+				var list = data.result.successMsg;
+				var len = list.length;
+				$("#satus").html("");
+				$("#satus").append($("<option value=''>--请选择--</option>"));
+				for ( var i = 0; i < len; i++) {
+					$("#satus").append(
+							$("<option value='"+list[i].code+"'>"
+									+ list[i].name + "</option>"));
+				}
+			}
+		}
+	}
+
+	function init() {
+		url = "/Hotel/rest/sellcoupon/" + page + "/" + pageSize;
+		var parameter = "name:'" + user_name  + "',satus:'" + satus + "'";
+		RemoteUtil.send(url, "GET", parameter, callSubmitBack);
+
+	}
+
+	function callSubmitBack(data) {
+		if (data.succeed) {
+			if (data.result.statusCode == "200") {
+				$(".list_centent").html("");
+				var table = $("<table width='100%' border='1' class='table'></table>");
+				var tr1 = $("<tr class='tr1'>"
+						+ "<td width='5%'><div align='center'>序号</div></td>"
+						+ "<td width='15%'><div align='center'>优惠卷码</div></td>"
+						+ "<td width='7%'><div align='center'>发放日期</div></td>"
+						+ "<td width='7%'><div align='center'>到期日期</div></td>"
+						+ "<td width='7%'><div align='center'>优惠卷类型</div></td>"
+						+ "<td width='7%'><div align='center'>状态</div></td>"
+						+ "<td width='7%'><div align='center'>优惠卷面值金额</div></td>"
+						+ "<td width='20%'><div align='center'>操作</div></td>"
+						+ "</tr>");
+				table.append(tr1);
+				var list = data.result.successMsg.pageElements;
+				var len = list.length;
+				for ( var i = 0; i < len; i++) {
+					var className = "tr3";
+					if (i % 2 == 0) {
+						className = "tr3";
+					} else {
+						className = "tr2";
+					}
+					var tr2 = $("<tr class='"+className+"'>"
+							+ "<td width='7%'><div align='center'>"
+							+ (i + 1)
+							+ "</div></td>"
+							+ "<td width='15%'><div align='center'>"
+							+ list[i].code
+							+ "</div></td>"
+							+ "<td width='15%'><div align='center'>"
+							+ list[i].issuedate
+							+ "</div></td>"
+							+ "<td width='15%'><div align='center'>"
+							+ list[i].duedate
+							+ "</div></td>"
+							+ "<td width='7%'><div align='center'>"
+							+ list[i].coupontype_name
+							+ "</div></td>"
+							+ "<td width='7%'><div align='center'>"+list[i].status_name+"</div></td>"
+							+ "<td width='7%'><div align='center'>"
+							+ list[i].price
+							+ "</div></td>"
+							+ "<td width='20%'><div align='center'>"
+							+ "<img src='../../img/lnk_detail.gif' title='查看' class='img' onclick=\"onclickCheck('"
+							+ list[i].rowid
+							+ "')\">"
+							+ "<img src='../../img/lnk_edit.gif' title='修改' class='img' onclick=\"onclickUpdate('"
+							+ list[i].rowid
+							+ "')\">"
+							+ "<img src='../../img/lnk_delete.gif' title='删除' class='img' onclick=\"onclickDelete('"
+							+ list[i].rowid + "')\"></div></td>" + "</tr>");
+					table.append(tr2);
+				}
+
+				$(".list_centent").append(table);
+				$("#totalCount")
+						.html(
+								"&nbsp;" + data.result.successMsg.totalCount
+										+ "&nbsp;");
+				$("#pageNo").html(
+						"&nbsp;" + data.result.successMsg.pageNo + "&nbsp;");
+				var pageCount = data.result.successMsg.pageCount;
+				$("#select").html("");
+				for ( var i = 1; i <= pageCount; i++) {
+					if (i == page) {
+						$("#select").append(
+								$("<option value='"+i+"' selected='selected'>第"
+										+ i + "页</option>"));
+					} else {
+						$("#select")
+								.append(
+										$("<option value='"+i+"'>第" + i
+												+ "页</option>"));
+					}
+				}
+			}
+		}
+
+	}
+	var user_name = "";
+	var satus = "";
+	var page = 1;
+	var pageSize = 20;
+	//搜索
+	function onClickSearch() {
+		user_name = $("#code").val();
+		satus = $("#satus").val();
+		page = 1;
+		init();
+
+	}
+
+	//新增
+	function onClickExamine() {
+
+		window.location.href = "add.html";
+
+	}
+
+	function onChange(select) {
+		page = select.value;
+		init();
+	}
+	//查看
+	function onclickCheck(id) {
+		window.location.href = "sellcoupon.html?id=" + id;
+	}
+	//修改
+	function onclickUpdate(id) {
+		window.location.href = "update.html?id=" + id;
+	}
+	//删除
+	function onclickDelete(id) {
+		var se = confirm("您确定要删除此条记录吗!");
+		if (se == true) {
+			url = "/Hotel/rest/sellcoupon/delete/" + id;
+			RemoteUtil.send(url, "POST", null, callSubmitBackDelete);
+		}
+	}
+	function callSubmitBackDelete(data) {
+		if (data.succeed) {
+			if (data.result.statusCode == "200") {
+				init();
+			}
+		}
+	}
+//-->
+</script>
+
+</head>
+
+<body>
+
+	<div class="list">
+
+		<div class="list_title">
+
+			<label>优惠券码：</label> <input type="text" class="input_text" id="code"
+				placeholder="请输入优惠券码"> <label>状态：</label> <select
+				name="satus" id="satus"></select>
+			<button type="button" class="button_search" onclick="onClickSearch()">搜&nbsp;
+				索</button>
+			<div class="operating">
+				<button type="button" onclick="onClickExamine()">新增</button>
+			</div>
+		</div>
+
+		<div class="list_centent"></div>
+
+		<div class="result_page">
+			<div class="page_info">
+				当前第<span style="color:#0000FF;" id="pageNo"> </span>页，共<span
+					style="color:#0000FF;" id="totalCount"> 10 </span>条记录
+			</div>
+			<div class="page_ctrl">
+				<select name="select" id="select" onchange="onChange(this)">
+
+				</select>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

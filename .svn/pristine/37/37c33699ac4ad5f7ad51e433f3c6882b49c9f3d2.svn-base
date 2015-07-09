@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=2,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>手机版-金茂凯悦</title>
+<meta name="keywords" content=",金茂凯悦">
+<meta name="description" content="-金茂凯悦">
+
+<link rel="stylesheet" type="text/css" href="../css/common.css" />
+<link rel="stylesheet" type="text/css" href="../css/index.css" />
+<!-- <script type="text/javascript" src="/Public/Js/jquery-1.9.0.min.js"></script> -->
+<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../js/zepto.min.js"></script>
+<script type="text/javascript" src="../js/index.js"></script>
+<script type="text/javascript" src="../js/fx.js"></script>
+<script type="text/javascript" src="../js/touch.js"></script>
+<script type="text/javascript" src="../js/TouchSlide.1.1.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/jquery.form.js"></script>
+</head>
+<body class="pa welbg">
+    <div class="main pr">
+<!-- 头部开始 -->
+        <div class="header">
+            <!-- logo开始 -->
+              <div class="header_b iconfont pa">
+                <a href="javascript:history.go(-1);" title="返回上一页">&#xe602;</a>
+            </div>
+            <div class="logo">
+                <img src="../images/logo.png" alt="" />
+            </div>
+            <!-- logo结束 -->
+<div class="header_n iconfont pa">
+
+<!-- 已登录用这个图标,点击弹出层是个人中心 -->
+ <!-- 未登录用这个图标,点击弹出层是登录 -->
+<a href="javascript:;" title="" class="cover_open">&#xe605;</a></div>
+            <!-- 右上角弹出层 -->
+<!-- login-s -->
+<div class="login">
+<div class="login_n">
+    <div class="logo">
+        用户登录
+    </div>
+    <!-- logo结束 -->
+    <div class="header_b iconfont pa cover_close">
+        <a href="" title="用户登录">&#xe602;</a>
+    </div>
+</div>
+<div class="login_c">
+    <div class="login_t">
+        <img src="../images/pic_07.png" alt="" />
+    </div>
+    <div class="login_ty1">
+        用户登录
+    </div>
+    <div class="login_ty2">
+        <i class="iconfont">&#xe606;</i>
+        LOGIN 
+    </div>
+    <form id="loginform">
+        <div class="login_ty3">
+            <i class="iconfont">&#xe609;</i>
+            <input type="text" name="mobile" id="l_tel" value="" placeholder="请输入您的手机号码" />
+        </div>
+        <div class="login_ty3">
+            <i class="iconfont">&#xe60c;</i>
+            <input type="password"  name="password" id="l_password"/>
+        </div>
+        <div>
+            <input type="submit" class="login_ty4" id="formsubmit" value="登录" />
+        </div>
+        
+    </form>
+    <div class="login_ty5 login_zc clearfix">
+        <a href="#" title="快速注册" class="login_reg fl">快速注册>></a>
+        <a href="../center/findpwd.html" title="找回密码" class="login_forget fr">找回密码</a>
+    </div>
+    
+</div>
+</div>
+<!-- login-e -->
+<script type="text/javascript">
+$(function(){
+$('#formsubmit').click(function(){
+	if($("#l_tel").val()=='')
+	{
+		$(document).layer('手机号码不能为空！');
+		$("#tel").focus();
+		return false;
+	}
+	if($("#l_password").val()=='')
+	{
+		$(document).layer('密码不能为空！');
+		$("#l_password").focus();
+		return false;
+	}
+	
+   var data=$("#loginform").serialize();
+   commonAjaxSubmit("../center/login.html",data);
+   return false;		
+		
+});
+
+})
+
+</script>
+            <!-- register-s -->
+<div class="register">
+<div class="login_n">
+<div class="logo">
+    用户注册
+</div>
+<!-- logo结束 -->
+<div class="header_b iconfont pa cover_close">
+    <a href="javascript:;" title="用户注册">&#xe602;</a>
+</div>
+</div>
+<div class="login_c">
+<div class="login_t">
+    <img src="../images/pic_08.png" alt="" />
+</div>
+<div class="login_ty1" style="margin-left:">
+    新用户注册
+</div>
+<div class="login_ty2">
+    <i class="iconfont">&#xe606;</i>
+    REGISTER 
+</div>
+<form  class="pr login_p" name="form" id="form">
+    <div class="login_ty3 login_ty6" >
+        <i class="iconfont">&#xe609;</i>
+        <input type="text" value=""  name="tel" placeholder="请填写您的手机号码" class="phone" />
+    </div>
+    <div class="login_a">
+        <input type="button" value="获取验证码" id="login_send"/>
+    </div>
+    <div class="login_ty3" >
+        <i class="iconfont">&#xe60f;</i>
+        <input type="text" name="verify" id="verify" placeholder="请填写收到的验证码" />
+    </div>
+    <div class="login_ty3">
+        <i class="iconfont">&#xe60c;</i>
+        <input type="password"  name="password" id="password" placeholder="请输入登录密码" />
+    </div>
+    <div class="login_ty3">
+        <i class="iconfont">&#xe60c;</i>
+        <input type="password" name="fpassword" id="fpassword" placeholder="确认登录密码" />
+    </div>
+ 
+    <div>
+        <input type="submit" class="login_ty4"  id="submit" value="注册" />
+    </div>
+</form>
+<div class="login_ty5 login_dl">
+    <a href="#" title="">已有账号？立即登录>></a>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+(function($){
+//注册
+$('#submit').click(function(){
+	if($("#password").val()=='')
+	{
+		$(document).layer('密码长度不能小于6位');
+		$("#password").focus();
+		return false;
+	}else
+	{
+		if($("#password").val().length<6)
+		{
+			$(document).layer('密码长度不能小于6位');
+		    $("#password").focus();
+		    return false;
+		}
+	}
+	if($("#verify").val()=='')
+	{
+		$(document).layer('验证码不能为空');
+		$("#password").focus();
+		return false;
+	}
+	if($("#fpassword").val()!=$("#password").val())
+	{
+		$(document).layer('两次密码不一致');
+		return false;
+	}
+   var data=$("#form").serialize();
+   commonAjaxSubmit("../center/register.html",data);
+  return false;
+});
+$(".login_a").delegate('#login_send', 'click', function(event) 
+{
+	var url="../center/message.html";
+	var  vs= $(this);
+	var tel=$(".phone").val();
+	if(tel=='')
+	{
+		$(document).layer('手机号码不能为空');
+		$(".phone").focus();
+		return false;
+	}else
+	{
+		 var re = /^1\d{10}$/
+		 if(!re.test(tel))
+		 {
+			$(document).layer('手机号码格式不正确');
+			$(".phone").focus();
+			return false;
+		 }
+		
+	}
+
+	$.post(url,{tel:tel},
+	function(data){
+		if(data=='success')
+		{
+			$(document).layer('发送成功！');
+			 time(vs);
+		}else
+		{
+			$(document).layer(data);
+		}
+		
+	})
+	return false;
+})
+})(jQuery);
+</script>
+            <!-- register-e -->
+            <!-- member-s -->
+<div class="jmember">
+<div class="login_n">
+<div class="logo">
+    个人中心
+</div>
+<!-- logo结束 -->
+<div class="header_b iconfont pa cover_close">
+ <a href="" title="用户登录">&#xe602;</a>
+</div>
+</div>
+<div class="login_c">
+<div class="login_t">
+    <img src="../images/pic_15.png" alt="" />
+</div>
+<div class="login_ty1"></div>
+<div class="login_ty2">
+    <i class="iconfont">&#xe606;</i>
+    ，欢迎回来 
+</div>
+<div class="login_out"><a href="javascript:;" class="loginOut">[安全退出]</a></div>
+<ul class="member_ul">
+    <li>
+        <a href="../center/coupon.html" title="">
+            <i class="ico_1"></i>
+            我的优惠券
+            <em>0</em>
+        </a>
+    </li>
+    <li>
+        <a href="../center/employ.html" title="">
+            <i class="ico_2"></i>
+            使用情况
+        </a>
+    </li>
+    <li>
+        <a href="../center/record.html" title="">
+            <i class="ico_3"></i>
+            消费记录
+        </a>
+    </li>
+      <li>
+        <a href="../center/myorder.html" title="">
+            <i class="ico_7"></i>
+            我的订单
+        </a>
+    </li>
+    <li>
+        <a href="../center/personal.html" title="">
+            <i class="ico_4"></i>
+            个人资料
+        </a>
+    </li>
+    <li>
+        <a href="../center/repwd.html" title="">
+            <i class="ico_5"></i>
+            修改密码
+        </a>
+    </li>
+    <li>
+        <a href="../center/comment.html" title="">
+            <i class="ico_6"></i>
+            意见与反馈
+        </a>
+    </li>
+</ul>
+</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	$('.loginOut').click(function(){
+		 commonAjaxSubmit("../center/loginOut.html",'');
+	});
+})
+
+</script>
+            <!-- member-e -->
+        </div>
+        <!-- 头部结束 -->
+        <!-- 主体部分 -->
+        <div class="content">
+            <div class="main1">
+
+
+
+            <!-- 套餐列表 -->
+            <ul class="tlist">
+                                </ul>
+
+
+
+             <div class="paging"></div>
+
+
+<div class="copy">
+    <div>
+    <i>Copyright2014 崇明金茂凯悦 All Rights Reserved</i>
+    </div>
+</div>
+<!--
+</div> -->
+</div>
+<!-- 主体部分结束 -->
+<!-- 底部部分 -->
+<div class="footer bg pr">
+<ul>
+    <li  ><a href="../room/index.html"><span class="iconfont">&#xe604;</span>首页</a></li>
+    <li ><a href="../hotel/index.html"><span class="iconfont">&#xe600;</span>优惠券</a></li>
+   <!--  <li class=" footer_dl"><a href="javascript:;" class="f_mb"><span class="iconfont">&#xe601;</span>会员</a></li> -->
+    <li class=" footer_dl "><a href="javascript:;" class="f_mb"><span class="iconfont">&#xe601;</span>会员</a></li>
+    <li class="footer_on"><a href="index.html"><span class="iconfont f_rota">&#xe60b;</span>套餐</a></li>
+    <li ><a href="../contact/index.html"><span class="iconfont">&#xe603;</span>简介</a></li>
+    <!-- <li ><a href="/contact/link.html"><span class="iconfont">&#xe603;</span>联系</a></li> -->
+</ul>
+</div>
+<!-- 底部结束 -->
+</div>
+
+</body>
+</html>

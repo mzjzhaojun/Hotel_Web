@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, minimum-scale=1, maximum-scale=2,user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+		<title>手机版-金茂凯悦</title>
+		<meta name="keywords" content="酒店介绍 ,金茂凯悦">
+			<meta name="description" content="酒店介绍 -金茂凯悦">
+				<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+				<script type="text/javascript" src="js/touch-0.2.14.min.js"></script>
+				<script type="text/javascript" src="js/index.js"></script>
+				<script type="text/javascript" src="js/request.js"></script>
+				<script type="text/javascript" src="js/json.js"></script>
+				<script type="text/javascript" src="js/getUrlParam.js"></script>
+				<script language="JavaScript" type="text/javascript">
+					G = function(objId) {
+						return document.getElementById(objId)
+					};
+					Gn = function(objName) {
+						return document.getElementsByName(objName)
+					};
+					window.onload = function() {
+
+					};
+
+					function submitForm() {
+						alert("提交");
+						RemoteUtil.send("/Hotel/rest/pay/openid","GET", "", getlogincustomerBack);
+					}
+
+					function getlogincustomerBack(data) {
+						alert(data);
+						if (data.succeed) {
+							if (data.result.statusCode == "200") {
+								if (data.result.successMsg != null
+										&& data.result.successMsg != "null") {
+									accout = data.result.successMsg.accout;
+									user_name = data.result.successMsg.name;
+									$(".login_ty1").html(accout);
+									$("#user_name").html(user_name);
+								}
+							}
+						}
+					}
+				</script>
+</head>
+<body class="pa welbg">
+	<input name="" type="button" class="loginbtn" value="登 &nbsp;录"
+		onclick="submitForm()" />
+
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>详情</title>
+
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="this is my page">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="../../css/list.css">
+<script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+<script language="JavaScript" src="../../js/request.js"></script>
+<script language="JavaScript" src="../../js/json.js"></script>
+
+<script language="JavaScript" type="text/javascript">
+	G = function(objId) {
+		return document.getElementById(objId)
+	};
+	Gn = function(objName) {
+		return document.getElementsByName(objName)
+	};
+	var id = getQueryStr("id");
+	var type = getQueryStr("type");
+	window.onload = function() {
+
+		init();
+	};
+	function init() {
+		url = "/Hotel/rest/orderinfo/selectOrder";
+		var parameter = "rowid:'"+id+"'";
+		RemoteUtil.send(url, "GET", parameter, callSubmitBack2);
+	}
+
+	var is_top;
+	function callSubmitBack2(data) {
+		if (data.succeed) {
+			if (data.result.statusCode == "200") {
+				$(".form_box").html("");
+				var table = $("<table width='100%' border='0' class='table'>");
+				var tr1;
+				if (type == "1") {//特产
+					tr1 = $("<tr>"
+							+ "<td class='td' >订单名称：</td>"
+							+ "<td ><span id='title'></span></td>"
+							+ "<td class='td'>客户帐号：</td>"
+							+ "<td><span id='account'></span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>订单状态：</td>"
+							+ "<td><span id='status'></span></td>"
+							+ " <td class='td'>订购数量：</td>"
+							+ "<td><span id='count'></span></td>"	
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>原价：</td>"
+							+ "<td><span id='price'></span></td>"
+							+ " <td class='td'>优惠价：</td>"
+							+ "<td><span id='newprice'></span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ " <td class='td'>客户姓名：</td>"
+							+ "<td><span id='custname'></span></td>"
+							+ "<td class='td'>手机号码：</td>"
+							+ "<td><span id='mobilephone'></span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ " <td class='td'>总价：</td>"
+							+ "<td><span id='sumamounts'></span></td>"
+							+ "<td class='td'>预约码：</td>"
+							+ "<td><span id='subnum'></span></td>"
+							+ "</tr>"
+							+ "<tr>"
+							+ " <td class='td'>收货地址：</td>"
+							+ "<td colspan='3'>"
+							+ "<span id='address'></span>"
+							+ "</td>"
+							+ "</tr>"
+							+ "<tr>"
+							+ " <td class='td2'>备注：</td>"
+							+ "<td colspan='3'>"
+							+ "<textArea name='remark' id='remark' cols='90%' rows='7' readonly ></textArea>"
+							+ "</td>"
+							+ "</tr>"
+							+ "<tr>"
+							+ "<td colspan='4' class='td3' align='center'>"
+							+ "<button type='button' class='button2' onclick='history.go(-1)'>取消返回</button>"
+							+ " </td>" + "</tr>" + "</table>");
+				}
+				if (type == "2") {//餐厅
+					tr1 = $("<tr>"
+							+ "<td class='td' >订单名称：</td>"
+							+ "<td ><span id='title'></span></td>"
+							+ "<td class='td' >客户帐号：</td>"
+							+ "<td ><span id='account'></span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>订单状态：</td>"
+							+ "<td><span id='status'></span></td>"
+							+ " <td class='td'>就餐人数：</td>"
+							+ "<td><span id='inperson'></span></td>"	
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>原价：</td>"
+							+ "<td><span id='price'></span></td>"
+							+ " <td class='td'>优惠价：</td>"
+							+ "<td><span id='newprice'></span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>客户姓名：</td>"
+							+ "<td><span id='custname'></span></td>"
+							+ "<td class='td'>手机号码：</td>"
+							+ "<td><span id='mobilephone'></span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>就餐时间：</td>"
+							+ "<td><span id='indatetime'></span></td>"
+							+ "<td class='td'>预约码：</td>"
+							+ "<td><span id='subnum'></span></td>"
+							+ "</tr>"
+							+ "<tr>"
+							+ " <td class='td2'>备注：</td>"
+							+ "<td colspan='3'>"
+							+ "<textArea name='remark' id='remark' cols='90%' rows='7' readonly></textArea>"
+							+ "</td>"
+							+ "</tr>"
+							+ "<tr>"
+							+ "<td colspan='4' class='td3' align='center'>"
+							+ "<button type='button' class='button2' onclick='history.go(-1)'>取消返回</button>"
+							+ " </td>" + "</tr>" + "</table>");
+				}
+				if (type == "3") {//房间
+					tr1 = $("<tr>"
+							+ "<td class='td' >订单名称：</td>"
+							+ "<td ><span id='title'></span></td>"
+							+ "<td class='td' >客户帐号：</td>"
+							+ "<td ><span id='account'></span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>订单状态：</td>"
+							+ "<td><span id='status'></span></td>"
+							+ " <td class='td'>入住人数：</td>"
+							+ "<td><span id='inperson'></span></td>"	
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>入住时间：</td>"
+							+ "<td><span id='indatetime'></span></td>"
+							+ " <td class='td'>退房时间：</td>"
+							+ "<td><span id='outdatetime'></span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>客户姓名：</td>"
+							+ "<td><span id='custname'></span></td>"
+							+ " <td class='td'>手机号码：</td>"
+							+ "<td><span id='mobilephone'></span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>原价：</td>"
+							+ "<td><span id='price'></span></td>"
+							+ "<td class='td'>优惠价：</td>"
+							+ "<td><span id='newprice'></span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>订购房间数：</td>"
+							+ "<td><span id='count'></span></td>"
+							+ "<td class='td'>总价：</td>"
+							+ "<td><span id='sumamounts'></span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>凯悦金护照号码：</td>"
+							+ "<td><span id='passport'></span></td>"
+							+ "<td class='td'>预约码：</td>"
+							+ "<td colspan='3'><span id='subnum'></span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>预计到店时间：</td>"
+							+ "<td><span id='predict'></span></td>"
+							+ "<td class='td'>其他需求：</td>"
+							+ "<td colspan='3'><span id='otherneed'></span></td>"
+							+ "</tr>"
+							+ "<tr>"
+							+ " <td class='td2'>备注：</td>"
+							+ "<td colspan='3'>"
+							+ "<textArea name='remark' id='remark' cols='90%' rows='7' readonly></textArea>"
+							+ "</td>"
+							+ "</tr>"
+							+ "<tr>"
+							+ "<td colspan='4' class='td3' align='center'>"
+							+ "<button type='button' class='button2' onclick='history.go(-1)'>取消返回</button>"
+							+ " </td>" + "</tr>" + "</table>");
+				}
+
+				table.append(tr1);
+				$(".form_box").append(table);
+				$("#status").html(data.result.successMsg.statusname);
+				$("#account").html(data.result.successMsg.account);
+				$("#sumamounts").html(data.result.successMsg.sumamounts);
+				$("#createdate").html(data.result.successMsg.createdate);
+				$("#custname").html(data.result.successMsg.custname);
+				$("#mobilephone").html(data.result.successMsg.mobilephone);
+				$("#orderrowid").html(data.result.successMsg.orderrowid);
+				$("#title").html(data.result.successMsg.title);
+				$("#count").html(data.result.successMsg.count);
+				$("#price").html(data.result.successMsg.price);
+				$("#newprice").html(data.result.successMsg.newprice);
+				$("#inperson").html(data.result.successMsg.inperson);
+				$("#iscoupon").html(data.result.successMsg.iscoupon);
+				$("#indatetime").html(data.result.successMsg.indatetime);
+				$("#outdatetime").html(data.result.successMsg.outdatetime);
+				$("#card").html(data.result.successMsg.card);
+				$("#subnum").html(data.result.successMsg.subnum);
+				$("#passport").html(data.result.successMsg.passport);
+				$("#need").html(data.result.successMsg.need);
+				$("#otherneed").html(data.result.successMsg.otherneed);
+				$("#predict").html(data.result.successMsg.predictname);
+				$("#address").html(data.result.successMsg.address);
+				$("#remark").html(RemoteUtil.replesecode(data.result.successMsg.remark));
+			}
+		}
+	}
+	  
+</script>
+
+</head>
+
+<body>
+
+	<div class="form_box"></div>
+
+</body>
+</html>

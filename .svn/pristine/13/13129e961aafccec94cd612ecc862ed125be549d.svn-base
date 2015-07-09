@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>用户管理-修改</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../css/list.css">
+    <script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+    <script language="JavaScript" src="../../js/request.js"></script>
+	<script language="JavaScript" src="../../js/json.js"></script>
+	
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		G = function(objId){return document.getElementById(objId)};
+		Gn = function(objName){return document.getElementsByName(objName)};
+		window.onload=function(){
+			 var thisURL = document.URL;    
+ 			 var  getval =thisURL.split('?')[1];  
+  			 id= getval.split("=")[1]; 
+  			 init();
+		};
+		var id;
+		function init(){
+			
+			url = "/Hotel/system/user/"+id;
+			RemoteUtil.send(url, "GET", null, callSubmitBack2);
+			
+		}
+		
+		function callSubmitBack2(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					$("#user_name").val(data.result.successMsg.user_name);
+					$("#password").val(data.result.successMsg.password);
+					$("#phone").val(data.result.successMsg.phone);
+					$("#email").val(data.result.successMsg.email);
+					$("#vname").val(data.result.successMsg.vname);
+					$("#tel").val(data.result.successMsg.tel);
+					$("#sex").val(data.result.successMsg.sex);
+					$("#age").val(data.result.successMsg.age);
+					$("#cardtype").val(data.result.successMsg.cardtype);
+					$("#cardnum").val(data.result.successMsg.cardnum);
+					$("#remarks").val(data.result.successMsg.remarks);
+				}
+			}
+		}
+		
+	    function submitForm(){
+			
+			var user_name = $("#user_name").val();
+			var password = $("#password").val();
+			var phone = $("#phone").val();
+			var email = $("#email").val();
+			var vname = $("#vname").val();
+			var tel = $("#tel").val();
+			var sex = $("#sex").val();
+			var age = $("#age").val();
+			var cardtype = $("#cardtype").val();
+			var cardnum = $("#cardnum").val();
+			var remarks = $("#remarks").val();
+			
+			var parameter = "user_name:'"+user_name+"',password:'"+password+"',phone:'"+phone+"',email:'"+email+"',vname:'"+vname+
+			"',tel:'"+tel+"',sex:'"+sex+"',age:'"+age+"',cardtype:'"+cardtype+"',cardnum:'"+cardnum+"',remarks:'"+remarks+"',rowid:'"+id+"'";
+			url = "/Hotel/system/user/"+id;
+			RemoteUtil.send(url, "POST", parameter, callSubmitBack);
+			
+		}
+		
+		function callSubmitBack(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					window.location.href = "list.html";
+				}
+			}
+		}
+	//-->
+	</script>
+	
+  </head>
+  
+  <body>
+   
+   	<div class="form_box">
+    	<table width="100%" border="0" class="table">
+		  <tr>
+		    <td class="td">用户名称：</td>
+		    <td><input type="text" class="input_text" id="user_name"></td>
+		    <td class="td">用户密码：</td>
+		    <td><input type="password" class="input_text" id="password"></td>
+		  </tr>
+		  <tr>
+		    <td class="td">移动电话：</td>
+		    <td><input type="text" class="input_text" id="phone"></td>
+		    <td class="td">注册邮箱：</td>
+		    <td><input type="text" class="input_text" id="email"></td>
+		  </tr>
+		  <tr>
+		    <td class="td">真实姓名：</td>
+		    <td><input type="text" class="input_text" id="vname"></td>
+		    <td class="td">联系电话：</td>
+		    <td><input type="text" class="input_text" id="tel"></td>
+		  </tr>
+		  <tr>
+		    <td class="td">性别：</td>
+		    <td>
+		    	<select id="sex">
+	    			<option value="男">男</option>
+	    			<option value="女">女</option>
+	    		</select>
+		    </td>
+		    <td class="td">年龄：</td>
+		    <td><input type="text" class="input_text" id="age"></td>
+		  </tr>
+		  <tr>
+		    <td class="td">证件类型：</td>
+		    <td><input type="text" class="input_text" id="cardtype"></td>
+		    <td class="td">证件号码：</td>
+		    <td><input type="text" class="input_text" id="cardnum"></td>
+		  </tr>
+		  <tr>
+		    <td class="td2">备注：</td>
+		    <td colspan="3">
+		    	<textArea name="remarks" id="remarks" cols="90%" rows="7" id="remarks"></textArea>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td colspan="4" class="td3" align="center">
+		    	<button type="button" class="button1" onclick="submitForm()">保存提交</button>
+    			<button type="button" class="button2" onclick="history.go(-1)">取消返回</button>
+		    </td>
+		  </tr>
+		</table>
+    </div>
+   
+  </body>
+</html>

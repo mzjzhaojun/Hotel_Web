@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+	<meta content="target-densitydpi=device-dpi,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+	<link rel="stylesheet" href="css/common.css" type="text/css">
+	<link rel="stylesheet" href="css/orderwrite.css" type="text/css">
+	<title>崇明金茂凯悦酒店</title>
+	<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="js/touch-0.2.14.min.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="js/request.js"></script>
+	<script type="text/javascript" src="js/json.js"></script>
+	<script type="text/javascript" src="js/getUrlParam.js"></script>
+	<script type="text/javascript">
+		usevou=new Array();
+		var title ="";
+		var price = "";
+		var indatetime = "";
+		var outdatetime = "";
+		var count = "";
+		var newprice = "";
+		var indays = "";
+		$(function(){
+		  /*  var thisURL = document.URL;    
+		   var  getval =thisURL.split('?')[1];  
+		   var name = getval.split("=")[1];alert(name); */
+		   var name=UrlParm.parm("name");
+		   
+		   title = UrlParm.parm("title");//客房名称
+		   price = UrlParm.parm("price");// 单价
+		   indatetime = UrlParm.parm("indatetime");// 入住时间
+		   outdatetime = UrlParm.parm("outdatetime");// 离开时间
+		   count = UrlParm.parm("count");// 房间数
+		   newprice = price*count;//总价
+		   indays = UrlParm.parm("indays");// 入住天数
+		   $("#title").html(title);price
+		   $("#price").html("￥"+price);
+		   var i_time = indatetime.split("/");
+		   var o_time = outdatetime.split("/");
+		   $("#in").html(i_time[1]+"月"+i_time[2]+"日入住");
+		   $("#out").html(o_time[1]+"月"+o_time[2]+"日离店");
+		   $("#livedays").html("共"+indays+"晚");
+		   $("#count").html(count+"间");
+		   $("#room_price").html(newprice);
+		   
+		   var url = "/Hotel/rest/dictionaries/type/D__pblt256ysl2e";
+		   RemoteUtil.send(url, "GET", null, callResultBack);
+		   var url2 = "/Hotel/rest/dictionaries/type/D__sxu9nuxzf1yw";
+		   RemoteUtil.send(url2, "GET", null, callResultBack2);
+		   
+		   //sumamounts总价
+		   //custname入住人
+		   //mobilephone手机号
+		   //title:客房名称
+		   //count:房间数
+		   //price:单价
+		   //newprice：总价
+		   //inperson:入住人数（空）
+		   //card:身份证(空)
+		   //subnum:预定吗(空)
+		   //passport:凯悦金护照号码
+		   //need:需求
+		   //otherneed:其他需求
+		   //predict:到店时间
+		   $("#schedule").click(function(){
+		   		
+		   		if($("#custname").val() == ''){
+					$('#booktips').html('请输入您的姓名');
+					return false;
+				}
+				if (!$('#mobilephone').val().match(/^1\d{10,13}$/g)){
+					$('#mobilephone').val('');
+					$('#booktips').html('请输入正确的手机号');
+					return false;
+				} 
+		   		
+		   		var custname = $("#custname").val();
+		   		var mobilephone = $("#mobilephone").val();
+		   		var passport = $("#passport").val();
+		   		var need = $("#need").val();
+		   		var otherneed = $("#otherneed").val();
+		   		var custname = $("#custname").val();
+		   		
+		    	var parameter = "type:'D__1q1b8nb3y5ez',no:'no',status:'D__9c6n1rjkdstf',sumamounts:'90',custname:'"+custname+"',mobilephone:'"+mobilephone+"',title:'"+title+"',count:'"+count+"',"+
+				"price:'"+price+"',newprice:'"+newprice+"',inperson:'inperson',indatetime:'"+indatetime+"',outdatetime:'"+outdatetime+"',card:'card',subnum:'subnum',passport:'"+passport+"',need:'"+need+"',otherneed:'"+otherneed+"',predict:'"+predict+"'";
+				url = "/Hotel/rest/orderinfo/submitorder";
+				RemoteUtil.send(url, "GET", parameter, submitorderBack);
+		  });
+		   
+	    }); 
+	    
+	    //预定
+	    function submitorderBack(data){
+	    	
+	    	if (data.succeed) {
+				if (data.result.statusCode == "200") {
+					
+					window.location.href = "../center/myorder.html";
+					
+				}
+			}
+	    	
+	    }
+	    
+	    function callResultBack(data){
+	    	if (data.succeed) {
+				if (data.result.statusCode == "200") {
+					var list = data.result.successMsg;
+					var len = list.length;
+					$("#need").html("");
+					for ( var i = 0; i < len; i++) {
+						$("#need").append(
+								$("<option value='"+list[i].code+"'>"
+										+ list[i].name + "</option>"));
+					}
+				}
+			}
+	    }
+	    function callResultBack2(data){
+	    	if (data.succeed) {
+				if (data.result.statusCode == "200") {
+					var list = data.result.successMsg;
+					var len = list.length;
+					$("#predict").html("");
+					for ( var i = 0; i < len; i++) {
+						$("#predict").append(
+								$("<option value='"+list[i].code+"'>"
+										+ list[i].name + "</option>"));
+					}
+				}
+			}
+	    }
+	</script>
+</head>
+
+
+<body>
+<div class="header">
+		<img src="img/left_arrow.png" alt="" class="back float_left" id="back">
+	</div>
+	<div class="headers" id="headers">
+			<div class="headerslide">
+				<img class="slideson" src="img/2015013016281912.jpg" alt="高级房(双)" style="width: 1349px;">
+			</div>
+			<div class="banner">
+				<span class="tex flo_le">崇明金茂凯悦酒店</span>
+			</div>
+	</div>
+	<div class="pad title overflow">
+		<span class="roomname float_left middle" id="title"></span>
+		<span class="total parice float_right color_orange" id="price"></span>
+	</div>
+
+	<form action="" id="formbook" method="post" class="write">
+	<input name="roomid" type="hidden" id="roomid" value="1">
+	<input name="nums" type="hidden" id="nums" value="1">
+	<input name="rp_cd" type="hidden" id="rp_cd" value="16">
+	<input name="startdate" type="hidden" id="startdate" value="2015/06/08">
+	<input name="enddate" type="hidden" id="enddate" value="2015/06/09">
+	<input name="paytype" type="hidden" id="paytype" value="1">
+	<input name="prevend" type="hidden" id="prevend" value="0">
+		<ul class="detail middle">
+			<li class="bac_white border_bottom">
+				<span id="in" class="in mar_rig">6月08日入住</span>
+				<span id="out" class="out mar_rig">6月09日离店</span>
+				<span id="livedays"></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>房间数</span>
+				<span class="absolute le" id="count"></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>总价</span>
+				<span class="color_orange le absolute">￥<span id="room_price">
+				
+					354
+				
+				</span></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>支付方式</span>
+				<span class="le absolute ch1" paytype="1"><img src="img/gou.jpg" class="gou check" alt="">进店支付 <span class="small"> </span></span>
+				
+		</li>
+		<li class="bac_white border_bottom">
+			<span>预留至</span>
+				<span class="le absolute" style="font-size:0.9em" id="prepay">离店日12:00(不能取消订单)</span>
+			</li>
+			<li class="Abb">
+				<p id="booktips" class="booktip">&nbsp;</p></li>
+			<li class="bac_white border_bottom ">
+				<span>入住人</span>
+				<input type="text" class="no_outline absolute le" name="custname" id="custname" placeholder="请输入联系人姓名">
+			</li>
+			<li class="bac_white border_bottom">
+				<span>手机号</span>
+				<input type="text" class="no_outline absolute le" name="mobilephone" id="mobilephone" placeholder="请输入联系人手机号">
+			</li>
+			<li class="bac_white border_bottom">
+				<span>崇明道护照</span>
+				<input type="text" class="no_outline absolute le" name="passport" id="passport" placeholder="请输入崇明道护照">
+			</li>
+			<li class="bac_white border_bottom">
+				<span>需求</span>
+				<select class="no_outline absolute le select" id="need">
+					
+				</select>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>其他需求</span>
+				<input type="text" class="no_outline absolute le" name="otherneed" id="otherneed" placeholder="请输入其他需求">
+			</li>
+			<li class="bac_white border_bottom">
+				<span>预计到店时间</span>
+				<select class="no_outline absolute le select" id="predict">
+					
+				</select>
+			</li>
+		</ul>
+		<div class="submit bac_orange color_white" id="schedule">预 订</div>
+		<br>
+	<!-- 弹层 
+	<div class="tanwrap" id="guodu">
+		<div class="big bac_white" style="height:0">
+			<div class="big_head bac_orange color_white" style="text-align:center">
+				状态提示
+				<img src="./顺德碧桂园度假村_files/remove.png" alt="" class="remove float_right">
+			</div>
+			<div class="say color_gray bac_white" style="text-align:center;padding:10% 5%;border-radius:0 0 8px 8px">
+				<p id="osubtip">提交订单中.....</p>
+			</div>
+		</div>
+	</div>-->
+</form>
+
+</body>
+</html>

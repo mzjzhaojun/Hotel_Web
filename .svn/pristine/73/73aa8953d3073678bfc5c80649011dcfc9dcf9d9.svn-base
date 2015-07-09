@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>新增</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../css/list.css">
+    <script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+    <script language="JavaScript" src="../../js/request.js"></script>
+	<script language="JavaScript" src="../../js/json.js"></script>
+	
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		G = function(objId){return document.getElementById(objId)};
+		Gn = function(objName){return document.getElementsByName(objName)};
+		window.onload=function(){
+			
+		};
+	    function submitForm(){
+			
+			var name = $("#name").val();
+			var detail = $("#detail").val();
+			var instructions = $("#instructions").val();
+			var count = $("#count").val();
+			var price = $("#price").val();
+			var sellprice = $("#sellprice").val();
+			var remarks = $("#remarks").val();
+			
+			var parameter = "name:'"+name+"',detail:'"+detail+"',instructions:'"+instructions+"',count:'"+count+"',price:'"+price+
+			"',sellprice:'"+sellprice+"',remarks:'"+remarks+"'";
+			url = "/Hotel/system/coupon";
+			RemoteUtil.send(url, "POST", parameter, callSubmitBack);
+			
+		}
+		
+		function callSubmitBack(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					window.location.href = "list.html";
+				}
+			}
+			
+		}
+	//-->
+	</script>
+	
+  </head>
+  
+  <body>
+   
+   	<div class="form_box">
+    	<table width="100%" border="0" class="table">
+		  <tr>
+		    <td class="td">用户名称：</td>
+		    <td><input type="text" class="input_text" id="name"></td>
+		  </tr>
+		  <tr>
+		    <td class="td">移动电话：</td>
+		    <td><input type="text" class="input_text" id="detail"></td>
+		    <td class="td">注册邮箱：</td>
+		    <td><input type="text" class="input_text" id="instructions"></td>
+		  </tr>
+		  <tr>
+		    <td class="td">真实姓名：</td>
+		    <td><input type="text" class="input_text" id="count"></td>
+		  </tr>
+		  <tr>
+		  	<td class="td">真实姓名：</td>
+		    <td><input type="text" class="input_text" id="price"></td>
+		  </tr>
+		  <tr>
+		    <td class="td">证件类型：</td>
+		    <td><input type="text" class="input_text" id="sellprice"></td>
+		  </tr>
+		  <tr>
+		    <td class="td2">备注：</td>
+		    <td colspan="3">
+		    	<textArea name="remarks" id="remarks" cols="90%" rows="7" id="remarks"></textArea>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td colspan="4" class="td3" align="center">
+		    	<button type="button" class="button1" onclick="submitForm()">保存提交</button>
+    			<button type="button" class="button2" onclick="history.go(-1)">取消返回</button>
+		    </td>
+		  </tr>
+		</table>
+    </div>
+   
+  </body>
+</html>

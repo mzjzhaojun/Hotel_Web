@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>新增</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../css/list.css">
+    <script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+    <script language="JavaScript" src="../../js/request.js"></script>
+	<script language="JavaScript" src="../../js/json.js"></script>
+	
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		G = function(objId){return document.getElementById(objId)};
+		Gn = function(objName){return document.getElementsByName(objName)};
+		window.onload=function(){
+			 var thisURL = document.URL;    
+ 			 var  getval =thisURL.split('?')[1];  
+  			 id= getval.split("=")[1]; 
+  			 init();
+		};
+		var id;
+		function init(){
+			url = "/Hotel/rest/room/"+id;
+			RemoteUtil.send(url, "GET", null, callSubmitBack2);
+		}
+		
+		var status,badtype; 
+		function callSubmitBack2(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					status = data.result.successMsg.status;
+					badtype = data.result.successMsg.badtype;
+					$("#name").html(data.result.successMsg.name);
+					$("#count").html(data.result.successMsg.count);
+					$("#price").html(data.result.successMsg.price);
+					$("#sellprice").html(data.result.successMsg.sellprice);
+					$("#floor").html(data.result.successMsg.floor);
+					$("#provide").html(data.result.successMsg.provide);
+					$("#status").html(data.result.successMsg.status_name);
+					$("#badtype").html(data.result.successMsg.badtype_name);
+					$("#area").html(data.result.successMsg.area);
+					$("#wifi").html(data.result.successMsg.wifi);
+					$("#breakfast").html(data.result.successMsg.breakfast);
+					$("#detail").val(RemoteUtil.replesecode(data.result.successMsg.detail));
+					$("#instructions").val(RemoteUtil.replesecode(data.result.successMsg.instructions));
+					$("#sdatetime").html(data.result.successMsg.sdatetime);
+					$("#edatetime").html(data.result.successMsg.edatetime);
+					$("#remark").val(RemoteUtil.replesecode(data.result.successMsg.remark));
+				}
+			}
+		}
+		
+	//-->
+	</script>
+	
+  </head>
+  
+  <body>
+   
+   		<div class="form_box">
+    	<table width="100%" border="0" class="table">
+		  <tr>
+		    <td class="td">客房名称：</td>
+		    <td><span id="name"></span></td>
+		     <td class="td">房间总数：</td>
+		    <td><span id="count"></span></td>
+		  </tr>
+		  <tr>
+		    <td class="td">房间价格：</td>
+		    <td><span id="price"></span></td>
+		    <td class="td">优惠后价格：</td>
+		    <td><span id="sellprice"></span></td>
+		  </tr>
+		  <tr>
+		    <td class="td">楼层：</td>
+		    <td><span id="floor"></span></td>
+		    <td class="td">配备：</td>
+		    <td><span id="provide"></span></td>
+		  </tr>
+		   <tr>
+		   	<td class="td">状态：</td>
+		    <td><span id="status"></span></td>
+		    <td class="td">床型：</td>
+		    <td><span id="badtype"></span></td>
+		  </tr>
+		  <tr>
+		   	<td class="td">面积：</td>
+		    <td><span id="area"></span></td>
+		    <td class="td">宽带：</td>
+		    <td><span id="wifi"></span></td>
+		  </tr>
+		   <tr>
+		   	<td class="td">售卖开始日期：</td>
+		    <td><span id="sdatetime"></span></td>
+		    <td class="td">售卖结束日期：</td>
+		    <td><span id="edatetime"></span></td>
+		  </tr>
+		  <tr>
+		   	<td class="td">是否有早餐：</td>
+		    <td><span id="breakfast"></span></td>
+		  </tr>
+		   <tr>
+		    <td class="td2">房间介绍：</td>
+		    <td colspan="3">
+		    	<textArea name="detail" id="detail" cols="90%" rows="7" readonly="readonly"></textArea>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td class="td2">入住须知：</td>
+		    <td colspan="3">
+		    	<textArea name="instructions" id="instructions" cols="90%" rows="7" readonly="readonly"></textArea>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td class="td2">备注：</td>
+		    <td colspan="3">
+		    	<textArea name="remark" id="remark" cols="90%" rows="7" readonly="readonly"></textArea>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td colspan="4" class="td3" align="center">
+		    	<button type="button" class="button1" onclick="submitForm()">保存提交</button>
+    			<button type="button" class="button2" onclick="history.go(-1)">取消返回</button>
+		    </td>
+		  </tr>
+		</table>
+    </div>
+   
+  </body>
+</html>

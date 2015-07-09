@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>角色管理-新增</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../css/list.css">
+    <link rel="stylesheet" type="text/css" href="../../css/validate.css">
+    <link rel="stylesheet" type="text/css" href="../../css/zTreeStyle/zTreeStyle.css" />
+    <script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+    <script language="JavaScript" src="../../js/request.js"></script>
+	<script language="JavaScript" src="../../js/json.js"></script>
+	<script type="text/javascript" src="../../js/eap.core.js"></script>
+	<script type="text/javascript" src="../../js/eap.tip.js" ></script>
+	<script language="JavaScript" src="../../js/eap.validate.js"></script>
+	<script type="text/javascript" src="../../js/ztree/jquery.ztree.all-3.5.min.js"></script>
+	<script type="text/javascript" src="../../js/ztree/ztree.js"></script>
+	<script src="../../js/eap.lang-zh_CN.js"></script>
+	
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		G = function(objId){return document.getElementById(objId)};
+		Gn = function(objName){return document.getElementsByName(objName)};
+		window.onload=function(){
+			$.fn.zTree.init($("#roleTree"), setting3, zNodes3);//权限菜单tree
+		};
+	    function submitForm(){
+			
+			var isValid = $("#form").valid();
+			if (!isValid) return;
+			var treeObj = $.fn.zTree.getZTreeObj("roleTree");
+			var nodes = treeObj.getCheckedNodes(true);
+			var module_codes="";
+			for (var i=0, l=nodes.length; i<l; i++) {
+				module_codes=module_codes+nodes[i].module_code+",";
+			 }
+			var role_name = $("#role_name").val();
+			var remarks = $("#remarks").val();
+			var role_code = generateRandomAlphaNum(12,"R");
+			var parameter = "role_name:'"+role_name+"',remarks:'"+remarks+"',role_code:'"+role_code+"',module_codes:'"+module_codes+"'";
+			url = "/Hotel/rest/role/save";
+			RemoteUtil.send(url, "POST", parameter, callSubmitBack);
+			
+		}
+		
+		function callSubmitBack(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					window.location.href = "list.html";
+				}
+			}
+			
+		}
+		
+		function oncheckRoleRepeat(value){
+			return valid;
+		}
+		var valid = true;
+		function callSubmitBackRoleRepeat(data){
+			
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					if(data.result.successMsg==null || data.result.successMsg == "null"){
+						valid = true;
+					}else{
+						valid = false;
+					}
+				}
+			}
+			
+		}
+		
+		function onBlur(){
+			
+			var parameter = "role_name:'"+$("#role_name").val()+"'";
+			url = "/Hotel/rest/role/checkrolename";
+			RemoteUtil.send(url, "GET", parameter, callSubmitBackRoleRepeat);
+			
+		}
+		
+	//-->
+	</script>
+	
+  </head>
+  
+  <body>
+     <form name="form" method="post" action="" enctype="multipart/form-data" id="form">
+   	<div class="form_box">
+    	<table width="100%" border="0" class="table">
+		  <tr>
+		    <td class="td">角色名称：</td>
+		    <td><input type="text" class="input_text required customvalid" id="role_name" onBlur="onBlur()" customvalid="oncheckRoleRepeat" customMessage="{customvalid:'角色已存在'}"><span class="span">*</span></td>
+		  </tr>
+		  <tr>
+		    <td class="td2">详细描述：</td>
+		    <td colspan="3">
+		    	<textArea name="remarks" id="remarks" cols="90%" rows="7" id="remarks"></textArea>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td class="td2">角色权限：</td>
+		    <td colspan="3">
+		    	<input type="hidden" name="module_codes" id="module_codes">
+    			<ul id="roleTree" class="ztree"></ul>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td colspan="4" class="td3" align="center">
+		    	<button type="button" class="button1" onclick="submitForm()">保存提交</button>
+    			<button type="button" class="button2" onclick="history.go(-1)">取消返回</button>
+		    </td>
+		  </tr>
+		</table>
+    </div>
+   </form>
+  </body>
+</html>

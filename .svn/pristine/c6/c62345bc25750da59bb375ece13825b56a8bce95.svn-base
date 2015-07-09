@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>新增</title>
+
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="this is my page">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="../../css/list.css">
+<script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+<script language="JavaScript" src="../../js/request.js"></script>
+<script language="JavaScript" src="../../js/json.js"></script>
+
+<script language="JavaScript" type="text/javascript">
+	G = function(objId) {
+		return document.getElementById(objId)
+	};
+	Gn = function(objName) {
+		return document.getElementsByName(objName)
+	};
+	window.onload = function() {
+		var thisURL = document.URL;
+		var getval = thisURL.split('?')[1];
+		id = getval.split("=")[1];
+		init();
+	};
+	var id;
+	function init() {
+		url = "/Hotel/rest/restaurant/" + id;
+		RemoteUtil.send(url, "GET", null, callSubmitBack2);
+	}
+	var type, status;
+	function callSubmitBack2(data) {
+		if (data.succeed) {
+			if (data.result.statusCode == "200") {
+				type = data.result.successMsg.type;
+				status = data.result.successMsg.status;
+				$("#name").val(data.result.successMsg.name);
+				$("#count").val(data.result.successMsg.count);
+				$("#type").val(data.result.successMsg.type);
+				$("#babychair").val(data.result.successMsg.babychair);
+				$("#status").val(data.result.successMsg.status);
+				$("#maxdinernum").val(data.result.successMsg.maxdinernum);
+				$("#detail").val(data.result.successMsg.detail);
+				$("#deposit").val(data.result.successMsg.deposit);
+				$("#lowest").val(data.result.successMsg.lowest);
+				$("#axf").val(data.result.successMsg.axf);
+				$("#remark").val(
+						RemoteUtil.replesecode(data.result.successMsg.remark));
+			}
+		}
+		var url = "/Hotel/rest/dictionaries/type/D__9k3wn846oan8";
+		RemoteUtil.send(url, "GET", null, callResultBack);
+
+		var url = "/Hotel/rest/dictionaries/type/D__1u3h8r0jke78";
+		RemoteUtil.send(url, "GET", null, callResultBack1);
+	}
+
+	function callResultBack(data) {
+		if (data.succeed) {
+			if (data.result.statusCode == "200") {
+				var list = data.result.successMsg;
+				var len = list.length;
+				$("#type").html("");
+				for ( var i = 0; i < len; i++) {
+					if (type == list[i].code) {
+						$("#type")
+								.append(
+										$("<option value='"+list[i].code+"' selected='selected'>"
+												+ list[i].name + "</option>"));
+					} else {
+						$("#type").append(
+								$("<option value='"+list[i].code+"'>"
+										+ list[i].name + "</option>"));
+					}
+				}
+			}
+		}
+	}
+
+	function callResultBack1(data) {
+		if (data.succeed) {
+			if (data.result.statusCode == "200") {
+				var list = data.result.successMsg;
+				var len = list.length;
+				$("#status").html("");
+				for ( var i = 0; i < len; i++) {
+					if (status == list[i].code) {
+						$("#status")
+								.append(
+										$("<option value='"+list[i].code+"' selected='selected'>"
+												+ list[i].name + "</option>"));
+					} else {
+						$("#status").append(
+								$("<option value='"+list[i].code+"'>"
+										+ list[i].name + "</option>"));
+					}
+				}
+			}
+		}
+	}
+
+	function submitForm() {
+		var isValid = $("#form").valid();
+		if (!isValid)
+			return;
+		var name = $("#name").val();
+		var count = $("#count").val();
+		var type = $("#type").val();
+		var babychair = $("#babychair").val();
+		var status = $("#status").val();
+		var maxdinernum = $("#maxdinernum").val();
+		var detail = $("#detail").val();
+		var deposit = $("#deposit").val();
+		var lowest = $("#lowest").val();
+		var axf = $("#axf").val();
+		var remark = $("#remark").val();
+
+		var parameter = "name:'" + name + "',count:'" + count + "',type:'"
+				+ type + "',babychair:'" + babychair + "',status:'" + status
+				+ "',maxdinernum:'" + maxdinernum + "',detail:'" + detail
+				+ "',deposit:'" + deposit + "',lowest:'" + lowest + "',axf:'"
+				+ axf + "',remark:'" + remark + "',rowid:'" + id + "'";
+
+		url = "/Hotel/rest/restaurant/" + id;
+		RemoteUtil.send(url, "POST", parameter, callSubmitBack);
+
+	}
+
+	function callSubmitBack(data) {
+		if (data.succeed) {
+			if (data.result.statusCode == "200") {
+				window.location.href = "list.html";
+			}
+		}
+
+	}
+</script>
+
+</head>
+
+<body>
+	<form name="form" method="post" action="" enctype="multipart/form-data"
+		id="form">
+		<div class="form_box">
+			<table width="100%" border="0" class="table">
+				<tr>
+					<td class="td">餐桌名称：</td>
+					<td><input type="text" class="input_text required" id="name"><span
+						class="span">*</span>
+					</td>
+					<td class="td">总数：</td>
+					<td><input type="text" class="input_text required" id="count"><span
+						class="span">*</span></td>
+				</tr>
+				<tr>
+					<td class="td">餐桌类型：</td>
+					<td><select name="type" id="type"></select><span class="span">*</span>
+					</td>
+					<td class="td">状态：</td>
+					<td><select name="status" id="status"></select><span
+						class="span">*</span></td>
+				</tr>
+				<tr>
+					<td class="td">建议用餐人数：</td>
+					<td><input type="text" class="input_text required"
+						id="maxdinernum"><span class="span">*</span></td>
+					<td class="td">是否有宝宝椅子：</td>
+					<td><input type="text" class="input_text required"
+						id="babychair"><span class="span">*</span></td>
+				</tr>
+				<tr>
+					<td class="td">预定押金：</td>
+					<td><input type="text" class="input_text required"
+						id="deposit"><span class="span">*</span></td>
+					<td class="td">最低消费金额：</td>
+					<td><input type="text" class="input_text required" id="lowest"><span
+						class="span">*</span></td>
+				</tr>
+				<tr>
+					<td class="td">人均消费：</td>
+					<td><input type="text" class="input_text" id="axf">
+					</td>
+				</tr>
+				<tr>
+					<td class="td2">餐桌说明：</td>
+					<td colspan="3"><textArea name="detail" id="detail" cols="90%"
+							rows="7"></textArea></td>
+					<span class="span">*</span>
+				</tr>
+				<tr>
+					<td class="td2">备注：</td>
+					<td colspan="3"><textArea name="remark" id="remark" cols="90%"
+							rows="7"></textArea></td>
+				</tr>
+				<tr>
+					<td colspan="4" class="td3" align="center">
+						<button type="button" class="button1" onclick="submitForm()">保存提交</button>
+						<button type="button" class="button2" onclick="history.go(-1)">取消返回</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</form>
+</body>
+</html>

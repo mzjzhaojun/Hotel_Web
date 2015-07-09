@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=2,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>手机版-金茂凯悦</title>
+<meta name="keywords" content=",金茂凯悦">
+<meta name="description" content="-金茂凯悦">
+<link rel="stylesheet" type="text/css" href="../css/common.css" />
+<link rel="stylesheet" type="text/css" href="../css/index.css" />
+<!-- <script type="text/javascript" src="/Public/Js/jquery-1.9.0.min.js"></script> -->
+<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../js/zepto.min.js"></script>
+<script type="text/javascript" src="../js/index.js"></script>
+<script type="text/javascript" src="../js/fx.js"></script>
+<script type="text/javascript" src="../js/touch.js"></script>
+<script type="text/javascript" src="../js/TouchSlide.1.1.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/jquery.form.js"></script>
+<script language="JavaScript" src="../../../js/request.js"></script>
+<script language="JavaScript" src="../../../js/json.js"></script>
+<script language="JavaScript" type="text/javascript">
+	var vs;
+	$(function(){
+	
+		$('#m_submit').click(function(){
+			if($("#m_password").val()=='')
+			{
+				parent.onPrompt('密码长度不能不能为空');
+				//$(document).layer('密码长度不能不能为空');
+				$("#m_password").focus();
+				return false;
+			}else
+			{
+				if($("#m_password").val().length<6)
+				{
+					parent.onPrompt('密码长度不能小于6位');
+					//$(document).layer('密码长度不能小于6位');
+				    $("#m_password").focus();
+				    return false;
+				}
+			}
+			if($("#m_verify").val()=='')
+			{
+				parent.onPrompt('验证码不能为空');
+				//$(document).layer('验证码不能为空');
+				$("#m_verify").focus();
+				return false;
+			}
+		   /* var data=$("#m_form").serialize();
+		   commonAjaxSubmit("../center/backpwd.html",data);
+		   return false; */
+		   var parameter = "no:'"+$("#m_phone").val()+"',code:'"+$("#m_verify").val()+"'";
+		   url = "/Hotel/rest/message/checkaccout";
+		   RemoteUtil.send(url, "GET", parameter, checkaccoutBack);
+		   return false;
+		});
+		$(".login_m").delegate('#login_send', 'click', function(event) 
+		{
+			vs= $(this);
+			var url="../center/findpwd.html";
+			var tel=$("#m_phone").val();
+			if(tel=='')
+			{
+				parent.onPrompt('手机号码不能为空');
+				//$(document).layer('手机号码不能为空');
+				$(".m_phone").focus();
+				return false;
+			}else
+			{
+				 var re = /^1\d{10}$/
+				 if(!re.test(tel))
+				 {
+				 	parent.onPrompt('手机号码格式不正确');
+					//$(document).layer('手机号码格式不正确');
+					$(".phone").focus();
+					return false;
+					
+				 }
+				
+			}
+			
+			//判断手机号是否注册
+			var parameter = "accout:'"+tel+"'";
+			url = "/Hotel/rest/customer/checkCustomer";
+			RemoteUtil.send(url, "GET", parameter, checkCustomerBack);
+			
+		
+		}) 
+		
+	})
+	
+	function checkCustomerBack(data){
+	
+		if(data.succeed){
+			if(data.result.statusCode == "200"){
+				if(data.result.successMsg!=null && data.result.successMsg!="null"){
+					//发送短信
+					var content = "D__tjrre15t7ilt";
+					var tel = $("#m_phone").val();
+					var parameter = "content:'"+content+"',no:'"+tel+"',type:'D__bw8naqz75mmz'";
+					url = "/Hotel/rest/message/sendmsg";
+					RemoteUtil.send(url, "GET", parameter, sendmsgBack);
+				}else{
+					parent.onPrompt('此手机号未注册，请重新输入！');
+					$("#m_phone").focus();
+					return false;
+				}
+			}else{
+				parent.onPrompt('服务器连接失败！');
+			}
+		}
+		
+	}
+	
+	function sendmsgBack(data){
+		
+		if(data.succeed){
+			if(data.result.statusCode == "200"){
+				parent.onPrompt('发送成功！');
+				//$(document).layer('发送成功！');
+				time(vs);
+			}else{
+				parent.onPrompt('发送失败！');
+				//$(document).layer('发送失败！');
+			}
+		}
+		
+	}
+	
+	function checkaccoutBack(data){
+		if(data.succeed){
+			if(data.result.statusCode == "200"){
+				if(data.result.successMsg!=null && data.result.successMsg!="null"){
+					//发送短信
+					var accout = $("#m_phone").val();
+					var password = $("#m_password").val();
+					var parameter = "accout:'"+accout+"',password:'"+password+"'";
+					url = "/Hotel/rest/customer/retrievePassword";
+					RemoteUtil.send(url, "GET", parameter, retrievePasswordBack);
+				}else{
+					parent.onPrompt('验证码不正确，请重新输入！');
+					$("#m_verify").focus();
+					return false;
+				}
+			}else{
+				parent.onPrompt('服务器连接失败！');
+			}
+		}
+	}
+	
+	function retrievePasswordBack(data){
+		
+		if(data.succeed){
+			if(data.result.statusCode == "200"){
+				parent.onLoginMain(data);
+			}
+		}
+		
+	}
+	
+</script>
+</head>
+<body class="pa welbg">
+	<div class="main1">
+      <div class="infobomb" style="display:block;">
+          <form id="m_form" method="post">
+              <!-- 找回密码 -->
+              <div class="infobomb_b step">
+                  <ul class="info_form">
+                      <li class="clear-input-box pr">
+                          <label style="position:absolute;top:0;left:10px">手机号码</label>
+                          <div class="form-detail">
+                              <input type="text" placeholder="注册或绑定手机号" id="m_phone" value="" name="m_phone" />
+                              <a class="clear-input " href="javascript:;">
+                                  <span></span>
+                              </a>
+                              <span class="clear-input">
+                                  <span></span>
+                              </span>
+                          </div>
+                      </li>
+                      <li class="clear-input-box pr">
+                          <label style="position:absolute;top:0;left:10px">验证码</label>
+                          <div class="form-detail">
+                              <input type="text" placeholder="" name="m_verify" id="m_verify" />
+                              <div class="login_a login_m">
+                              <input type="button" value="获取验证码" id="login_send"/>
+                              </div>
+                             <a class="clear-input" href="javascript:;">
+                                  <span></span>
+                              </a>
+                              <span class="clear-input">
+                                  <span></span>
+                              </span>
+                          </div>
+                      </li>
+                      <li class="clear-input-box pr">
+                          <label style="position:absolute;top:0;left:10px">新密码</label>
+                          <div class="form-detail">
+                              <input type="password" placeholder="6-20位字母、数字和符号" name="m_password" id="m_password" />
+                              <a class="clear-input " href="javascript:;">
+                                  <span></span>
+                              </a>
+                              <span class="clear-input">
+                                  <span></span>
+                              </span>
+                          </div>
+                      </li>
+                  </ul>
+                  <button class="step_1" id="m_submit">提交</button>
+              </div>
+          </form>
+      </div>
+      
+    </div>
+
+</body>
+</html>

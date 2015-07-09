@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>load</title>
+<script language="javascript" type="text/javascript">
+	window.location.href = "http://127.0.0.1/test";
+</script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<base href="<%=basePath%>">
+</head>
+<body>
+<form name="adminFrom" action="servlet/Md5Trade" method="Post">
+<table width="760" style="margin: 10px auto; padding: 0px;" border="0"
+	cellpadding="5" cellspacing="0">
+	<tr height="30">
+		<td colspan="2" align="center"><font size="12">支付请求</font></td>
+	</tr>
+	<tr height="20">
+		<td></td>
+		<td></td>
+	</tr>
+
+	<tr><td colspan="2"><b>常规参数</b></td></tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	
+	<tr>
+		<td width="200"><span>请求地址</span>
+		<td><input name="req_url" type="text" value="http://wappaygw.alipay.com/service/rest.htm" size="50" />固定值</td>
+	</tr>
+
+	<tr>
+		<td width="200"><span>版本(version)</span>
+		<td><input name="version" type="text" value="2.0" size="50" />固定值</td>
+	</tr>
+
+	<tr>
+		<td width="200"><span>服务(service)</span>
+		<td><input name="service" type="text"
+			value="alipay.wap.trade.create.direct" size="50" />固定值</td>
+	</tr>
+
+	<tr>
+		<td width="200"><span>合作伙伴ID(partner)</span><span></span>
+		<td><input name="partner_id" type="text" value=""
+			size="50" />从签约平台获取</td> 
+		
+	</tr>
+
+	<tr>
+		<td width="200"><span>签名算法(sec_id)</span><br><td><input name="sec_id" type="text" value="MD5" size="50" />固定值</td>
+	</tr>
+	
+	<tr>
+		<td width="200"><span>md5安全校验码(注意保密)</span><span></span>
+		<td><input name="key" type="text" value=""
+			size="50" />从签约平台获取</td> 
+		
+	</tr>
+	
+
+	<tr>
+		<td width="200"><span>请求参数格式(format)</span>
+		<td><input name="format" type="text" value="xml" size="50" />固定值</td>
+	</tr>
+
+	<tr>
+		<td width="200"><span>支付成功跳转链接(call_back_url)</span>
+		<td><input name="call_back_url" type="text" value="<%=basePath%>/servlet/Md5CallBack" size="50" />需要商户自行输入</td>
+	</tr>
+
+	<tr><td colspan="2"><b>业务参数</b></td></tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+
+	<tr>
+		<td width="200"><span>外部交易号(out_trade_no)</span>
+		<td><input name="out_trade_no" type="text" value="" size="50" />需要商户自行输入</td>
+	</tr>
+	<tr>
+		<td width="200"><span>商品名称(subject)</span>
+		<td><input name="subject" type="text" value="" size="50" />需要商户自行输入</td>
+	</tr>
+	<tr>
+		<td width="200"><span>商品总价(total_fee)</span>
+		<td><input name="total_fee" type="text" value="" size="50" />需要商户自行输入</td>
+	</tr>
+	<tr>
+		<td width="200"><span>卖家账户(seller_account_name)</span>	 
+		<td><input name="seller_account_name" type="text"
+			value="" size="50" />需要商户自行输入</td>
+		
+	</tr>
+	<tr>
+		<td width="200"><span>系统用户唯一标识(out_user)</span>
+		<td><input name="out_user" type="text"
+			value="" size="50" />需要商户自行输入</td>
+	</tr>
+
+	<tr>
+		<td width="200"><span>商户接受通知的url(notify_url)</span>
+		<td><input name="notify_url" type="text" value="<%=basePath%>/servlet/Md5NotifyReceiver"  size="50" />需要商户自行输入</td>
+	</tr>
+	  
+	<tr>
+		<td width="200"><span>返回商户链接(merchant_url)</span>
+		<td><input name="merchant_url" type="text" size="50" value=""/>需要商户自行输入</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input name="submit" type="submit" value="提交 ..." /></td>
+	</tr>
+</table>
+</form>
+</body>
+</html>

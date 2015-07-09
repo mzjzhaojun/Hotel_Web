@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>角色管理-查看</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../css/list.css">
+    <link rel="stylesheet" type="text/css" href="../../css/zTreeStyle/zTreeStyle.css" />
+    <script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+    <script language="JavaScript" src="../../js/request.js"></script>
+	<script language="JavaScript" src="../../js/json.js"></script>
+	<script type="text/javascript" src="../../js/ztree/jquery.ztree.all-3.5.min.js"></script>
+	<script type="text/javascript" src="../../js/ztree/ztree.js"></script>
+	
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		G = function(objId){return document.getElementById(objId)};
+		Gn = function(objName){return document.getElementsByName(objName)};
+		var role_code;
+		window.onload=function(){
+  			 id=getQueryStr("id");
+  			 role_code= getQueryStr("role_code");
+  			 init();
+  			getTree(role_code);
+		};
+		var id;
+		function init(){
+			
+			url = "/Hotel/rest/role/"+id;
+			RemoteUtil.send(url, "GET", null, callSubmitBack2);
+			//var parameter = "";
+			/* url = "/Hotel/rest/rolemodule/menu";
+			RemoteUtil.send(url, "GET", parameter, callMenuSubmitBack); */
+		}
+		function callMenuSubmitBack(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					var module_1 = data.result.successMsg;
+					var len = module_1.length;
+					var html = "";
+					for(var i=0;i<len;i++){
+						html = $("<div class='module' name='"+module_1[i].url+"'>"+module_1[i].module_name+"</div>");
+						$(".main_LeftContent").append(html);
+						var module_2 = module_1[i].children;
+						var len2 = module_2.length;
+						var html2 = "";
+						if(i==0){
+							html2+="<div class=\"module2\"><ul class=\"menuson\">";
+							$("#module_1").html(module_1[i].module_name);
+							$("#user_name").html(module_1[i].role_name);
+							$("#main").attr("src",module_1[i].url);
+						}else{
+							html2+="<div class=\"module3\"><ul class=\"menuson\">";
+						}
+						for(var y=0;y<len2;y++){
+							if(y==0){
+								html2+="<li class=\"active\" onclick=\"onClickNavigation('"+module_2[y].url+"','"+module_2[y].module_name+"')\"><cite></cite><a target=\"rightFrame\">"+module_2[y].module_name+"</a><i></i></li>";
+							}else{
+								html2+="<li onclick=\"onClickNavigation('"+module_2[y].url+"','"+module_2[y].module_name+"')\"><cite></cite><a target=\"rightFrame\">"+module_2[y].module_name+"</a><i></i></li>";
+							}
+							if(i==0 && y==0){
+								$("#module_2").html(module_2[y].module_name);
+							}
+						}
+						html2+="</ul></div>";
+						$(".main_LeftContent").append(html2);
+					}
+					
+				}
+			}
+		}
+		function callSubmitBack2(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					$("#role_name").html(data.result.successMsg.role_name);
+					$("#remarks").html(data.result.successMsg.remarks);
+				}
+			}
+		}
+		
+	//-->
+	</script>
+	
+  </head>
+  
+  <body>
+   
+   	<div class="form_box">
+    	<table width="100%" border="0" class="table">
+		  <tr>
+		    <td class="td">角色名称：</td>
+		    <td><span id="role_name"></span></td>
+		  </tr>
+		  <tr>
+		    <td class="td2">详细描述：</td>
+		    <td colspan="3">
+		    	<textArea name="remarks" id="remarks" cols="90%" rows="7" id="remarks" readonly="readonly"></textArea>
+		    </td>
+		  </tr>
+		   <tr>
+		    <td class="td2">角色权限：</td>
+		    <td colspan="3">
+		    	
+    			<ul id="roleTree" class="ztree"></ul>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td colspan="4" class="td3" align="center">
+    			<button type="button" class="button2" onclick="history.go(-1)">取消返回</button>
+		    </td>
+		  </tr>
+		</table>
+    </div>
+   
+  </body>
+</html>

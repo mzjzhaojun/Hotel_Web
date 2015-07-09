@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>新增</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../css/list.css">
+    <script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+    <script language="JavaScript" src="../../js/request.js"></script>
+	<script language="JavaScript" src="../../js/json.js"></script>
+	
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		G = function(objId){return document.getElementById(objId)};
+		Gn = function(objName){return document.getElementsByName(objName)};
+		window.onload=function(){
+			 var thisURL = document.URL;    
+ 			 var  getval =thisURL.split('?')[1];  
+  			 id= getval.split("=")[1]; 
+  			 init();
+		};
+		var id;
+		function init(){
+			url = "/Hotel/rest/coupon/"+id;
+			RemoteUtil.send(url, "GET", null, callSubmitBack2);
+			
+		}
+		
+		function callSubmitBack2(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					$("#name").html(data.result.successMsg.name);
+					$("#detail").html(data.result.successMsg.detail);
+					$("#coupontype").html(data.result.successMsg.coupontype_name);
+					$("#instructions").html(data.result.successMsg.instructions);
+					$("#count").html(data.result.successMsg.count);
+					$("#price").html(data.result.successMsg.price);
+					$("#sellprice").html(data.result.successMsg.sellprice);
+					$("#remark").html(data.result.successMsg.remark);
+				}
+			}
+		}
+		
+	//-->
+	</script>
+	
+  </head>
+  
+  <body>
+   
+   		<div class="form_box">
+    	<table width="100%" border="0" class="table">
+		  <tr>
+		    <td class="td">优惠卷名称：</td>
+		    <td><span id="name"></span></td>
+		    <td class="td">优惠卷类型：</td>
+		    <td><span id="coupontype"></span></td>
+		  </tr>
+		  <tr>
+		    <td class="td">优惠卷内容：</td>
+		    <td><span id="detail"></span></td>
+		    <td class="td">总数量：</td>
+		    <td><span id="count"></span></td>
+		  </tr>
+		  <tr>
+		    <td class="td">优惠卷面值金额：</td>
+		    <td><span id="price"></span></td>
+		    <td class="td">优惠卷售卖金额：</td>
+		    <td><span id="sellprice"></span></td>
+		  </tr>
+		   <tr>
+		    <td class="td2">说明：</td>
+		    <td colspan="3">
+		    	<textArea name="instructions" id="instructions" cols="90%" rows="7"></textArea>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td class="td2">备注：</td>
+		    <td colspan="3">
+		    	<textArea name="remark" id="remark" cols="90%" rows="7" ></textArea>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td colspan="4" class="td3" align="center">
+    			<button type="button" class="button2" onclick="history.go(-1)">取消返回</button>
+		    </td>
+		  </tr>
+		</table>
+    </div>
+   
+  </body>
+</html>

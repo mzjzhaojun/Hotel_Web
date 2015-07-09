@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=2,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>手机版-金茂凯悦</title>
+<meta name="keywords" content="首页,金茂凯悦">
+<meta name="description" content="首页-金茂凯悦">
+<link rel="stylesheet" type="text/css" href="css/common.css" />
+<link rel="stylesheet" type="text/css" href="css/index.css" />
+<!-- <script type="text/javascript" src="/Public/Js/jquery-1.9.0.min.js"></script> -->
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="js/zepto.min.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/fx.js"></script>
+<script type="text/javascript" src="js/touch.js"></script>
+<script type="text/javascript" src="js/TouchSlide.1.1.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/jquery.form.js"></script>
+<script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.zclip.js"></script>
+
+<link rel="stylesheet" type="text/css" href="css/base.css">
+<link rel="stylesheet" type="text/css" href="css/lay.css">
+<script>
+
+  $(document).ready(function(){
+    is_weixn();
+    $('.lay-btn').on('click',function(){
+      $('.lay-tips2').show();
+    });
+    $('.lay-close').on('click',function(){
+      $('.lay-bg').fadeOut(100);
+      $('.lay-tips2').hide();
+    })
+    /* 定义所有class为copy-input标签，点击后可复制class为input的文本 */
+    $(".lay-btn").zclip({
+      path: "js/ZeroClipboard.swf",
+      copy: function(){
+      return $(this).parent().find(".input").val();
+      },
+      afterCopy:function(){/* 复制成功后的操作 */
+        $('.lay-tips2').show();
+      }
+    });
+  })
+
+function is_weixn(){  
+	var ua = navigator.userAgent.toLowerCase();  
+	if(ua.match(/MicroMessenger/i)=="micromessenger") {
+		 $('#lay_wap').show();
+	} else {  
+		return false;  
+	}  
+} 
+</script>
+</head>
+<body class="pa welbg">
+    <div class="main pr">
+ <!-- 主体部分 -->
+  <div id="lay_wap" class="lay-bg" style="display:none">
+    <div class="lay-box">
+      <dl class="lay-c">
+        <dt>温馨提醒</dt>
+        <dd>
+          <p class="lay-tips">为了您的购买体验更流畅，建议您复制以下网址<br />用UC、Safari等浏览器打开，给您带来不便，敬请谅解！</p>
+          <input type="text" class="lay-txt" readonly="true" value="121.237.53.49" />
+		 
+          <p>IOS用户手动复制文本框内容！</p>
+        </dd>
+      </dl>
+      <i class="lay-close">×</i>
+    </div>
+  </div>
+  <div class="content" style="padding:0;">
+         <div class="main1 bg">
+             <a href="main.html" title="">
+                 <div class="wel">
+                     <div class="wel_t">
+                         
+                     </div>
+                     <div class="wel_c"></div>
+                     <div class="wel_b">
+                         <div class="wel_g">
+                             <img src="images/wel2.gif" alt="" />
+                         </div>
+                         <div class="wel_f">
+                             点击开启您的尊贵生活！
+                         </div>
+                     </div>
+                 </div>
+             </a>
+         </div>
+     </div>
+ </div>
+	
+	
+
+</body>
+</html>

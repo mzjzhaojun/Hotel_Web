@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+	<meta content="target-densitydpi=device-dpi,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+	<link rel="stylesheet" href="../reservation/css/common.css" type="text/css">
+	<link rel="stylesheet" href="../reservation/css/orderwrite.css" type="text/css">
+	<title>崇明金茂凯悦酒店-订单详情</title>
+	<script type="text/javascript" src="../reservation/js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="../reservation/js/touch-0.2.14.min.js"></script>
+	<script type="text/javascript" src="../reservation/js/index.js"></script>
+	<script type="text/javascript" src="../reservation/js/request.js"></script>
+	<script type="text/javascript" src="../reservation/js/json.js"></script>
+	<script type="text/javascript" src="../reservation/js/getUrlParam.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			
+			var no=UrlParm.parm("no");
+			alert(no);
+			var parameters = "";
+		  	var url = "/Hotel/rest/orderinfo/lectOrderInfo/"+no;
+		  	RemoteUtil.send(url, "POST", parameters, lectOrderInfoBack);
+			
+		});
+		
+		function lectOrderInfoBack(){
+			
+			if (data.succeed) {
+				if (data.result.statusCode == "200") {
+					
+				}
+			}
+			
+		}
+		
+	</script>
+</head>
+
+
+<body id="body">
+	<div class="headers" id="headers">
+			<div class="headerslide">
+				<img class="slideson" src="../reservation/img/2015013016281912.jpg" alt="高级房(双)" style="width: 1349px;">
+			</div>
+			<div class="banner">
+				<span class="tex flo_le">崇明金茂凯悦酒店</span>
+			</div>
+	</div>
+	<div class="pad title overflow">
+		<span class="roomname float_left middle" id="title">标间大床房</span>
+		<span class="total parice float_right color_orange" id="price">￥100</span>
+	</div>
+
+	<form action="" id="formbook" method="post" class="write">
+	<input name="roomid" type="hidden" id="roomid" value="1">
+	<input name="nums" type="hidden" id="nums" value="1">
+	<input name="rp_cd" type="hidden" id="rp_cd" value="16">
+	<input name="startdate" type="hidden" id="startdate" value="2015/06/08">
+	<input name="enddate" type="hidden" id="enddate" value="2015/06/09">
+	<input name="paytype" type="hidden" id="paytype" value="1">
+	<input name="prevend" type="hidden" id="prevend" value="0">
+		<ul class="detail middle">
+			<li class="bac_white border_bottom">
+				<span id="in" class="in mar_rig">6月08日入住</span>
+				<span id="out" class="out mar_rig">6月09日离店</span>
+				<span id="livedays">3晚</span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>订单号</span>
+				<span class="absolute le" id="count">2</span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>预定码</span>
+				<span class="absolute le" id="count">2</span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>房间数</span>
+				<span class="absolute le" id="count">2</span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>总价</span>
+				<span class="color_orange le absolute">￥<span id="room_price">11</span></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>是否支付</span>
+				<span class="le absolute ch1" paytype="1">已支付</span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>预定时间</span>
+				<span class="absolute le" id="count">2</span>
+			</li>
+			<li class="Abb">
+				<p id="booktips" class="booktip">&nbsp;</p></li>
+			<li class="bac_white border_bottom ">
+				<span>入住人</span>
+				<span class="le absolute" style="font-size:0.9em" name="custname" id="custname">离店日12:00(不能取消订单)</span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>手机号</span>
+				<span class="le absolute" style="font-size:0.9em" name="mobilephone" id="mobilephone">离店日12:00(不能取消订单)</span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>凯悦金护照</span>
+				<span class="le absolute" style="font-size:0.9em" name="passport" id="passport">离店日12:00(不能取消订单)</span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>需求</span>
+				<span class="le absolute" style="font-size:0.9em" name="need" id="need">离店日12:00(不能取消订单)</span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>其他需求</span>
+				<span class="le absolute" style="font-size:0.9em" name="otherneed" id="otherneed">离店日12:00(不能取消订单)</span>
+			</li>
+		</ul>
+</form>
+
+</body>
+</html>

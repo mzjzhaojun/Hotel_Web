@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>修改</title>
+
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="this is my page">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="../../css/list.css">
+<link rel="stylesheet" type="text/css" href="../../css/date.css">
+<link rel="stylesheet" type="text/css" href="../../css/zyUpload.css">
+<script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+<script language="JavaScript" src="../../js/request.js"></script>
+<script language="JavaScript" src="../../js/json.js"></script>
+<script language="JavaScript" src="../../js/eap.core.js"></script>
+<script language="JavaScript" src="../../js/eap.util.date.js"></script>
+<script language="JavaScript" src="../../js/eap.simpleDatepicker.js"></script>
+<script language="JavaScript" src="../../js/eap.lang-zh_CN.js"></script>
+<script language="JavaScript" src="../../js/zyFile.js"></script>
+<script language="JavaScript" src="../../js/zyUpload.js"></script>
+<script type="text/javascript" src="../../js/eap.tip.js"></script>
+<script language="JavaScript" src="../../js/eap.validate.js"></script>
+
+<script language="JavaScript" type="text/javascript">
+	G = function(objId) {
+		return document.getElementById(objId)
+	};
+	Gn = function(objName) {
+		return document.getElementsByName(objName)
+	};
+	var imgurl = "";
+	window.onload = function() {
+		var thisURL = document.URL;
+		var getval = thisURL.split('?')[1];
+		id = getval.split("=")[1];
+		init();
+		// 初始化插件
+		$("#img").zyUpload({
+			width : "100%px", // 宽度
+			height : "100%px", // 宽度
+			itemWidth : "120px", // 文件项的宽度
+			itemHeight : "100px", // 文件项的高度
+			url : "/Hotel/rest/room/upload", // 上传文件的路径
+			multiple : true, // 是否可以多个文件上传
+			dragDrop : false, // 是否可以拖动上传文件
+			del : true, // 是否可以删除文件
+			finishDel : true, // 是否在上传文件完成后删除预览
+			needFlage : "1",//是否必须选择图片0是是，1是否
+			uploadInput : $("#button1"),
+			/* 外部获得的回调接口 */
+			onSuccess : function(response) {
+				var data = JSON.decode(response); // 文件上传成功的回调方法
+				if (data.succeed) {
+					if (data.result.statusCode == "200") {
+						var url = data.result.successMsg;
+						imgurl += url + "|";
+					}
+				}
+			},
+			onComplete : function(responseInfo) {
+				submitForm(); // 上传完成的回调方法
+			}
+		});
+		
+		
+		
+	};
+	
+	var id;
+	function init() {
+		url = "/Hotel/rest/restaurant/" + id;
+		RemoteUtil.send(url, "GET", null, callSubmitBack2);
+	}
+
+	var status, badtype;
+	var roomimg = "";
+	var roomimg2 = "";
+	function callSubmitBack2(data) {
+		if (data.succeed) {
+			if (data.result.statusCode == "200") {
+				type = data.result.successMsg.type;
+				status = data.result.successMsg.status;
+				$("#name").val(data.result.successMsg.name);
+				$("#count").val(data.result.successMsg.count);
+				$("#surplus").val(data.result.successMsg.surplus);
+				$("#type").val(data.result.successMsg.type);
+				$("#status").val(data.result.successMsg.status);
+				$("#detail").val(RemoteUtil.replesecode(data.result.successMsg.detail));
+				$("#remark").val(
+						RemoteUtil.replesecode(data.result.successMsg.remark));
+				
+				roomimg = data.result.successMsg.dningimg;
+				if(roomimg!=undefined && roomimg!=""){
+					var roomimgs = roomimg.split("|");
+					var len = roomimgs.length;
+					for(var i=0;i<len;i++){
+						var img = roomimgs[i];
+						if(img.length>10){
+							img = img.substr(0,9)+"...";
+						}
+						$(".room_img2").append($("<div class=\"room_img_1\" id=\"room_img"+i+"\">"+
+												"<img src=\"../../img/upload/"+roomimgs[i]+"\">"+
+												"<div class=\"delete_div\">"+
+													"<span>"+img+"</span>"+
+													"<img class=\"close_img\" id=\"room_img"+i+"\" name=\""+roomimgs[i]+"\" src=\"../../img/delete_white.png\" onmousemove=\"this.src='../../img/delete_blue.png'\" onmouseout=\"this.src='../../img/delete_white.png'\">"+
+												"</div>"+
+											"</div>"));
+					}
+				}
+				
+			}
+		}
+		var url = "/Hotel/rest/dictionaries/type/D__9k3wn846oan8";
+		RemoteUtil.send(url, "GET", null, callResultBack);
+
+		var url = "/Hotel/rest/dictionaries/type/D__1u3h8r0jke78";
+		RemoteUtil.send(url, "GET", null, callResultBack1);
+		
+		$(".room_img_1").mousemove(function(){
+			$(this).find("div").css({"display":"block"});
+		});
+		$(".room_img_1").mouseout(function(){
+			$(this).find("div").css({"display":"none"});
+		});
+		$(".close_img").click(function(){
+			var id = $(this).attr("id");
+			roomimg2 += $(this).attr("name")+"|";
+			$("#"+id).remove();
+		});
+	}
+
+	function callResultBack(data) {
+		if (data.succeed) {
+			if (data.result.statusCode == "200") {
+				var list = data.result.successMsg;
+				var len = list.length;
+				$("#type").html("");
+				for ( var i = 0; i < len; i++) {
+					if (type == list[i].code) {
+						$("#type")
+								.append(
+										$("<option value='"+list[i].code+"' selected='selected'>"
+												+ list[i].name + "</option>"));
+					} else {
+						$("#type").append(
+								$("<option value='"+list[i].code+"'>"
+										+ list[i].name + "</option>"));
+					}
+				}
+			}
+		}
+	}
+
+	function callResultBack1(data) {
+		if (data.succeed) {
+			if (data.result.statusCode == "200") {
+				var list = data.result.successMsg;
+				var len = list.length;
+				$("#status").html("");
+				for ( var i = 0; i < len; i++) {
+					if (status == list[i].code) {
+						$("#status")
+								.append(
+										$("<option value='"+list[i].code+"' selected='selected'>"
+												+ list[i].name + "</option>"));
+					} else {
+						$("#status").append(
+								$("<option value='"+list[i].code+"'>"
+										+ list[i].name + "</option>"));
+					}
+				}
+			}
+		}
+	}
+	var roomimgs3 = "";
+	function submitForm() {
+		$("#form").validate({
+			rules : {
+				"name" : {
+					required : true,
+					maxlength : 20
+				},
+				"count" : {
+					required : true,
+				},
+				"surplus" : {
+					required : true,
+				},
+				"detail" : {
+					required : true
+				}
+			}
+		});
+		var isValid = $("#form").valid();
+		if (!isValid)
+			return;
+		var len = 0;
+		var roomimgs = "";
+		if(roomimg!="" && roomimg!=undefined){
+			roomimgs = roomimg.split("|");
+			if(roomimgs!="" && roomimgs!=undefined){
+				len = roomimgs.length;
+			}
+		}
+		var len2 = 0;
+		var roomimgs2 = "";
+		if(roomimg2!="" && roomimg2!=undefined){
+			roomimgs2 = roomimg2.split("|");
+			len2 = roomimgs2.length-1;
+		}
+		
+		for(var i=0;i<len;i++){
+			var bool = true;
+			for(var y=0;y<len2;y++){
+				
+				if(roomimgs[i]==roomimgs2[y]){
+					bool = false;
+				}
+				
+			}
+			if(bool==true){
+				roomimgs3 += roomimgs[i]+"|";
+			}
+			
+		}
+		var img = "";
+		if(imgurl==""){
+			img = roomimgs3.substring(0, roomimgs3.length - 1);
+		}else{
+			img = roomimgs3+imgurl.substring(0, imgurl.length - 1);
+		}
+
+		var name = $("#name").val();
+		var count = $("#count").val();
+		var surplus = $("#surplus").val();
+		var type = $("#type").val();
+		var status = $("#status").val();
+		var detail = $("#detail").val();
+		var remark = $("#remark").val();
+
+		var parameter = "name:'" + name + "',count:'" + count + "',type:'"
+				+ type + "',surplus:'" + surplus + "',status:'" + status
+				+ "',detail:'" + detail + "',dningimg:'" + imgurl.substring(0, imgurl.length - 1)
+				+ "',remark:'" + remark + "',rowid:'" + id + "'";
+
+
+		url = "/Hotel/rest/restaurant/" + id;
+		RemoteUtil.send(url, "POST", parameter, callSubmitBack);
+
+	}
+
+	function callSubmitBack(data) {
+		if (data.succeed) {
+			if (data.result.statusCode == "200") {
+				window.location.href = "list.html";
+			}
+		}
+	}
+//-->
+</script>
+
+</head>
+
+<body>
+	<form name="form" method="post" action="" enctype="multipart/form-data"
+		id="form">
+		<div class="form_box">
+			<table width="100%" border="0" class="table">
+				<tr>
+					<td class="td">菜品名称：</td>
+					<td><input type="text" class="input_text required" id="name"
+						name="name"><span class="span">*</span>
+					</td>
+				</tr>
+				<tr>
+					<td class="td">菜品类型：</td>
+					<td><select name="type" id="type"></select><span class="span">*</span>
+					</td>
+					<td class="td">状态：</td>
+					<td><select name="status" id="status"></select><span
+						class="span">*</span></td>
+				</tr>
+				<tr>
+					<td class="td">价格：</td>
+					<td><input type="text" class="input_text required" id="count"
+						name="count"><span class="span">*</span></td>
+					<td class="td">优惠后价格：</td>
+					<td><input type="text" class="input_text required"
+						id="surplus" name="surplus"><span class="span">*</span></td>
+				</tr>
+				<tr>
+					<td class="td2">菜品说明：</td>
+					<td colspan="3"><textArea name="detail" id="detail" cols="90%"
+							rows="7"></textArea><span class="span">*</span></td>
+				</tr>
+				<tr>
+					<td class="td2">备注：</td>
+					<td colspan="3"><textArea name="remark" id="remark"   cols="90%"
+							rows="7"></textArea></td>
+				</tr>
+				<tr>
+					<td class="td2">餐厅图片：</td>
+					<td colspan="3">
+						<div class=room_img2>
+							<!-- <div class="room_img_1">
+								<img src="../../img/upload/1.jpg">
+								<div class="delete_div">
+									<span>cf.png</span>
+									<img src="../../img/delete_white.png" onmousemove="this.src='../../img/delete_blue.png'" onmouseout="this.src='../../img/delete_white.png'">
+								</div>
+							</div> -->
+						</div>
+						<div id="img" class="img" style="float: left;border-left:0px;"></div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4" class="td3" align="center">
+						<button type="button" id="button1" class="button1">保存提交</button>
+						<button type="button" id="button2" class="button2"
+							onclick="history.go(-1)">取消返回</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</form>
+</body>
+</html>

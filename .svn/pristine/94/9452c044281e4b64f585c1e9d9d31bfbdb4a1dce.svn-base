@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>exchangel.html</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+<link rel="stylesheet" type="text/css" href="../../css/list.css">
+<link rel="stylesheet" type="text/css" href="../../css/date.css">
+<script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+<script language="JavaScript" src="../../js/request.js"></script>
+<script language="JavaScript" src="../../js/json.js"></script>
+<script language="JavaScript" src="../../js/eap.core.js"></script>
+<script language="JavaScript" src="../../js/eap.util.date.js"></script>
+<script language="JavaScript" src="../../js/eap.simpleDatepicker.js"></script>
+<script language="JavaScript" src="../../js/eap.lang-zh_CN.js"></script>
+<script language="JavaScript" src="../../js/eap.validate.js"></script>
+<script type="text/javascript" src="../../js/eap.tip.js" ></script>
+<style type="text/css">
+.list .list_centent2{position: absolute;left:0px;right:0px;top:60px;bottom:39px;border:solid 0px #D8D8D8;overflow: auto;}
+.list .list_centent2 .table,.table td,.table th{border:solid 1px #DBDBDB;border-collapse:collapse;}
+</style>
+<script language="JavaScript" type="text/javascript">
+
+var code="";
+var relpwd="";
+//搜索
+function onClickSearch() {
+	init();
+	code = $("#ucode").val();
+	if(code!=""){
+		select();
+	}else{
+		alert('请输入优惠券码！');
+	}
+	
+}
+
+function select() {
+	url = "/Hotel/rest/sellcoupon/selectOneSellcoupon/"+ code;
+	RemoteUtil.send(url, "GET", null, callSubmitBack2);
+
+}
+
+function callSubmitBack2(data) {
+	if (data.succeed) {
+		if (data.result.statusCode == "200") {
+			if(data.result.successMsg=="null"){
+				alert("无此优惠券信息！");
+			}else{
+				$("#code").html(data.result.successMsg.code);
+				$("#coupontype").html(data.result.successMsg.coupontype);
+				$("#coupontype").html(
+						data.result.successMsg.coupontype_name);
+				$("#price").html(data.result.successMsg.price);
+				$("#buyprice").html(data.result.successMsg.buyprice);
+				$("#status").html(data.result.successMsg.status_name);
+				$("#issuedate").html(data.result.successMsg.issuedate);
+				$("#duedate").html(data.result.successMsg.duedate);
+				$("#buycount").html(data.result.successMsg.buycount);
+				$("#remarks").val(RemoteUtil.replesecode(data.result.successMsg.remarks));
+				relpwd=data.result.successMsg.pwd;
+			}
+			
+		}else{
+			alert('查询失败！请重新查询！');
+		}
+	}
+}
+function init(){
+	$("#code").html("");
+	$("#coupontype").html("");
+	$("#price").html("");
+	$("#buyprice").html("");
+	$("#status").html("");
+	$("#issuedate").html("");
+	$("#duedate").html("");
+	$("#buycount").html("");
+	$("#remarks").val("");
+	$("#pwd").val("");
+}
+function submitForm(){
+	$("#form").validate({
+		rules : {
+			"code" : {
+				required : true,
+				maxlength : 20
+			},
+			"pwd" : {
+				required : true,
+				maxlength : 20
+			}
+		}
+	});
+	var isValid = $("#form").valid();
+	if (!isValid)
+		return;
+	code = $("#ucode").val();
+	var status = $("#status").val();
+	var pwd=$("#pwd").val();
+	if(pwd!=relpwd){
+		alert("兑换码不正确!");
+	}else{
+		url = "/Hotel/rest/sellcoupon/updateSellcouponStatus/"+code;
+		RemoteUtil.send(url, "POST", null, callSubmitBack);
+	}
+	
+}
+function callSubmitBack(data){
+	if(data.succeed){
+		if(data.result.statusCode == "200"){
+			alert("兑换成功！");
+			select() ;
+		}
+	}
+}
+</script>
+
+  </head>
+  
+  <body>
+  <form name='form' method='post' action='' enctype='multipart/form-data' id='form'>
+  <div class="list">
+  		<div class="list_title">
+
+			<label>优惠券码：</label> <input type="text" class="input_text" id="ucode" name="ucode"
+				placeholder="请输入优惠券码" /> 
+			<button type="button" class="button_search" onclick="onClickSearch()">搜&nbsp;
+				索</button>
+			<div class="operating">
+			</div>
+		</div>
+		<div class="list_centent2">
+		 <div class="form_box">
+		<table width="100%" border="0" class="table">
+			<tr>
+				<td class="td">优惠卷码：</td>
+				<td><span id="code"></span>
+				</td>
+				<td class="td">优惠卷类型：</td>
+				<td><span id="coupontype"></span>
+				</td>
+			</tr>
+			<tr>
+				<td class="td">发放日期：</td>
+				<td><span id="issuedate"></span>
+				</td>
+				<td class="td">到期日期：</td>
+				<td><span id="duedate"></span>
+				</td>
+			</tr>
+			<tr>
+				<td class="td">优惠卷总金额：</td>
+				<td><span id="price"></span>
+				</td>
+				<td class="td">优惠卷购买金额：</td>
+				<td><span id="buyprice"></span>
+				</td>
+			</tr>
+			<tr>
+				<td class="td">状态：</td>
+				<td><span id="status"></span>
+				</td>
+				<td class="td">购买数量：</td>
+				<td><span id="buycount"></span>
+				</td>
+			</tr>
+			<tr>
+				<td class="td2">备注：</td>
+				<td colspan="3"><textArea name="remarks" id="remarks"
+						cols="90%" rows="7" readonly="readonly"></textArea></td>
+			</tr>
+			<tr>
+				<td class="td">兑换码：</td>
+				<td colspan="3"><input type="text" class="input_text" id="pwd" name="pwd">
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4" class="td3" align="center">
+					<button type="button" class="button1" onclick="submitForm()">确认兑换</button>
+					<button type="button" class="button2" onclick="init()">取消</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+		</div>
+	</div>
+ </form>
+  </body>
+</html>

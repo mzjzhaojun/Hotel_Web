@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>新增</title>
+
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="this is my page">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="../../css/list.css">
+<link rel="stylesheet" type="text/css" href="../../css/date.css">
+<script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+<script language="JavaScript" src="../../js/request.js"></script>
+<script language="JavaScript" src="../../js/json.js"></script>
+<script language="JavaScript" src="../../js/eap.core.js"></script>
+<script language="JavaScript" src="../../js/eap.util.date.js"></script>
+<script language="JavaScript" src="../../js/eap.simpleDatepicker.js"></script>
+<script language="JavaScript" src="../../js/eap.lang-zh_CN.js"></script>
+<script type="text/javascript" src="../../js/eap.tip.js"></script>
+<script language="JavaScript" src="../../js/eap.validate.js"></script>
+<script language="JavaScript" src="../../js/zyFile.js"></script>
+<script language="JavaScript" src="../../js/zyUpload.js"></script>
+
+<script language="JavaScript" type="text/javascript">
+	G = function(objId) {
+		return document.getElementById(objId)
+	};
+	Gn = function(objName) {
+		return document.getElementsByName(objName)
+	};
+	var type = getQueryStr("type");
+	window.onload = function() {
+		init();
+	
+	};
+	
+	function init() {
+				$(".form_box").html("");
+				var table = $("<table width='100%' border='0' class='table'>");
+				var tr1;
+				if (type == "1") {//特产
+					tr1 = $("<tr>"
+							+ "<td class='td' >订单名称：</td>"
+							+ "<td ><input type='text' class='input_text' id='title' name='title' /><span class='span'>*</span></td>"
+							+ "<td class='td'>客户帐号：</td>"
+							+ "<td><input type='text' class='input_text' id='account' name='account'/><span class='span'>*</span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>订单状态：</td>"
+							+ "<td><select name='status' id='status'></select></td>"
+							+ " <td class='td'>订购数量：</td>"
+							+ "<td><input type='text' class='input_text' id='count' name='count'/><span class='span'>*</span></td>"	
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>原价：</td>"
+							+ "<td><input type='text' class='input_text' id='price' name='price'/><span class='span'>*</span></td>"
+							+ " <td class='td'>优惠价：</td>"
+							+ "<td><input type='text' class='input_text' id='newprice' name='newprice'/><span class='span'>*</span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ " <td class='td'>客户姓名：</td>"
+							+ "<td><input type='text' class='input_text' id='custname' name='custname'/><span class='span'>*</span></td>"
+							+ "<td class='td'>手机号码：</td>"
+							+ "<td><input type='text' class='input_text' id='mobilephone' name='mobilephone' /><span class='span'>*</span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ " <td class='td'>总价：</td>"
+							+ "<td colspan='3'><input type='text' class='input_text' id='sumamounts' name='sumamounts'/><span class='span'>*</span></td>"
+							+ "</tr>"
+							+ "<tr>"
+							+ " <td class='td2'>备注：</td>"
+							+ "<td colspan='3'>"
+							+ "<textArea name='remark' id='remark' cols='90%' rows='7' ></textArea>"
+							+ "</td>"
+							+ "</tr>"
+							+ "<tr>"
+							+ "<td colspan='4' class='td3' align='center'>"
+							+ "<button type='button' class='button1' onclick='submitForm()'>保存提交</button>"
+							+ "<button type='button' class='button2' onclick='history.go(-1)'>取消返回</button>"
+							+ " </td>" + "</tr>" + "</table>");
+				}
+				if (type == "2") {//餐厅
+					tr1 = $("<tr>"
+							+ "<td class='td' >订单名称：</td>"
+							+ "<td ><input type='text' class='input_text' id='title' name='title'/><span class='span'>*</span></td>"
+							+ "<td class='td' >客户帐号：</td>"
+							+ "<td ><input type='text' class='input_text' id='account' name='account' /><span class='span'>*</span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>订单状态：</td>"
+							+ "<td><select name='status' id='status'></select></td>"
+							+ " <td class='td'>就餐人数：</td>"
+							+ "<td><input type='text' class='input_text' id='inperson' name='inperson'/><span class='span'>*</span></td>"	
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>原价：</td>"
+							+ "<td><input type='text' class='input_text' id='price' name='price'/><span class='span'>*</span></td>"
+							+ " <td class='td'>优惠价：</td>"
+							+ "<td><input type='text' class='input_text' id='newprice' name='newprice'/><span class='span'>*</span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>客户姓名：</td>"
+							+ "<td><input type='text' class='input_text' id='custname' name='custname'/><span class='span'>*</span></td>"
+							+ "<td class='td'>手机号码：</td>"
+							+ "<td><input type='text' class='input_text' id='mobilephone' name='mobilephone'/><span class='span'>*</span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>就餐时间：</td>"
+							+ "<td><input type='text' class='input_text' id='indatetime' readonly name='indatetime' /><span class='span'>*</span></td>"
+							+ "</tr>"
+							+ "<tr>"
+							+ " <td class='td2'>备注：</td>"
+							+ "<td colspan='3'>"
+							+ "<textArea name='remark' id='remark' cols='90%' rows='7' ></textArea>"
+							+ "</td>"
+							+ "</tr>"
+							+ "<tr>"
+							+ "<td colspan='4' class='td3' align='center'>"
+							+ "<button type='button' class='button1' onclick='submitForm()'>保存提交</button>"
+							+ "<button type='button' class='button2' onclick='history.go(-1)'>取消返回</button>"
+							+ " </td>" + "</tr>" + "</table>");
+				}
+				if (type == "3") {//房间
+					tr1 = $("<tr>"
+							+ "<td class='td' >订单名称：</td>"
+							+ "<td ><input type='text' class='input_text' id='title' name='title' /><span class='span'>*</span></td>"
+							+ "<td class='td' >客户帐号：</td>"
+							+ "<td ><input type='text' class='input_text' id='account' name='account'/><span class='span'>*</span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>订单状态：</td>"
+							+ "<td><select name='status' id='status'></select></td>"
+							+ " <td class='td'>入住人数：</td>"
+							+ "<td><input type='text' class='input_text' id='inperson' name='inperson' /><span class='span'>*</span></td>"	
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>入住时间：</td>"
+							+ "<td><input type='text' class='input_text' id='indatetime' name='indatetime' readonly /><span class='span'>*</span></td>"
+							+ " <td class='td'>退房时间：</td>"
+							+ "<td><input type='text' class='input_text' id='outdatetime' readonly name='outdatetime'/><span class='span'>*</span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>客户姓名：</td>"
+							+ "<td><input type='text' class='input_text' id='custname' name='custname'/><span class='span'>*</span></td>"
+							+ " <td class='td'>手机号码：</td>"
+							+ "<td><input type='text' class='input_text' id='mobilephone' name='mobilephone' /><span class='span'>*</span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>原价：</td>"
+							+ "<td><input type='text' class='input_text' id='price' name='price'/><span class='span'>*</span></td>"
+							+ "<td class='td'>优惠价：</td>"
+							+ "<td><input type='text' class='input_text' id='newprice' name='newprice' /><span class='span'>*</span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>订购房间数：</td>"
+							+ "<td><input type='text' class='input_text' id='count' name='count'/><span class='span'>*</span></td>"
+							+ "<td class='td'>总价：</td>"
+							+ "<td><input type='text' class='input_text' id='sumamounts' name='sumamounts'/><span class='span'>*</span></td>"
+							+ "</tr>"
+							+ " <tr>"
+							+ "<td class='td'>凯悦金护照号码：</td>"
+							+ "<td><input type='text' class='input_text' id='passport' name='passport'/></td>"
+							+ "<td class='td'>身份证：</td>"
+							+ "<td><input type='text' class='input_text' id='card' name='card' /></td>"
+							+ "</tr>"
+							+ "<tr>"
+							+ " <td class='td2'>备注：</td>"
+							+ "<td colspan='3'>"
+							+ "<textArea name='remark' id='remark' cols='90%' rows='7'></textArea>"
+							+ "</td>"
+							+ "</tr>"
+							+ "<tr>"
+							+ "<td colspan='4' class='td3' align='center'>"
+							+ "<button type='button' class='button1' onclick='submitForm()'>保存提交</button>"
+							+ "<button type='button' class='button2' onclick='history.go(-1)'>取消返回</button>"
+							+ " </td>" + "</tr>" + "</table>");
+				}
+
+				table.append(tr1);
+				$(".form_box").append(table);
+				url = "/Hotel/rest/dictionaries/type/D__vsk6jpsgbjof";
+				RemoteUtil.send(url, "GET", null, callResultBack);
+				$("#indatetime").simpleDatepicker({
+					pattern : "yyyy-MM-dd"
+				});
+				$("#outdatetime").simpleDatepicker({
+					pattern : "yyyy-MM-dd"
+				});
+	}
+	function callResultBack(data){
+		if(data.succeed){
+			if(data.result.statusCode == "200"){
+				var list = data.result.successMsg;
+				var len = list.length;
+					$("#status").html("");
+					for(var i=0;i<len;i++){
+						$("#status").append($("<option value='"+list[i].code+"'>"+list[i].name+"</option>"));
+					}
+			}
+		}
+	}
+	
+    function submitForm(){
+		var status= $("#status").val();
+		var account= $("#account").val();
+		var sumamounts= $("#sumamounts").val();
+		var createdate= $("#createdate").val();
+		var custname= $("#custname").val();
+		var mobilephone= $("#mobilephone").val();
+		var orderrowid= $("#orderrowid").val();
+		var title= $("#title").val();
+		var count= $("#count").val();
+		var price= $("#price").val();
+		var newprice= $("#newprice").val();
+		var inperson= $("#inperson").val();
+		var iscoupon= $("#iscoupon").val();
+		var indatetime= $("#indatetime").val();
+		var outdatetime= $("#outdatetime").val();
+		var card= $("#card").val();
+		var subnum= $("#subnum").val();
+		var passport= $("#passport").val();
+		var need= $("#need").val();
+		var otherneed= $("#otherneed").val();
+		var predict= $("#predict").val();
+		var remark= $("#remark").val();
+		var parameter="";
+		
+		if (type == "1") {//特产
+			$("#form").validate({
+				rules : {
+					"title" : {
+						required : true,
+						maxlength : 20
+					},
+					"account" : {
+						required : true
+					},
+					"count" : {
+						required : true,
+						digits : true
+					},
+					"price" : {
+						required : true,
+						number : true
+					},
+					"newprice" : {
+						required : true,
+						number : true
+					},
+					"custname" : {
+						required : true,
+						maxlength : 20
+					},
+					"mobilephone" : {
+						required : true,
+						maxlength : 20
+					},
+					"sumamounts" : {
+						required : true,
+						number : true
+					}
+				}
+			});
+			var isValid = $("#form").valid();
+			if (!isValid)
+				return;
+			parameter = "title:'"+title+"',account:'"+account+
+			"',status:'"+status+"',count:'"+count+"',price:'"+price+
+			"',newprice:'"+newprice+"',custname:'"+custname+
+			"',mobilephone:'"+mobilephone+"',sumamounts:'"+sumamounts+
+			"',type:'"+type+"',remark:'"+remark+"'";
+    	}
+		if (type == "2") {//餐厅
+			$("#form").validate({
+				rules : {
+					"title" : {
+						required : true,
+						maxlength : 20
+					},
+					"account" : {
+						required : true
+					},
+					"count" : {
+						required : true,
+						digits : true
+					},
+					"price" : {
+						required : true,
+						number : true
+					},
+					"newprice" : {
+						required : true,
+						number : true
+					},
+					"custname" : {
+						required : true,
+						maxlength : 20
+					},
+					"mobilephone" : {
+						required : true,
+						maxlength : 20
+					},
+					"sumamounts" : {
+						required : true,
+						number : true
+					},
+					"indatetime" : {
+						required : true
+					},
+					"inperson" : {
+						required : true,
+						digits : true
+					}
+				}
+			});
+			var isValid = $("#form").valid();
+			if (!isValid)
+				return;
+			parameter = "title:'"+title+"',account:'"+account+
+			"',status:'"+status+"',inperson:'"+inperson+"',custname:'"+custname+
+			"',price:'"+price+"',newprice:'"+newprice+"',sumamounts:'"+newprice+
+			"',indatetime:'"+indatetime+"',mobilephone:'"+mobilephone+
+			"',type:'"+type+"',remark:'"+remark+"'";
+    	}
+		if (type == "3") {//房间
+			$("#form").validate({
+				rules : {
+					"title" : {
+						required : true,
+						maxlength : 20
+					},
+					"account" : {
+						required : true
+					},
+					"count" : {
+						required : true,
+						digits : true
+					},
+					"price" : {
+						required : true,
+						number : true
+					},
+					"newprice" : {
+						required : true,
+						number : true
+					},
+					"custname" : {
+						required : true,
+						maxlength : 20
+					},
+					"mobilephone" : {
+						required : true,
+						maxlength : 20
+					},
+					"sumamounts" : {
+						required : true,
+						number : true
+					},
+					"indatetime" : {
+						required : true
+					},
+					"outdatetime" : {
+						required : true
+					},
+					"inperson" : {
+						required : true,
+						digits : true
+					}
+				}
+			});
+			var isValid = $("#form").valid();
+			if (!isValid)
+				return;
+			parameter = "title:'"+title+"',account:'"+account+
+			"',status:'"+status+"',inperson:'"+inperson+
+			"',indatetime:'"+indatetime+"',outdatetime:'"+outdatetime+
+			"',custname:'"+custname+"',mobilephone:'"+mobilephone+
+			"',price:'"+price+"',newprice:'"+newprice+
+			"',count:'"+count+"',sumamounts:'"+sumamounts+
+			"',passport:'"+passport+"',card:'"+card+
+			"',type:'"+type+"',remark:'"+remark+"'";
+		}
+		url = "/Hotel/rest/orderinfo/privatesubmitorder";
+		RemoteUtil.send(url, "GET", parameter, callSubmitBack);
+		
+	}
+	
+	function callSubmitBack(data) {
+		if (data.succeed) {
+			if (data.result.statusCode == "200") {
+				window.location.href = "list.html?type="+type;
+			}
+		}
+	}
+	
+	  
+</script>
+
+</head>
+
+<body>
+<form name='form' method='post' action='' enctype='multipart/form-data' id='form'>
+	<div class="form_box">
+	
+	</div>
+</form>
+</body>
+</html>

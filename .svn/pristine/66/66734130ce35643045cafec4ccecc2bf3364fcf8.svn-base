@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>新增</title>
+
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="this is my page">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="../../css/list.css">
+<link rel="stylesheet" type="text/css" href="../../css/date.css">
+<link rel="stylesheet" type="text/css" href="../../css/zyUpload.css">
+<script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+<script language="JavaScript" src="../../js/request.js"></script>
+<script language="JavaScript" src="../../js/json.js"></script>
+<script language="JavaScript" src="../../js/eap.core.js"></script>
+<script language="JavaScript" src="../../js/eap.util.date.js"></script>
+<script language="JavaScript" src="../../js/eap.simpleDatepicker.js"></script>
+<script language="JavaScript" src="../../js/eap.lang-zh_CN.js"></script>
+<script type="text/javascript" src="../../js/eap.tip.js"></script>
+<script language="JavaScript" src="../../js/eap.validate.js"></script>
+<script language="JavaScript" src="../../js/zyFile.js"></script>
+<script language="JavaScript" src="../../js/zyUpload.js"></script>
+
+<script language="JavaScript" type="text/javascript">
+	G = function(objId) {
+		return document.getElementById(objId)
+	};
+	Gn = function(objName) {
+		return document.getElementsByName(objName)
+	};
+	var imgurl = "";
+
+	window.onload = function() {
+		init();
+		$("#img").zyUpload({
+			width : "100%px", // 宽度
+			height : "100%px", // 宽度
+			itemWidth : "120px", // 文件项的宽度
+			itemHeight : "100px", // 文件项的高度
+			url : "/Hotel/rest/room/upload", // 上传文件的路径
+			multiple : true, // 是否可以多个文件上传
+			dragDrop : false, // 是否可以拖动上传文件
+			del : true, // 是否可以删除文件
+			finishDel : true, // 是否在上传文件完成后删除预览
+			uploadInput : $("#button1"),
+			/* 外部获得的回调接口 */
+			onSuccess : function(response) {
+				var data = JSON.decode(response); // 文件上传成功的回调方法
+				if (data.succeed) {
+					if (data.result.statusCode == "200") {
+						var url = data.result.successMsg;
+						imgurl += url + "|";
+					}
+				}
+			},
+			onComplete : function(responseInfo) {
+				submitForm(); // 上传完成的回调方法
+			}
+		});
+	};
+
+	function init() {
+		$("#sdatetime").simpleDatepicker({
+			pattern : "yyyy-MM-dd"
+		});
+		$("#edatetime").simpleDatepicker({
+			pattern : "yyyy-MM-dd"
+		});
+
+		url = "/Hotel/rest/dictionaries/type/D__1u3h8r0jke78";
+		RemoteUtil.send(url, "GET", null, callResultBack1);
+		url = "/Hotel/rest/dictionaries/type/D__2ycs7ehm8gog";
+		RemoteUtil.send(url, "GET", null, callResultBack2);
+
+	}
+
+	function callResultBack1(data) {
+		if (data.succeed) {
+			if (data.result.statusCode == "200") {
+				var list = data.result.successMsg;
+				var len = list.length;
+				$("#status").html("");
+				for ( var i = 0; i < len; i++) {
+					$("#status").append(
+							$("<option value='"+list[i].code+"'>"
+									+ list[i].name + "</option>"));
+				}
+			}
+		}
+	}
+
+	function callResultBack2(data) {
+		if (data.succeed) {
+			if (data.result.statusCode == "200") {
+				var list = data.result.successMsg;
+				var len = list.length;
+				$("#badtype").html("");
+				for ( var i = 0; i < len; i++) {
+					$("#badtype").append(
+							$("<option value='"+list[i].code+"'>"
+									+ list[i].name + "</option>"));
+				}
+			}
+		}
+	}
+
+	function submitForm() {
+		$("#form").validate({
+			rules : {
+				"name" : {
+					required : true,
+					maxlength : 20
+				},
+				"count" : {
+					required : true,
+					digits : true
+				},
+				"price" : {
+					required : true,
+					number : true
+				},
+				"sellprice" : {
+					required : true,
+					number : true
+				},
+				"floor" : {
+					required : true,
+					digits : true
+				},
+				"provide" : {
+					required : true,
+				},
+				"area" : {
+					required : true,
+					number : true
+				},
+				"wifi" : {
+					required : true
+				},
+				"breakfast" : {
+					required : true,
+					maxlength : 20
+				},
+				"detail" : {
+					required : true,
+				}
+				,
+				"instructions" : {
+					required : true,
+				}
+				,
+				"sdatetime" : {
+					required : true,
+				}
+				,
+				"edatetime" : {
+					required : true,
+				}
+			}
+		});
+		var isValid = $("#form").valid();
+		if (!isValid)
+			return;
+
+		var name = $("#name").val();
+		var count = $("#count").val();
+		var price = $("#price").val();
+		var sellprice = $("#sellprice").val();
+		var floor = $("#floor").val();
+		var provide = $("#provide").val();
+		var status = $("#status").val();
+		var badtype = $("#badtype").val();
+		var area = $("#area").val();
+		var wifi = $("#wifi").val();
+		var breakfast = $("#breakfast").val();
+		var detail = $("#detail").val();
+		var instructions = $("#instructions").val();
+		var remark = $("#remark").val();
+		var sdatetime = $("#sdatetime").val();
+		var edatetime = $("#edatetime").val();
+		var parameter = "name:'" + name + "',count:'" + count + "',price:'"
+				+ price + "',sellprice:'" + sellprice + "',floor:'" + floor
+				+ "',provide:'" + provide + "',status:'" + status
+				+ "',badtype:'" + badtype + "',area:'" + area + "',wifi:'"
+				+ wifi + "',breakfast:'" + breakfast + "',detail:'" + detail
+				+ "',instructions:'" + instructions + "',sdatetime:'"
+				+ sdatetime + "',roomimg:'" + imgurl.substring(0,imgurl.length-1) + "',edatetime:'"
+				+ edatetime + "',remark:'" + remark + "'";
+				
+		url = "/Hotel/rest/room";
+		RemoteUtil.send(url, "POST", parameter, callSubmitBack);
+
+	}
+
+	function callSubmitBack(data) {
+		if (data.succeed) {
+			if (data.result.statusCode == "200") {
+				window.location.href = "list.html";
+			}
+		}
+
+	}
+</script>
+
+</head>
+
+<body>
+	<form name="form" method="post" action="" enctype="multipart/form-data"
+		id="form">
+		<div class="form_box">
+
+			<table width="100%" border="0" class="table">
+				<tr>
+					<td class="td">客房名称：</td>
+					<td><input type="text" class="input_text required"   id="name" name="name"><span
+						class="span">*</span></td>
+					<td class="td">房间总数：</td>
+					<td><input type="text" class="input_text required"   id="count" name="count"><span
+						class="span">*</span>
+					</td>
+				</tr>
+				<tr>
+					<td class="td">平时价格：</td>
+					<td><input type="text" class="input_text required"   id="price" name="price"><span
+						class="span">*</span>
+					</td>
+					<td class="td">周末价格：</td>
+					<td><input type="text" class="input_text required"   id="sellprice" name="sellprice"><span
+						class="span">*</span>
+					</td>
+				</tr>
+				<tr>
+					<td class="td">楼层：</td>
+					<td><input type="text" class="input_text required"   id="floor" name="floor"><span
+						class="span">*</span>
+					</td>
+					<td class="td">配备：</td>
+					<td><input type="text" class="input_text required" max="100" id="provide" name="provide"><span
+						class="span">*</span>
+					</td>
+				</tr>
+				<tr>
+					<td class="td">状态：</td>
+					<td><select name="status" id="status"></select><span
+						class="span">*</span></td>
+					<td class="td">床型：</td>
+					<td><select name="badtype" id="badtype"></select><span
+						class="span">*</span></td>
+				</tr>
+				<tr>
+					<td class="td">面积：</td>
+					<td><input type="text" class="input_text required"   id="area" name="area"><span
+						class="span">*</span></td>
+					<td class="td">宽带：</td>
+					<td><input type="text" class="input_text required"   id="wifi" name="wifi"><span
+						class="span">*</span></td>
+				</tr>
+				<tr>
+					<td class="td">售卖开始日期：</td>
+					<td><input type="text" class="input_date required" readonly="readonly" id="sdatetime" name="sdatetime"><span
+						class="span">*</span>
+					</td>
+					<td class="td">售卖结束日期：</td>
+					<td><input type="text" class="input_date required" readonly="readonly" id="edatetime" name="edatetime"><span
+						class="span">*</span>
+					</td>
+				</tr>
+				<tr>
+					<td class="td">是否有早餐：</td>
+					<td><input type="text" class="input_text required"   id="breakfast" name="breakfast"><span
+						class="span">*</span>
+					</td>
+				</tr>
+				<tr>
+					<td class="td2">房间介绍：</td>
+					<td colspan="3"><textArea name="detail" id="detail"   cols="90%"
+							rows="7"></textArea><span class="span">*</span>
+					</td>
+				</tr>
+				<tr>
+					<td class="td2">入住须知：</td>
+					<td colspan="3"><textArea name="instructions"
+							id="instructions"    cols="90%" rows="7"></textArea><span class="span">*</span>
+					</td>
+				</tr>
+				<tr>
+					<td class="td2">备注：</td>
+					<td colspan="3"><textArea name="remark" id="remark"    cols="90%"
+							rows="7"></textArea>
+					</td>
+				</tr>
+				<tr>
+					<td class="td2">客房图片：</td>
+					<td colspan="3">
+						<div id="img" class="img">
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4" class="td3" align="center">
+						<button type="button" id="button1" class="button1">保存提交</button>
+						<button type="button" id="button2" class="button2"
+							onclick="history.go(-1)">取消返回</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</form>
+</body>
+</html>

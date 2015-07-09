@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>字典表管理-新增</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../css/list.css">
+    <link rel="stylesheet" type="text/css" href="../../css/validate.css">
+    <script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+    <script language="JavaScript" src="../../js/request.js"></script>
+	<script language="JavaScript" src="../../js/json.js"></script>
+	<script type="text/javascript" src="../../js/eap.core.js"></script>
+	<script type="text/javascript" src="../../js/eap.tip.js" ></script>
+	<script language="JavaScript" src="../../js/eap.validate.js"></script>
+	<script src="../../js/eap.lang-zh_CN.js"></script>
+	
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		G = function(objId){return document.getElementById(objId)};
+		Gn = function(objName){return document.getElementsByName(objName)};
+		window.onload=function(){
+			init();
+		};
+		
+		function init(){
+			url = "/Hotel/rest/dictionaries/getListLevel";
+			RemoteUtil.send(url, "GET", null, callResultBack);
+			
+		}
+		
+		function callResultBack(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					var list = data.result.successMsg;
+					var len = list.length;
+						$("#parentid").html("");
+						$("#parentid").append($("<option value='-1'></option>"));
+						for(var i=0;i<len;i++){
+							$("#parentid").append($("<option value='"+list[i].code+"'>"+list[i].name+"</option>"));
+						}
+				}
+			}
+		}
+		
+	    function submitForm(){
+			
+			var isValid = $("#form").valid();
+			if (!isValid) return;
+			
+			var name = $("#name").val();
+			var parentid = $("#parentid").val();
+			var typename = $("#parentid").find("option:selected").text();
+			var code = generateRandomAlphaNum(12,"D_");
+			var remarks = $("#remarks").val();
+			var parameter = "name:'"+name+"',parentid:'"+parentid+"',typename:'"+typename+"',code:'"+code+"',remarks:'"+remarks+"'";
+			url = "/Hotel/rest/dictionaries";
+			RemoteUtil.send(url, "POST", parameter, callSubmitBack);
+			
+		}
+		
+		function callSubmitBack(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					window.location.href = "list.html";
+				}
+			}
+			
+		}
+		
+	//-->
+	</script>
+	
+  </head>
+  
+  <body>
+     <form name="form" method="post" action="" enctype="multipart/form-data" id="form">
+   	<div class="form_box">
+    	<table width="100%" border="0" class="table">
+		  <tr>
+		    <td class="td">字典名称：</td>
+		    <td><input type="text" class="input_text required" id="name"><span class="span">*</span></td>
+		  </tr>
+		  <tr>
+		    <td class="td">类型名称：</td>
+		    <td>
+		    	<select id="parentid">
+	    			
+	    		</select>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td class="td2">备注：</td>
+		    <td colspan="3">
+		    	<textArea name="remarks" id="remarks" cols="90%" rows="7" id="remarks"></textArea>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td colspan="4" class="td3" align="center">
+		    	<button type="button" class="button1" onclick="submitForm()">保存提交</button>
+    			<button type="button" class="button2" onclick="history.go(-1)">取消返回</button>
+		    </td>
+		  </tr>
+		</table>
+    </div>
+   </form>
+  </body>
+</html>

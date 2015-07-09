@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>list列表</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../css/list.css">
+    <script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+    <script language="JavaScript" src="../../js/request.js"></script>
+	<script language="JavaScript" src="../../js/json.js"></script>
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		G = function(objId){return document.getElementById(objId)};
+		Gn = function(objName){return document.getElementsByName(objName)};
+		window.onload=function(){
+			init();
+		};
+		
+		function init(){
+			url = "/Hotel/rest/coupon/"+page+"/"+pageSize;
+			var parameter = "name:'"+user_name+"'";
+			RemoteUtil.send(url, "GET", parameter, callSubmitBack);
+			
+		}
+		
+		function callSubmitBack(data){
+			//var data = {"succeed":true,"result":{"statusCode":200,"successMsg":{"firstPage":false,"lastPage":true,"lastPageNo":1,"nextPageNo":2,"pageElements":[{"password":"123","remarks":"中文","rowid":1,"user_code":"U01","user_name":"admin"},{"password":"123","remarks":"我是中文","rowid":2,"user_code":"U02","user_name":"test"}],"pageNo":1,"pageSize":20,"previousPageNo":0,"totalCount":2}}};
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					$(".list_centent").html("");
+					var table = $("<table width='100%' border='1' class='table'></table>");
+					var tr1 = $("<tr class='tr1'>"+
+						    "<td width='5%'><div align='center'>序号</div></td>"+
+						    "<td width='15%'><div align='center'>优惠卷名称</div></td>"+
+						    "<td width='15%'><div align='center'>优惠卷内容</div></td>"+
+						    "<td width='7%'><div align='center'>优惠卷类型</div></td>"+
+						    "<td width='7%'><div align='center'>总数量</div></td>"+
+						    "<td width='7%'><div align='center'>剩余数量</div></td>"+
+						    "<td width='7%'><div align='center'>优惠卷面值金额</div></td>"+
+						    "<td width='7%'><div align='center'>优惠卷售卖金额</div></td>"+
+						    "<td width='10%'><div align='center'>创建日期</div></td>"+
+						    "<td width='20%'><div align='center'>操作</div></td>"+
+						  "</tr>");
+					table.append(tr1);
+					var list = data.result.successMsg.pageElements;
+					var len = list.length;
+					for(var i=0;i<len;i++){
+						var className = "tr3";
+						if(i%2==0){
+							className = "tr3";
+						}else{
+							className = "tr2";
+						}
+						var tr2 = $("<tr class='"+className+"'>"+
+						    "<td width='7%'><div align='center'>"+(i+1)+"</div></td>"+
+						    "<td width='15%'><div align='center'>"+list[i].name+"</div></td>"+
+						    "<td width='15%'><div align='center'>"+list[i].detail+"</div></td>"+
+						    "<td width='7%'><div align='center'>"+list[i].coupontype_name+"</div></td>"+
+						    "<td width='7%'><div align='center'>"+list[i].count+"</div></td>"+
+						    "<td width='7%'><div align='center'>"+list[i].surplus+"</div></td>"+
+						    "<td width='7%'><div align='center'>"+list[i].price+"</div></td>"+
+						    "<td width='7%'><div align='center'>"+list[i].sellprice+"</div></td>"+
+						    "<td width='10%'><div align='center'>"+list[i].create_time+"</div></td>"+
+						    "<td width='20%'><div align='center'>"+
+						    "<img src='../../img/lnk_detail.gif' title='查看' class='img' onclick=\"onclickCheck('"+list[i].rowid+"')\">"+
+							"<img src='../../img/lnk_edit.gif' title='修改' class='img' onclick=\"onclickUpdate('"+list[i].rowid+"')\">"+
+							"<img src='../../img/lnk_delete.gif' title='删除' class='img' onclick=\"onclickDelete('"+list[i].rowid+"')\"></div></td>"+
+						  "</tr>");
+						 table.append(tr2); 
+					}
+					
+					$(".list_centent").append(table);
+					$("#totalCount").html("&nbsp;"+data.result.successMsg.totalCount+"&nbsp;");
+					$("#pageNo").html("&nbsp;"+data.result.successMsg.pageNo+"&nbsp;");
+					var pageCount = data.result.successMsg.pageCount;
+					$("#select").html("");
+					for(var i=1;i<=pageCount;i++){
+						if(i==page){
+							$("#select").append($("<option value='"+i+"' selected='selected'>第"+i+"页</option>"));
+						}else{
+							$("#select").append($("<option value='"+i+"'>第"+i+"页</option>"));
+						}
+					}
+				}
+			}
+			
+		}
+		var user_name = "";
+		var page = 1;
+		var pageSize = 20;
+		//搜索
+		function onClickSearch(){
+			user_name = $("#name").val();
+			page = 1;
+			init();
+			
+		}
+		
+		//新增
+		function onClickExamine(){
+			
+			window.location.href = "add.html";
+	
+		}
+		
+		function onChange(select){
+			page = select.value;
+			init();
+		}
+		//查看
+		function onclickCheck(id){
+			window.location.href = "coupon.html?id="+id;
+		}
+		//修改
+		function onclickUpdate(id){
+			window.location.href = "update.html?id="+id;
+		}
+		//删除
+		function onclickDelete(id){
+			var se=confirm("您确定要删除此条记录吗!");
+			if (se==true)
+		    {
+				url = "/Hotel/rest/coupon/delete/"+id;
+				RemoteUtil.send(url, "POST", null, callSubmitBackDelete);
+		    }
+		}
+		function callSubmitBackDelete(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					init();
+				}
+			}
+		}
+	//-->
+	</script>
+
+  </head>
+  
+  <body>
+    
+    <div class="list">
+    	
+    	<div class="list_title">
+    		
+    		<label>用户名：</label>
+    		<input type="text" class="input_text" id="name" placeholder="请输入优惠券名称">
+    		<button type="button" class="button_search" onclick="onClickSearch()">搜&nbsp; 索</button>
+    		<div class="operating">
+    			<!-- <button type="button" onclick="onClickExamine()">新增</button> -->
+    		</div>
+    	</div>
+    	
+    	<div class="list_centent">
+    		<!-- <table width="100%" border="1" class="table">
+			   <tr class="tr1">
+			    <td width="7%"><div align="center">序号</div></td>
+			    <td width="15%"><div align="center">考核主题</div></td>
+			    <td width="10%"><div align="center">责任单位</div></td>
+			    <td width="10%"><div align="center">被考单位</div></td>
+			    <td width="15%"><div align="center">上报主题</div></td>
+			    <td width="10%"><div align="center">上报人</div></td>
+			    <td width="13%"><div align="center">上报日期</div></td>
+			    <td width="10%"><div align="center">基准分值</div></td>
+			    <td width="10%"><div align="center">操作</div></td>
+			  </tr>
+			  <tr class="tr3">
+			    <td><div align="center">1</div></td>
+			    <td><div align="center">考核主题</div></td>
+			    <td><div align="center">责任单位</div></td>
+			    <td><div align="center">被考单位</div></td>
+			    <td><div align="center">上报主题</div></td>
+			    <td><div align="center">上报人</div></td>
+			    <td><div align="center">上报日期</div></td>
+			    <td><div align="center">基准分值</div></td>
+			    <td><div align="center">
+			    	<img src="../img/lnk_detail.gif" title="查看" class="img">
+					<img src="../img/lnk_edit.gif" title="修改" class="img">
+					<img src="../img/lnk_delete.gif" title="删除" class="img">
+			    </div></td>
+			  </tr>
+			</table> -->
+    	</div>
+    	
+    	<div class="result_page">
+			<div class="page_info">
+				当前第<span style="color:#0000FF;" id="pageNo">  </span>页，共<span style="color:#0000FF;" id="totalCount"> 10 </span>条记录
+			</div>
+			<div class="page_ctrl">
+				<select name="select" id="select" onchange="onChange(this)">
+					
+				</select>
+			</div>
+		</div>
+    </div>
+    
+  </body>
+</html>

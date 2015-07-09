@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+	<meta content="target-densitydpi=device-dpi,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+	<link rel="stylesheet" href="css/common.css" type="text/css">
+	<link rel="stylesheet" href="css/orderwrite.css" type="text/css">
+	<title>崇明金茂凯悦酒店-特产预定</title>
+	<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="js/touch-0.2.14.min.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="js/request.js"></script>
+	<script type="text/javascript" src="js/json.js"></script>
+	<script type="text/javascript" src="js/getUrlParam.js"></script>
+	<script type="text/javascript">
+		usevou=new Array();
+		var name ="";
+		var price = "";
+		var count = "";
+		var new_price = "";
+		var name = "";
+		var rowid = "";
+		$(function(){
+		   name=UrlParm.parm("name");//特产名称
+		   price = UrlParm.parm("price");// 单价
+		   new_price = UrlParm.parm("new_price");// 优惠价格
+		   var img = UrlParm.parm("img");// 特产图片第一张
+		   count = UrlParm.parm("count");// 库存
+		   rowid = UrlParm.parm("rowid");
+		   
+		   $("#name_1").html(name);
+		   $("#name").html(name);
+		   $("#price").html("￥"+price);
+		   $("#new_price").html("￥"+new_price);
+		   $(".slideson").attr("src","../../../img/upload/"+img);
+		   $("#sumamounts").html(new_price);
+		   $("#count").html(count);
+		   $("#schedule").click(function(){
+		   		
+		   		if($("#custname").val() == ''){
+					$('#booktips').html('请输入您的姓名');
+					return false;
+				}
+				if (!$('#mobilephone').val().match(/^1\d{10,13}$/g)){
+					$('#mobilephone').val('');
+					$('#booktips').html('请输入正确的手机号');
+					return false;
+				}
+				if($("#address").val() == ''){
+					$('#booktips').html('请输入您的收货地址');
+					return false;
+				} 
+		   		if(accout==""){
+		   			window.location.href = "../main.html?login=login";
+		   			//$('#booktips').html('您未登录，请先登录！');
+		   			return false;
+		   		}
+		   		var custname = $("#custname").val();
+		   		var mobilephone = $("#mobilephone").val();
+		   		var address = $("#address").val();
+		   		
+		   		var count_1 = Number($("#count_1").html());
+		    	var parameter = "custname:'"+custname+"',mobilephone:'"+mobilephone+"',address:'"+address+"',type:'1',status:'D__9c6n1rjkdstf',title:'"+name+"',count:'"+count_1+"',price:'"+price+"',newprice:'"+new_price+"',sumamounts:'"+new_price*count_1+"',commodityrowid='"+rowid+"'";
+				url = "/Hotel/rest/orderinfo/submitorder";
+				RemoteUtil.send(url, "GET", parameter, submitorderBack);
+		  });
+		  //加
+		  $("#plus").click(function(){
+		  	
+		  	var count_1 = Number($("#count_1").html());
+		  	if(count_1<count){
+		  		count_1 = count_1+1;
+		  		$("#sumamounts").html(new_price*count_1);
+		  		$("#count_1").html(count_1);
+		  	}
+		  	
+		  });
+		  //减
+		  $("#minus").click(function(){
+		  
+		  	var count_1 = Number($("#count_1").html());
+		  	if(count_1>1){
+		  		count_1 = count_1-1;
+		  		$("#sumamounts").html(new_price*count_1);
+		  		$("#count_1").html(count_1);
+		  	}
+		  	
+		  });
+		   RemoteUtil.send("/Hotel/rest/customer/getlogincustomer", "GET", "", getlogincustomerBack);
+		   
+	    });
+	    var accout = "";
+	    function getlogincustomerBack(data){
+	    	
+	    	if (data.succeed) {
+				if (data.result.statusCode == "200") {
+					if(data.result.successMsg!=null && data.result.successMsg!="null"){
+						accout = data.result.successMsg.accout;
+					}else{
+						window.location.href = "../main.html?login=login";
+					}
+				}
+			}
+	    	
+	    }
+	    
+	    //预定
+	    function submitorderBack(data){
+	    	
+	    	if (data.succeed) {
+				if (data.result.statusCode == "200") {
+					
+					//window.location.href = "../center/myorder.html";
+					//window.location.href = "../main.html?login=order";
+					$("#body").html(data.result.successMsg);
+				}
+			}
+	    	
+	    }
+	    
+	</script>
+</head>
+
+
+<body id="body">
+<div class="header">
+		<img src="img/left_arrow.png" alt="" class="back float_left" id="back2">
+	</div>
+	<div class="headers" id="headers">
+			<div class="headerslide">
+				<img class="slideson" src="" alt="特产" style="width: 1349px;">
+			</div>
+			<div class="banner">
+				<span class="tex flo_le" id="name_1"></span>
+			</div>
+	</div>
+	<div class="pad title overflow">
+		<span class="roomname float_left middle" id="name">1</span>
+		<span class="total parice float_right color_orange" id="price">2</span>
+	</div>
+
+	<form action="" id="formbook" method="post" class="write">
+		<ul class="detail middle">
+			<li class="bac_white border_bottom">
+				<span>优惠价格</span>
+				<span class="absolute le" id="new_price"></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>数量</span>
+				<div class="color_orange le absolute" style="width:40px;height:40px;border:solid 1px;top:35%;text-align: center;line-height: 40px;font-weight: bolder;" id="plus">
+					+
+				</div>
+				<span  class="color_orange le absolute" style="left:36%" id="count_1">1</span>
+				<div class="color_orange le absolute" style="width:40px;height:40px;border:solid 1px;top:35%;text-align: center;line-height: 40px;font-weight: bolder;left:40%" id="minus">
+					-
+				</div>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>库存</span>
+				<span class="absolute le" id="count"></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>总价</span>
+				<span class="color_orange le absolute">￥<span id="sumamounts"></span></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>支付方式</span>
+				<span class="le absolute ch1" paytype="1"><img src="img/gou.jpg" class="gou check" alt="">支付宝支付 <span class="small"> </span></span>
+			</li>
+		<li class="bac_white border_bottom">
+			<li class="Abb">
+				<p id="booktips" class="booktip">&nbsp;</p></li>
+			<li class="bac_white border_bottom ">
+				<span>购买人</span>
+				<input type="text" class="no_outline absolute le" name="custname" id="custname" placeholder="请输入联系人姓名">
+			</li>
+			<li class="bac_white border_bottom">
+				<span>手机号</span>
+				<input type="text" class="no_outline absolute le" name="mobilephone" id="mobilephone" placeholder="请输入联系人手机号">
+			</li>
+			<li class="bac_white border_bottom">
+				<span>收货地址</span>
+				<input type="text" class="no_outline absolute le" name="address" id="address" placeholder="请输入收货地址">
+			</li>
+		</ul>
+		<div class="submit bac_orange color_white" id="schedule">购 买</div>
+		<br>
+</form>
+
+</body>
+</html>
