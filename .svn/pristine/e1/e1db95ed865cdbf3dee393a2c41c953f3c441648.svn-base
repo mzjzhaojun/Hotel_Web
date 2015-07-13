@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=2,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>手机版-金茂凯悦-订位</title>
+<meta name="keywords" content="酒店介绍 ,金茂凯悦">
+<meta name="description" content="酒店介绍 -金茂凯悦">
+<link rel="stylesheet" type="text/css" href="../css/common.css" />
+<link rel="stylesheet" type="text/css" href="../css/index.css" />
+<!-- <script type="text/javascript" src="/Public/Js/jquery-1.9.0.min.js"></script> -->
+<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../js/zepto.min.js"></script>
+<script type="text/javascript" src="../js/index.js"></script>
+<script type="text/javascript" src="../js/fx.js"></script>
+<script type="text/javascript" src="../js/touch.js"></script>
+<script type="text/javascript" src="../js/TouchSlide.1.1.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/jquery.form.js"></script>
+<script language="JavaScript" src="../reservation/js/request.js"></script>
+<script language="JavaScript" src="../../../js/json.js"></script>
+
+<script type="text/javascript">
+		G = function(objId){return document.getElementById(objId)};
+		Gn = function(objName){return document.getElementsByName(objName)};
+		window.onload=function(){
+			var parameter = "";
+			var url = "/Hotel/rest/reservation";
+			RemoteUtil.send(url, "GET", parameter, reservationBack);
+		};
+		
+		function reservationBack(data){
+			if(data.succeed){
+				if(data.result.statusCode == "200"){
+					roomData = data.result.successMsg;
+					$(".tlist").empty();
+					var list = data.result.successMsg;
+					var len = list.length;
+					for(var i=0;i<len;i++){
+						$(".tlist").append($("<li>"+
+				            "<div class=\"tlist_t\">"+list[i].name+"</div>"+
+				            "<div class=\"tlist_v clearfix\">"+
+				                "<div class=\"tlist_d fr\">"+
+				                		""+list[i].detail+""+
+				                		"<br><br>"+
+				                		"<div style=\"text-indent: 2em;\">地址："+list[i].address+"</div>"+
+				                		"<div style=\"text-indent: 2em;\">电话："+list[i].tel+"</div>"+
+				                	"</div>"+
+				            "</div>"+
+				            "<div class=\"tlist_a clearfix\">"+
+				                "<a href=\"tel:"+list[i].tel+"\"> <div class=\"fr\">拨打电话>></div></a>"+
+				           " </div>"+
+				         "</li>"));
+					}
+					
+				}
+			}
+			
+		}
+		
+	</script>
+
+<style type="text/css">
+    .tlist{margin-top: -1em;width: 96%;}
+    .tlist li{background: #fff;border: 1px solid #d7d7d7;box-shadow: 0 2px 2px #cacaca;padding: .5em .8em;border-radius: 5px;}
+    .tlist li a{color: #666;}
+    .tlist_t{border-bottom: 1px solid #d1d1d1;color: #689dad;}
+    .tlist_v{padding: .7em 0;}
+    .tlist_box{width: 40%;}
+    .tlist_d{width: 100%;font-size: .8em;line-height: 1.5;text-indent: 2em;}
+    .tlist_a{border-top: 1px solid #d7d7d7;padding-top: .5em;}
+</style>
+</head>
+<body class="pa welbg">
+  <div class="main1">
+  <!--焦点图开始-->
+	  <div id="slideBox" class="slideBox">
+	      <div class="bd">
+	          <ul>
+	                </ul>
+	      </div>
+	      <div class="hd">
+	          <ul></ul>
+	      </div>
+	  </div>
+       <div class="th3">
+           	崇明金茂凯悦餐厅介绍
+       </div>
+
+       <ul class="tlist">
+		<!-- <li>
+            <div class="tlist_t">品悦中餐厅</div>
+            <div class="tlist_v clearfix">
+                <div class="tlist_d fr">
+                		品悦中餐厅以现代中式花园装修风格为特点，为顾客创造一格典雅独特的地道本帮菜用餐体验。以上海本帮菜，崇明本地菜，和长兴岛，横沙岛，崇明岛特色三岛河鲜为主打，取材自崇明优质农产品，为顾客奉上丰富本地特色菜肴，另外提供6间雅致包房。
+                		<br><br>
+                		<div style="text-indent: 2em;">地址：崇明县陈家镇揽海路799弄崇明金茂凯悦酒店1楼品悦中餐厅</div>
+                		<div style="text-indent: 2em;">电话：67031166</div>
+                	</div>
+            </div>
+            <div class="tlist_a clearfix">
+                <a href="tel:67031166"> <div class="fr">拨打电话>></div></a>
+            </div>
+         </li>
+         <li>
+            <div class="tlist_t">咖啡厅</div>
+            <div class="tlist_v clearfix">
+                <div class="tlist_d fr">
+                		品悦中餐厅以现代中式花园装修风格为特点，为顾客创造一格典雅独特的地道本帮菜用餐体验。以上海本帮菜，崇明本地菜，和长兴岛，横沙岛，崇明岛特色三岛河鲜为主打，取材自崇明优质农产品，为顾客奉上丰富本地特色菜肴，另外提供6间雅致包房。
+                		<br><br>
+                		<div style="text-indent: 2em;">地址：崇明县陈家镇揽海路799弄崇明金茂凯悦酒店2楼咖啡厅</div>
+                		<div style="text-indent: 2em;">电话：67031155</div>
+                	</div>
+            </div>
+            <div class="tlist_a clearfix">
+                <a href="tel:67031155"> <div class="fr">拨打电话>></div></a>
+            </div>
+         </li>
+         <li>
+            <div class="tlist_t">茶苑</div>
+            <div class="tlist_v clearfix">
+                <div class="tlist_d fr">
+                		茶苑提供最经典的中式传统茶品和地道小吃，是旅行中的茶道爱好者修身养性和沉静心灵的理想之地。酒店特聘专业茶艺师为您讲解如何沏茶、赏茶、闻茶和饮茶。
+                		<br><br>
+                		<div style="text-indent: 2em;">地址：崇明县陈家镇揽海路799弄崇明金茂凯悦酒店1楼品悦中餐厅</div>
+                		<div style="text-indent: 2em;">电话：67031168</div>
+                	</div>
+            </div>
+            <div class="tlist_a clearfix">
+                <a href="tel:67031168"> <div class="fr">拨打电话>></div></a>
+            </div>
+         </li>
+         <li>
+            <div class="tlist_t">Bistro</div>
+            <div class="tlist_v clearfix">
+                <div class="tlist_d fr">
+                		特色小馆主推意大利乡村风味美食，主菜精选罗马，西西里，那不勒斯等地风味传统意大利美食。
+                		<br><br>
+                		<div style="text-indent: 2em;">地址：崇明县陈家镇揽海路799弄崇明金茂凯悦酒店2楼Bistro</div>
+                		<div style="text-indent: 2em;">电话：67031156</div>
+                	</div>
+            </div>
+            <div class="tlist_a clearfix">
+                <a href="tel:67031156"> <div class="fr">拨打电话>></div></a>
+            </div>
+         </li>  -->              
+       </ul>
+       <div class="paging"></div>
+		<div class="copy">
+		    <div>
+		    <i>Copyright2014 崇明金茂凯悦 All Rights Reserved</i>
+		    </div>
+		</div>
+	</div>
+</body>
+</html>

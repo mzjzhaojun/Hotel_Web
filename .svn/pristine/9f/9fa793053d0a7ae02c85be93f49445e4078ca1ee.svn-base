@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+	<meta content="target-densitydpi=device-dpi,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+	<link rel="stylesheet" href="../reservation/css/common.css" type="text/css">
+	<link rel="stylesheet" href="../reservation/css/orderwrite.css" type="text/css">
+	<title>崇明金茂凯悦酒店-餐厅订单详情</title>
+	<script type="text/javascript" src="../reservation/js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="../reservation/js/touch-0.2.14.min.js"></script>
+	<script type="text/javascript" src="../reservation/js/index.js"></script>
+	<script type="text/javascript" src="../reservation/js/request.js"></script>
+	<script type="text/javascript" src="../reservation/js/json.js"></script>
+	<script type="text/javascript" src="../reservation/js/getUrlParam.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			
+			var no=UrlParm.parm("no");
+			var parameters = "";
+		  	var url = "/Hotel/rest/orderinfo/selectOrderInfo/"+no;
+		  	RemoteUtil.send(url, "GET", parameters, lectOrderInfoBack);
+			
+		});
+		
+		function lectOrderInfoBack(data){
+			
+			if (data.succeed) {
+				if (data.result.statusCode == "200") {
+					var detall = data.result.successMsg;
+					$("#name").html(detall.title);
+					$("#sumamounts").html("￥"+detall.sumamounts);
+					$("#no").html(detall.no);
+					$("#statusname").html(detall.statusname);
+					$("#createdate").html(detall.createdate);
+					$("#subnum").html(detall.subnum);
+					
+					/* $("#babychair").html(detall.babychair);
+					$("#maxdinernum").html(detall.maxdinernum);
+					$("#detall").html(detall.detall);
+					$("#lowest").html(detall.lowest);
+					$("#axf").html(detall.axf);
+					$("#remark").html(detall.remark); */
+				}
+			}
+			
+		}
+		
+	</script>
+</head>
+
+
+<body id="body">
+	<div class="headers" id="headers">
+			<div class="headerslide">
+				<img class="slideson" src="../images/20150309100754_10596.jpg" alt="高级房(双)" style="width: 1349px;">
+			</div>
+			<div class="banner">
+				<span class="tex flo_le">崇明金茂凯悦酒店</span>
+			</div>
+	</div>
+	<div class="pad title overflow">
+		<span class="roomname float_left middle" id="name">餐厅</span>
+		<span class="total parice float_right color_orange" id="sumamounts"></span>
+	</div>
+		<ul class="detail middle">
+			<li class="bac_white border_bottom">
+				<span>订单号</span>
+				<span class="absolute le" id="no"></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>是否支付</span>
+				<span class="le absolute ch1" id="statusname"></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>预定时间</span>
+				<span class="absolute le" id="createdate"></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>预定码</span>
+				<span class="absolute le" id="subnum"></span>
+			</li>
+			<!-- <li class="Abb">
+				<p id="booktips" class="booktip">&nbsp;</p></li>
+			<li class="bac_white border_bottom ">
+				<span>是否提供宝宝椅子</span>
+				<span class="le absolute" style="font-size:0.9em" name="custname" id="babychair"></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>最大容纳用餐人数</span>
+				<span class="le absolute" style="font-size:0.9em" name="mobilephone" id="maxdinernum"></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>餐厅说明</span>
+				<span class="le absolute" style="font-size:0.9em" name="passport" id="detall"></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>最低消费金额</span>
+				<span class="le absolute" style="font-size:0.9em" name="passport" id="lowest"></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>人均消费</span>
+				<span class="le absolute" style="font-size:0.9em" name="passport" id="axf"></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>备注</span>
+				<span class="le absolute" style="font-size:0.9em" name="passport" id="remark"></span>
+			</li> -->
+		</ul>
+</form>
+
+</body>
+</html>

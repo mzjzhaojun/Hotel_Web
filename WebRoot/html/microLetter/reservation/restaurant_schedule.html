@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+	<meta content="target-densitydpi=device-dpi,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+	<link rel="stylesheet" href="css/common.css" type="text/css">
+	<link rel="stylesheet" href="css/orderwrite.css" type="text/css">
+	<title>崇明金茂凯悦酒店-餐厅预定</title>
+	<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="js/touch-0.2.14.min.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="js/request.js"></script>
+	<script type="text/javascript" src="js/json.js"></script>
+	<script type="text/javascript" src="js/getUrlParam.js"></script>
+	<script type="text/javascript" src="../js/zepto.min.js"></script>
+	<script type="text/javascript" src="../js/index.js"></script>
+	<script type="text/javascript">
+		usevou=new Array();
+		var name ="";
+		var surplus = "";
+		var detail = "";
+		var img = "";
+		var rowid = "";
+		$(function(){
+		   name=UrlParm.parm("name");//餐厅名称
+		   surplus = UrlParm.parm("surplus");// 价格
+		   detail = UrlParm.parm("detail");// 说明
+		   img = UrlParm.parm("img");// 图片
+		   rowid = UrlParm.parm("rowid");// id
+		   
+		   $("#img").attr("src","../../../img/upload/"+img);
+		   $("#name_1").html(name);
+		   $("#name").html(name);
+		    $("#name_2").html(name);
+		   $("#sellprice").html("￥"+surplus);
+		   $("#sumamounts").html(surplus);
+		   //$("#detall").html(detall);
+		   //$("#instructions").html(instructions);
+		   $("#schedule").click(function(){
+		   		if(accout==""){
+		   			window.location.href = "../main.html?login=login";
+		   			//$('#booktips').html('您未登录，请先登录！');
+		   			return false;
+		   		}
+		   		
+		   		var myDate = new Date();
+		   		var time = myDate.getFullYear()+"-"+(myDate.getMonth()+1)+"-"+myDate.getDate();
+		   		var parameter = "type:'2',no:'no',status:'D__9c6n1rjkdstf',sumamounts:'"+surplus+"',custname:'',mobilephone:'',title:'"+name+"',count:'1',"+
+				"price:'"+surplus+"',newprice:'"+surplus+"',inperson:'inperson',indatetime:'"+time+"',outdatetime:'"+time+"',card:'card',subnum:'subnum',passport:'',need:'',otherneed:'',predict:'',commodityrowid='"+rowid+"'";
+				url = "/Hotel/rest/orderinfo/submitorder";
+				RemoteUtil.send(url, "GET", parameter, submitorderBack);
+		   		
+		  });
+		   RemoteUtil.send("/Hotel/rest/customer/getlogincustomer", "GET", "", getlogincustomerBack);
+		   
+	    });
+	    var accout = "";
+	    function getlogincustomerBack(data){
+	    	
+	    	if (data.succeed) {
+				if (data.result.statusCode == "200") {
+					if(data.result.successMsg!=null && data.result.successMsg!="null"){
+						accout = data.result.successMsg.accout;
+					}else{
+						window.location.href = "../main.html?login=login";
+					}
+				}
+			}
+	    	
+	    }
+	    
+	    //预定
+	    function submitorderBack(data){
+	    	
+	    	if (data.succeed) {
+				if (data.result.statusCode == "200") {
+					
+					//window.location.href = "../center/myorder.html";
+					//window.location.href = "../main.html?login=order";
+					$("#body").html(data.result.successMsg);
+				}
+			}
+	    	
+	    }
+	    
+	</script>
+	<style>
+	#layer{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: rgba(0,0,0,.5);
+	}
+	#layer span{
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	z-index: 2100;
+	border-radius: 5px;
+	padding: 10px 15px;
+	background: rgba(0,0,0,.7);
+	color: #fff;
+	font-family: Arial;
+	font-weight: bold;
+	font-size: 12px;
+	display: block;
+	}
+	</style>
+</head>
+
+
+<body id="body">
+<div class="header">
+		<img src="img/left_arrow.png" alt="" class="back float_left" id="back2">
+	</div>
+	<div class="headers" id="headers">
+			<div class="headerslide">
+				<img class="slideson" src="img/sellcoupon.png" id="img" alt="优惠卷" style="width: 1349px;">
+			</div>
+			<div class="banner">
+				<span class="tex flo_le" id="name_1"></span>
+			</div>
+	</div>
+	<div class="pad title overflow">
+		<span class="roomname float_left middle" id="name"></span>
+		<span class="total parice float_right color_orange" id="sellprice"></span>
+	</div>
+
+	<form action="" id="formbook" method="post" class="write">
+		<ul class="detail middle">
+			<li class="bac_white border_bottom">
+				<span>名称</span>
+				<span class="absolute le" id="name_2"></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>总价</span>
+				<span class="color_orange le absolute">￥<span id="sumamounts"></span></span>
+			</li>
+			<li class="bac_white border_bottom">
+				<span>支付方式</span>
+				<span class="le absolute ch1" paytype="1"><img src="img/gou.jpg" class="gou check" alt="">支付宝支付 <span class="small"> </span></span>
+			</li>
+		</ul>
+		<div class="submit bac_orange color_white" id="schedule">购 买</div>
+		<br>
+</form>
+
+</body>
+</html>
