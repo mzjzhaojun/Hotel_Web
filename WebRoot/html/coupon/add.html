@@ -25,7 +25,7 @@
 	Gn = function(objName) {
 		return document.getElementsByName(objName)
 	};
-	
+
 	var imgurl = "";
 	window.onload = function() {
 		init();
@@ -60,7 +60,8 @@
 	function init() {
 		url = "/Hotel/rest/dictionaries/type/D__ey5wyw3xsguy";
 		RemoteUtil.send(url, "GET", null, callResultBack);
-
+		url = "/Hotel/rest/dictionaries/type/D__1u3h8r0jke78";
+		RemoteUtil.send(url, "GET", null, callResultBack1);
 	}
 
 	function callResultBack(data) {
@@ -71,6 +72,21 @@
 				$("#coupontype").html("");
 				for ( var i = 0; i < len; i++) {
 					$("#coupontype").append(
+							$("<option value='"+list[i].code+"'>"
+									+ list[i].name + "</option>"));
+				}
+			}
+		}
+	}
+
+	function callResultBack1(data) {
+		if (data.succeed) {
+			if (data.result.statusCode == "200") {
+				var list = data.result.successMsg;
+				var len = list.length;
+				$("#status").html("");
+				for ( var i = 0; i < len; i++) {
+					$("#status").append(
 							$("<option value='"+list[i].code+"'>"
 									+ list[i].name + "</option>"));
 				}
@@ -107,7 +123,7 @@
 			}
 		});
 		var isValid = $("#form").valid();
-		if (!isValid){
+		if (!isValid) {
 			imgurl = "";
 			return;
 		}
@@ -117,13 +133,16 @@
 		var instructions = $("#instructions").val();
 		var count = $("#count").val();
 		var price = $("#price").val();
+		var status = $("#status").val();
 		var sellprice = $("#sellprice").val();
 		var remark = $("#remark").val();
 
 		var parameter = "name:'" + name + "',detail:'" + detail
-				+ "',instructions:'" + instructions + "',count:'" + count
-				+ "',price:'" + price + "',sellprice:'" + sellprice
-				+ "',remark:'" + remark + "',coupontype:'" + coupontype + "',couponimg:'" + imgurl.substring(0,imgurl.length-1) + "'";
+				+ "',instructions:'" + instructions + "',status:'" + status
+				+ "',count:'" + count + "',price:'" + price + "',sellprice:'"
+				+ sellprice + "',remark:'" + remark + "',coupontype:'"
+				+ coupontype + "',couponimg:'"
+				+ imgurl.substring(0, imgurl.length - 1) + "'";
 		url = "/Hotel/rest/coupon";
 		RemoteUtil.send(url, "POST", parameter, callSubmitBack);
 
@@ -150,24 +169,24 @@
 				<tr>
 					<td class="td">劵名称：</td>
 					<td><input type="text" class="input_text equired" id="name"
-						name="name"><span class="span">*</span>
+						name="name"><span class="span">*</span></td>
+					<td class="td">状态：</td>
+					<td><select name="status" id="status"></select><span
+						class="span">*</span>
 					</td>
 				</tr>
 				<tr>
 					<td class="td">劵类型：</td>
 					<td><select name="coupontype" id="coupontype"
-						name="coupontype"></select> <span class="span">*</span>
-					</td>
+						name="coupontype"></select> <span class="span">*</span></td>
 					<td class="td">总数量：</td>
 					<td><input type="text" class="input_text equired" id="count"
-						name="count"> <span class="span">*</span>
-					</td>
+						name="count"> <span class="span">*</span></td>
 				</tr>
 				<tr>
 					<td class="td">劵面值金额：</td>
 					<td><input type="text" class="input_text equired" id="price"
-						name="price"> <span class="span">*</span>
-					</td>
+						name="price"> <span class="span">*</span></td>
 					<td class="td">劵售卖金额：</td>
 					<td><input type="text" class="input_text equired"
 						id="sellprice" name="sellprice"> <span class="span">*</span>
@@ -176,17 +195,20 @@
 				<tr>
 					<td class="td">劵内容：</td>
 					<td><textArea name="detail" id="detail" cols="90%" rows="7"></textArea>
-						<span class="span">*</span></td>
+						<span class="span">*</span>
+					</td>
 				</tr>
 				<tr>
 					<td class="td2">说明：</td>
 					<td colspan="3"><textArea name="instructions"
-							id="instructions" cols="90%" rows="7"></textArea></td>
+							id="instructions" cols="90%" rows="7"></textArea>
+					</td>
 				</tr>
 				<tr>
 					<td class="td2">备注：</td>
 					<td colspan="3"><textArea name="remark" id="remark" cols="90%"
-							rows="7"></textArea></td>
+							rows="7"></textArea>
+					</td>
 				</tr>
 				<tr>
 					<td class="td2">券图片：</td>

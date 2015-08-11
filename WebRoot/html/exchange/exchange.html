@@ -51,6 +51,7 @@ function callSubmitBack2(data) {
 				alert("无此优惠券信息！");
 			}else{
 				$("#code").html(data.result.successMsg.code);
+				$("#name").html(data.result.successMsg.name);
 				$("#coupontype").html(data.result.successMsg.coupontype);
 				$("#coupontype").html(
 						data.result.successMsg.coupontype_name);
@@ -61,6 +62,7 @@ function callSubmitBack2(data) {
 				$("#duedate").html(data.result.successMsg.duedate);
 				$("#buycount").html(data.result.successMsg.buycount);
 				$("#remarks").val(RemoteUtil.replesecode(data.result.successMsg.remarks));
+				$("#cwcodes").html(data.result.successMsg.cwcode);
 				var status1=data.result.successMsg.satus;
 				if(status1!="D__1xlxuvvs2jiq"){
 					document.getElementById("bt").style.visibility = "hidden";   
@@ -85,6 +87,7 @@ function init(){
 	$("#pwd").val("");
 }
 var pwd;
+var cwcode;
 function submitForm(){
 	$("#form").validate({
 		rules : {
@@ -95,6 +98,10 @@ function submitForm(){
 			"pwd" : {
 				required : true,
 				maxlength : 20
+			},
+			"cwcode" : {
+				required : true,
+				maxlength : 32
 			}
 		}
 	});
@@ -103,6 +110,7 @@ function submitForm(){
 		return;
 	code = $("#ucode").val();
 	pwd=$("#pwd").val();
+	cwcode=$("#cwcode").val();
 	checkPwd(code,pwd);
 }
 function callSubmitBack(data){
@@ -125,7 +133,7 @@ function callSubmitBackCheck(data){
 				alert("兑换密码不正确！");
 			}else{
 				var url2 = "/Hotel/rest/sellcoupon/updateSellcouponStatus/"+code;
-				var parameter = "pwd:'"+pwd+"'";
+				var parameter = "pwd:'"+pwd+"',cwcode:'"+cwcode+"'";
 				RemoteUtil.send(url2, "POST", parameter, callSubmitBack);
 			}
 		}
@@ -156,8 +164,17 @@ function callSubmitBackCheck(data){
 				<td class="td">优惠劵码：</td>
 				<td><span id="code"></span>
 				</td>
+				<td class="td">优惠名称：</td>
+				<td><span id="name"></span>
+				</td>
+				
+			</tr>
+			<tr>
 				<td class="td">优惠劵类型：</td>
 				<td><span id="coupontype"></span>
+				</td>
+				<td class="td">财务识别码：</td>
+				<td><span id="cwcodes"></span>
 				</td>
 			</tr>
 			<tr>
@@ -191,7 +208,10 @@ function callSubmitBackCheck(data){
 			</tr>
 			<tr>
 				<td class="td">兑换密码：</td>
-				<td colspan="3"><input type="text" class="input_text" id="pwd" name="pwd">
+				<td ><input type="text" class="input_text" id="pwd" name="pwd">
+				</td>
+				<td class="td">财务识别码：</td>
+				<td ><input type="text" class="input_text" id="cwcode" name="cwcode">
 				</td>
 			</tr>
 			<tr>

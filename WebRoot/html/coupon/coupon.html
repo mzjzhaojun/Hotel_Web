@@ -44,6 +44,7 @@
 										.replesecode(data.result.successMsg.instructions));
 				$("#count").html(data.result.successMsg.count);
 				$("#price").html(data.result.successMsg.price);
+				$("#status").html(data.result.successMsg.status_name);
 				$("#sellprice").html(data.result.successMsg.sellprice);
 				$("#remark").html(
 						RemoteUtil.replesecode(data.result.successMsg.remark));
@@ -73,6 +74,8 @@
 			<tr>
 				<td class="td">劵名称：</td>
 				<td><span id="name"></span></td>
+				<td class="td">状态：</td>
+				<td><span id="status"></span></td>
 			</tr>
 			<tr>
 				<td class="td">劵类型：</td>

@@ -37,6 +37,13 @@
 	var sellprice = "";
 	var rowid = "";
 	
+	//优惠卷
+	var name = "";
+	var surplus = "";
+	var detall = "";
+	var instructions = "";
+	var img = "";
+	
 	window.onload=function(){
 		//从订单页面跳转登录
 		login = UrlParm.parm("login");
@@ -47,7 +54,17 @@
 		}else if(login=="speclalty"){
 			$("#main").attr("src","center/speclalty_order.html");
 		}else if(login=="sellcoupon"){
-			$("#main").attr("src","center/sellcoupon_order.html");
+			$(".login").show();
+			name = UrlParm.parm("name");
+			surplus = UrlParm.parm("surplus");
+			price = UrlParm.parm("price");
+			sellprice = UrlParm.parm("sellprice");
+			detall = UrlParm.parm("detall");
+			instructions = UrlParm.parm("instructions");
+			img = UrlParm.parm("img");
+			rowid = UrlParm.parm("rowid");
+			
+			//$("#main").attr("src","center/sellcoupon_order.html");
 		}else if(login=="room"){
 			$(".login").show();
 			title = UrlParm.parm("title");
@@ -510,12 +527,12 @@ function sendmsgBack(data){
             	我的优惠券
         </a>
     </li>
-    <li>
+   <!--  <li>
         <a href="javascript:onorders('center/restaurant_order.html')" title="">
             <i class="ico_7"></i>
             	我的订餐
         </a>
-    </li>
+    </li> -->
     <!-- <li>
         <a href="/center/personal.html" title="">
             <i class="ico_4"></i>
@@ -603,7 +620,7 @@ function loginOutBack(data){
 <ul>
     <li class="footer_on" ><a href="javascript:navigation('room/index.html')"><span class="iconfont">&#xe604;</span>首页</a></li>
     <li ><a href="javascript:onReservation3('reservation/restaurant.html')"><span class="iconfont">&#xe600;</span>订餐</a></li>
-    <li ><a href="javascript:onReservation('reservation/speclalty.html')"><span class="iconfont">&#xe60d;</span>特产</a></li>
+    <li ><a href="javascript:onReservation2('reservation/speclalty.html')"><span class="iconfont">&#xe60d;</span>特产</a></li>
     <!-- <li class=" footer_dl "><a href="javascript:;" class="f_mb"><span class="iconfont">&#xe601;</span>会员</a></li> -->
     <li ><a href="javascript:onReservation('reservation/roomList.html')"><span class="iconfont f_rota">&#xe60b;</span>订房</a></li>
     <li ><a href="javascript:onReservation('reservation/sellcoupon.html')"><span class="iconfont">&#xe603;</span>优惠券</a></li>

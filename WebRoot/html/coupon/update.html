@@ -69,13 +69,14 @@
 		RemoteUtil.send(url, "GET", null, callSubmitBack2);
 	}
 
-	var coupontype;
+	var coupontype,status;
 	var roomimg = "";
 	var roomimg2 = "";
 	function callSubmitBack2(data) {
 		if (data.succeed) {
 			if (data.result.statusCode == "200") {
 				coupontype = data.result.successMsg.coupontype;
+				status = data.result.successMsg.status;
 				$("#name").val(data.result.successMsg.name);
 				$("#detail").val(data.result.successMsg.detail);
 				$("#coupontype").val(data.result.successMsg.coupontype);
@@ -88,40 +89,50 @@
 				$("#sellprice").val(data.result.successMsg.sellprice);
 				$("#remark").val(
 						RemoteUtil.replesecode(data.result.successMsg.remark));
-						
+
 				roomimg = data.result.successMsg.couponimg;
-				if(roomimg!=undefined && roomimg!=""){
+				if (roomimg != undefined && roomimg != "") {
 					var roomimgs = roomimg.split("|");
 					var len = roomimgs.length;
-					for(var i=0;i<len;i++){
+					for ( var i = 0; i < len; i++) {
 						var img = roomimgs[i];
-						if(img.length>10){
-							img = img.substr(0,9)+"...";
+						if (img.length > 10) {
+							img = img.substr(0, 9) + "...";
 						}
-						$(".room_img2").append($("<div class=\"room_img_1\" id=\"room_img"+i+"\">"+
-												"<img src=\"../../img/upload/"+roomimgs[i]+"\">"+
-												"<div class=\"delete_div\">"+
-													"<span>"+img+"</span>"+
-													"<img class=\"close_img\" id=\"room_img"+i+"\" name=\""+roomimgs[i]+"\" src=\"../../img/delete_white.png\" onmousemove=\"this.src='../../img/delete_blue.png'\" onmouseout=\"this.src='../../img/delete_white.png'\">"+
-												"</div>"+
-											"</div>"));
+						$(".room_img2")
+								.append(
+										$("<div class=\"room_img_1\" id=\"room_img"+i+"\">"
+												+ "<img src=\"../../img/upload/"+roomimgs[i]+"\">"
+												+ "<div class=\"delete_div\">"
+												+ "<span>"
+												+ img
+												+ "</span>"
+												+ "<img class=\"close_img\" id=\"room_img"+i+"\" name=\""+roomimgs[i]+"\" src=\"../../img/delete_white.png\" onmousemove=\"this.src='../../img/delete_blue.png'\" onmouseout=\"this.src='../../img/delete_white.png'\">"
+												+ "</div>" + "</div>"));
 					}
 				}
 			}
 		}
 		var url2 = "/Hotel/rest/dictionaries/type/D__ey5wyw3xsguy";
 		RemoteUtil.send(url2, "GET", null, callResultBack);
-		
-		$(".room_img_1").mousemove(function(){
-			$(this).find("div").css({"display":"block"});
+
+		url = "/Hotel/rest/dictionaries/type/D__1u3h8r0jke78";
+		RemoteUtil.send(url, "GET", null, callResultBack1);
+
+		$(".room_img_1").mousemove(function() {
+			$(this).find("div").css({
+				"display" : "block"
+			});
 		});
-		$(".room_img_1").mouseout(function(){
-			$(this).find("div").css({"display":"none"});
+		$(".room_img_1").mouseout(function() {
+			$(this).find("div").css({
+				"display" : "none"
+			});
 		});
-		$(".close_img").click(function(){
+		$(".close_img").click(function() {
 			var id = $(this).attr("id");
-			roomimg2 += $(this).attr("name")+"|";
-			$("#"+id).remove();
+			roomimg2 += $(this).attr("name") + "|";
+			$("#" + id).remove();
 		});
 	}
 
@@ -139,6 +150,28 @@
 												+ list[i].name + "</option>"));
 					} else {
 						$("#coupontype").append(
+								$("<option value='"+list[i].code+"'>"
+										+ list[i].name + "</option>"));
+					}
+				}
+			}
+		}
+	}
+
+	function callResultBack1(data) {
+		if (data.succeed) {
+			if (data.result.statusCode == "200") {
+				var list = data.result.successMsg;
+				var len = list.length;
+				$("#status").html("");
+				for ( var i = 0; i < len; i++) {
+					if (status == list[i].code) {
+						$("#status")
+								.append(
+										$("<option value='"+list[i].code+"' selected='selected'>"
+												+ list[i].name + "</option>"));
+					} else {
+						$("#status").append(
 								$("<option value='"+list[i].code+"'>"
 										+ list[i].name + "</option>"));
 					}
@@ -181,32 +214,32 @@
 			return;
 		var len = 0;
 		var roomimgs = "";
-		if(roomimg!="" && roomimg!=undefined){
+		if (roomimg != "" && roomimg != undefined) {
 			roomimgs = roomimg.split("|");
-			if(roomimgs!="" && roomimgs!=undefined){
+			if (roomimgs != "" && roomimgs != undefined) {
 				len = roomimgs.length;
 			}
 		}
 		var len2 = 0;
 		var roomimgs2 = "";
-		if(roomimg2!="" && roomimg2!=undefined){
+		if (roomimg2 != "" && roomimg2 != undefined) {
 			roomimgs2 = roomimg2.split("|");
-			len2 = roomimgs2.length-1;
+			len2 = roomimgs2.length - 1;
 		}
-		
-		for(var i=0;i<len;i++){
+
+		for ( var i = 0; i < len; i++) {
 			var bool = true;
-			for(var y=0;y<len2;y++){
-				
-				if(roomimgs[i]==roomimgs2[y]){
+			for ( var y = 0; y < len2; y++) {
+
+				if (roomimgs[i] == roomimgs2[y]) {
 					bool = false;
 				}
-				
+
 			}
-			if(bool==true){
-				roomimgs3 += roomimgs[i]+"|";
+			if (bool == true) {
+				roomimgs3 += roomimgs[i] + "|";
 			}
-			
+
 		}
 		var name = $("#name").val();
 		var detail = $("#detail").val();
@@ -214,22 +247,22 @@
 		var instructions = $("#instructions").val();
 		var count = $("#count").val();
 		var price = $("#price").val();
+		var status = $("#status").val();
 		var sellprice = $("#sellprice").val();
 		var remark = $("#remark").val();
-		
+
 		var img = "";
-		if(imgurl==""){
+		if (imgurl == "") {
 			img = roomimgs3.substring(0, roomimgs3.length - 1);
-		}else{
-			img = roomimgs3+imgurl.substring(0, imgurl.length - 1);
+		} else {
+			img = roomimgs3 + imgurl.substring(0, imgurl.length - 1);
 		}
-		
-		var parameter = "name:'" + name + "',detail:'" + detail
-				+ "',instructions:'" + instructions + "',count:'" + count
-				+ "',price:'" + price + "',sellprice:'" + sellprice
-				+ "',remark:'" + remark + "',couponimg:'"
-				+ img + "',coupontype:'" + coupontype
-				+ "',rowid:'" + id + "'";
+
+		var parameter = "name:'" + name + "',status:'" + status + "',detail:'"
+				+ detail + "',instructions:'" + instructions + "',count:'"
+				+ count + "',price:'" + price + "',sellprice:'" + sellprice
+				+ "',remark:'" + remark + "',couponimg:'" + img
+				+ "',coupontype:'" + coupontype + "',rowid:'" + id + "'";
 
 		url = "/Hotel/rest/coupon/" + id;
 		RemoteUtil.send(url, "POST", parameter, callSubmitBack);
@@ -255,24 +288,24 @@
 				<tr>
 					<td class="td">劵名称：</td>
 					<td><input type="text" class="input_text equired" id="name"
-						name="name"><span class="span">*</span>
+						name="name"><span class="span">*</span></td>
+					<td class="td">状态：</td>
+					<td><select name="status" id="status"></select><span
+						class="span">*</span>
 					</td>
 				</tr>
 				<tr>
 					<td class="td">劵类型：</td>
 					<td><select name="coupontype" id="coupontype"
-						name="coupontype"></select> <span class="span">*</span>
-					</td>
+						name="coupontype"></select> <span class="span">*</span></td>
 					<td class="td">总数量：</td>
 					<td><input type="text" class="input_text equired" id="count"
-						name="count"> <span class="span">*</span>
-					</td>
+						name="count"> <span class="span">*</span></td>
 				</tr>
 				<tr>
 					<td class="td">劵面值金额：</td>
 					<td><input type="text" class="input_text equired" id="price"
-						name="price"> <span class="span">*</span>
-					</td>
+						name="price"> <span class="span">*</span></td>
 					<td class="td">劵售卖金额：</td>
 					<td><input type="text" class="input_text equired"
 						id="sellprice" name="sellprice"> <span class="span">*</span>
@@ -281,17 +314,20 @@
 				<tr>
 					<td class="td">劵内容：</td>
 					<td><textArea name="detail" id="detail" cols="90%" rows="7"></textArea>
-					<span class="span">*</span></td>
+						<span class="span">*</span>
+					</td>
 				</tr>
 				<tr>
 					<td class="td2">说明：</td>
 					<td colspan="3"><textArea name="instructions"
-							id="instructions" cols="90%" rows="7"></textArea></td>
+							id="instructions" cols="90%" rows="7"></textArea>
+					</td>
 				</tr>
 				<tr>
 					<td class="td2">备注：</td>
 					<td colspan="3"><textArea name="remark" id="remark" cols="90%"
-							rows="7"></textArea></td>
+							rows="7"></textArea>
+					</td>
 				</tr>
 				<tr>
 					<td class="td2">券图片：</td>

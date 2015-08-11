@@ -48,8 +48,8 @@
 						roomimg = roomimg.split("|"); 
 						var li = "";
 						if(list[i].coupontype=="D__ts449wp7zz8y"){
-							li = $("<li class='bac_white border_bottom many'><img src='../../../img/upload/"+roomimg[0]+"' alt='"+list[i].coupontype_name+"' class='roompc float_left' style='max-height: 248px;'>"+					 
-							"<div class='roomdetail float_right'>"+
+							li = $("<li class='bac_white border_bottom many'><img src='../../../img/upload/"+roomimg[0]+"' alt='"+list[i].coupontype_name+"' class='roompc float_left'  style='max-height: 248px;width: 38%;'>"+					 
+							"<div class='roomdetail float_right' style='width: 57%;'>"+
 							"<p class='roomname overflow'>"+
 							"<span onclick=\"tdetail('"+list[i].rowid+"')\" id='roomname' style=\"color:#689dad\">"+list[i].name+"</span>"+
 							"<span class='price color_orange float_right'>￥"+list[i].sellprice+"<span style='font-size:0.7em'></span></span></p>"+
@@ -59,8 +59,8 @@
 			                    "<span class='status order small f_r color_white btn' onclick=\"sub(&#39;"+list[i].name+"&#39;,&#39;"+list[i].surplus+"&#39;,&#39;"+list[i].price+"&#39;,&#39;"+list[i].sellprice+"&#39;,&#39;"+list[i].detall+"&#39;,&#39;"+list[i].instructions+"&#39;,&#39;"+roomimg[0]+"&#39;,&#39;"+list[i].rowid+"&#39;)\">购买</span>"+
 			                "</div>");
 						}else{
-							li = $("<li class='bac_white border_bottom many'><img src='../../../img/upload/"+roomimg[0]+"' alt='"+list[i].coupontype_name+"' class='roompc float_left' style='max-height: 248px;'>"+					 
-							"<div class='roomdetail float_right'>"+
+							li = $("<li class='bac_white border_bottom many'><img src='../../../img/upload/"+roomimg[0]+"' alt='"+list[i].coupontype_name+"' class='roompc float_left'  style='max-height: 248px;width: 38%;'>"+					 
+							"<div class='roomdetail float_right' style='width: 57%;'>"+
 							"<p class='roomname overflow'>"+
 							"<span onclick=\"tdetail('"+list[i].rowid+"')\" id='roomname' style=\"color:#689dad\">"+list[i].name+"</span>"+
 							"<span class='price color_orange float_right'>￥"+list[i].sellprice+"<span style='font-size:0.7em'></span></span></p>"+
@@ -173,20 +173,20 @@
 	       				$("#name").html("");
 	       				$("#surplus").html("");
 	       				$("#price").html("");
-	       				$("#sellprice").html("");
+	       				/* $("#sellprice").html(""); */
 	       				$("#detall").html("");
 	       				$("#instructions").html("");
 	       				$("#speclalty_name").html("");
 	       				$("#speclalty_name_1").html("");
 	       				var lunboHtml="";
-	       				lunboHtml += "<img class=\"roomkind_slideson slideson about_slideson1\" src=\"../../../img/upload/"+roomimgs[i]+"\" alt=\""+couponData[i].name+"\" style=\"width: 1349px;\"/>";
+	       				lunboHtml += "<img class=\"roomkind_slideson slideson about_slideson1\" src=\"../../../img/upload/"+roomimgs[0]+"\" alt=\""+couponData[i].name+"\" style=\"width: 1349px;\"/>";
 	       				$("#lunbo").html(lunboHtml);
 	       				
 	       				$("#name").html(couponData[i].name);
 	       				$("#surplus").html(couponData[i].surplus);
 	       				$("#price").html("￥"+couponData[i].price);
-	       				$("#sellprice").html("￥"+couponData[i].sellprice);
-	       				$("#detall").html(couponData[i].detall);
+	       				/* $("#sellprice").html("￥"+couponData[i].sellprice); */
+	       				$("#detall").html(couponData[i].detail);
 	       				$("#instructions").html(couponData[i].instructions);
 	       				$("#speclalty_name").html(couponData[i].name);
 	       				$("#speclalty_name_1").html(couponData[i].name);
@@ -289,10 +289,10 @@
 					<ul class="pinlun bac_white small color_black ul_details">
 						<li class="padd border_bottom li_details"><span id="price"></span></li>
 					</ul>
-					<h4 class="padd color_black" style="background:#f8f8f8;clear: both;">优惠劵售卖金额</h4>
+					<!-- <h4 class="padd color_black" style="background:#f8f8f8;clear: both;">优惠劵售卖金额</h4>
 					<ul class="pinlun bac_white small color_black ul_details">
 						<li class="padd border_bottom li_details"><span id="sellprice"></span></li>
-					</ul>
+					</ul> -->
 					<h4 class="padd color_black" style="background:#f8f8f8;clear: both;">优惠劵内容</h4>
 					<ul class="pinlun bac_white small color_black ul_details">
 						<li class="padd border_bottom li_details"><span id="detall"></span></li>

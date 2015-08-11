@@ -46,8 +46,8 @@
 					for(var i=0;i<len;i++){
 						var img = list[i].image_url;
 						img = img.split("|");
-						var li = $("<li class='bac_white border_bottom many'><img src='../../../img/upload/"+img[0]+"' alt='"+list[i].name+"' class='roompc float_left' style='max-height: 248px;'>"+					 
-							"<div class='roomdetail float_right'>"+
+						var li = $("<li class='bac_white border_bottom many'><img src='../../../img/upload/"+img[0]+"' alt='"+list[i].name+"' class='roompc float_left'  style='max-height: 248px;width: 38%;'>"+					 
+							"<div class='roomdetail float_right' style='width: 57%;'>"+
 							"<p class='roomname overflow'>"+
 							"<span onclick=\"tdetail('"+list[i].rowid+"')\" id='roomname' style=\"color:#689dad\">"+list[i].name+"</span>"+
 							"<span class='price color_orange float_right'>￥"+list[i].price+"<span style='font-size:0.7em'></span></span></p>"+

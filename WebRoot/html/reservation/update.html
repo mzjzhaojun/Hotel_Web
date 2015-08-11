@@ -6,29 +6,56 @@
     <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
     <meta http-equiv="description" content="this is my page">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" type="text/css" href="../../css/list.css">
-    <link rel="stylesheet" type="text/css" href="../../js/kindeditor/themes/default/default.css" />
-    <script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
-    <script language="JavaScript" src="../../js/request.js"></script>
-	<script language="JavaScript" src="../../js/json.js"></script>
-	<script charset="utf-8" src="../../js/kindeditor/kindeditor-min.js"></script>
-	<script charset="utf-8" src="../../js/kindeditor/lang/zh_CN.js"></script>
-	<script language="JavaScript" src="../../js/eap.core.js"></script>
-	<script language="JavaScript" src="../../js/eap.util.date.js"></script>
-	<script language="JavaScript" src="../../js/eap.simpleDatepicker.js"></script>
-	<script language="JavaScript" src="../../js/eap.lang-zh_CN.js"></script>
-	<script language="JavaScript" src="../../js/eap.validate.js"></script>
-	<script type="text/javascript" src="../../js/eap.tip.js"></script>
-	<link rel="stylesheet" type="text/css" href="../../css/validate.css">
+<link rel="stylesheet" type="text/css" href="../../css/list.css">
+<link rel="stylesheet" type="text/css" href="../../css/date.css">
+<link rel="stylesheet" type="text/css" href="../../css/zyUpload.css">
+<script language="JavaScript" src="../../js/jquery-1.9.1.min.js"></script>
+<script language="JavaScript" src="../../js/request.js"></script>
+<script language="JavaScript" src="../../js/json.js"></script>
+<script language="JavaScript" src="../../js/eap.core.js"></script>
+<script language="JavaScript" src="../../js/eap.util.date.js"></script>
+<script language="JavaScript" src="../../js/eap.simpleDatepicker.js"></script>
+<script language="JavaScript" src="../../js/eap.lang-zh_CN.js"></script>
+<script language="JavaScript" src="../../js/zyFile.js"></script>
+<script language="JavaScript" src="../../js/zyUpload.js"></script>
+<script type="text/javascript" src="../../js/eap.tip.js"></script>
+<script language="JavaScript" src="../../js/eap.validate.js"></script>
 	
 	<script language="JavaScript" type="text/javascript">
 		G = function(objId){return document.getElementById(objId)};
 		Gn = function(objName){return document.getElementsByName(objName)};
+		var imgurl = "";
 		window.onload=function(){
 			 var thisURL = document.URL;    
  			 var  getval =thisURL.split('?')[1];  
   			 id= getval.split("=")[1]; 
   			 init();
+  			$("#img").zyUpload({
+  				width : "100%px", // 宽度
+  				height : "100%px", // 宽度
+  				itemWidth : "120px", // 文件项的宽度
+  				itemHeight : "100px", // 文件项的高度
+  				url : "/Hotel/rest/room/upload", // 上传文件的路径
+  				multiple : true, // 是否可以多个文件上传
+  				dragDrop : false, // 是否可以拖动上传文件
+  				del : true, // 是否可以删除文件
+  				finishDel : true, // 是否在上传文件完成后删除预览
+  				needFlage : "1",//是否必须选择图片0是是，1是否
+  				uploadInput : $("#button1"),
+  				/* 外部获得的回调接口 */
+  				onSuccess : function(response) {
+  					var data = JSON.decode(response); // 文件上传成功的回调方法
+  					if (data.succeed) {
+  						if (data.result.statusCode == "200") {
+  							var url = data.result.successMsg;
+  							imgurl += url + "|";
+  						}
+  					}
+  				},
+  				onComplete : function(responseInfo) {
+  					submitForm(); // 上传完成的回调方法
+  				}
+  			});
 		};
 		var id;
 		function init(){
@@ -37,6 +64,8 @@
 		}
 		
 		var is_top; 
+		var roomimg = "";
+		var roomimg2 = "";
 		function callSubmitBack2(data){
 			if(data.succeed){
 				if(data.result.statusCode == "200"){
@@ -45,12 +74,40 @@
 					$("#detail").val(data.result.successMsg.detail);
 					$("#address").val(RemoteUtil.replesecode(data.result.successMsg.address));
 					$("#remark").val(data.result.successMsg.remark);
-					
+					roomimg = data.result.successMsg.img;
+					if(roomimg!=undefined && roomimg!=""){
+						var roomimgs = roomimg.split("|");
+						var len = roomimgs.length;
+						for(var i=0;i<len;i++){
+							var img = roomimgs[i];
+							if(img.length>10){
+								img = img.substr(0,9)+"...";
+							}
+							$(".room_img2").append($("<div class=\"room_img_1\" id=\"room_img"+i+"\">"+
+													"<img src=\"../../img/upload/"+roomimgs[i]+"\">"+
+													"<div class=\"delete_div\">"+
+														"<span>"+img+"</span>"+
+														"<img class=\"close_img\" id=\"room_img"+i+"\" name=\""+roomimgs[i]+"\" src=\"../../img/delete_white.png\" onmousemove=\"this.src='../../img/delete_blue.png'\" onmouseout=\"this.src='../../img/delete_white.png'\">"+
+													"</div>"+
+												"</div>"));
+						}
+					}
+					$(".room_img_1").mousemove(function(){
+						$(this).find("div").css({"display":"block"});
+					});
+					$(".room_img_1").mouseout(function(){
+						$(this).find("div").css({"display":"none"});
+					});
+					$(".close_img").click(function(){
+						var id = $(this).attr("id");
+						roomimg2 += $(this).attr("name")+"|";
+						$("#"+id).remove();
+					});
 					
 				}
 			}
 		}
-		
+		var roomimgs3 = "";
 	    function submitForm(){
 	    	$("#form").validate({
 				rules : {
@@ -75,6 +132,40 @@
 			var isValid = $("#form").valid();
 			if (!isValid)
 				return;
+			var roomimgs = "";
+			if(roomimg!="" && roomimg!=undefined){
+				roomimgs = roomimg.split("|");
+				if(roomimgs!="" && roomimgs!=undefined){
+					len = roomimgs.length;
+				}
+			}
+			var len2 = 0;
+			var roomimgs2 = "";
+			if(roomimg2!="" && roomimg2!=undefined){
+				roomimgs2 = roomimg2.split("|");
+				len2 = roomimgs2.length-1;
+			}
+			
+			for(var i=0;i<len;i++){
+				var bool = true;
+				for(var y=0;y<len2;y++){
+					
+					if(roomimgs[i]==roomimgs2[y]){
+						bool = false;
+					}
+					
+				}
+				if(bool==true){
+					roomimgs3 += roomimgs[i]+"|";
+				}
+				
+			}
+			var img = "";
+			if(imgurl==""){
+				img = roomimgs3.substring(0, roomimgs3.length - 1);
+			}else{
+				img = roomimgs3+imgurl.substring(0, imgurl.length - 1);
+			}
 			var name = $("#name").val();
 			var address = $("#address").val();
 			var tel = $("#tel").val();
@@ -82,7 +173,7 @@
 			var remark = $("#remark").val();
 			
 			var parameter = "name:'"+name+"',address:'"+address+"',tel:'"+tel+
-			"',detail:'"+detail+"',remark:'"+remark+"',rowid:'"+id+"'";
+			"',detail:'"+detail+"',remark:'"+remark+"',rowid:'"+id+"',img:'"+img+"'";
 			
 			url = "/Hotel/rest/reservation/"+id;
 			RemoteUtil.send(url, "POST", parameter, callSubmitBack);
@@ -133,8 +224,16 @@
 		    </td>
 		  </tr>
 		  <tr>
+				<td class="td2">商品图片：</td>
+					<td colspan="3">
+						<div class=room_img2>
+						</div>
+						<div id="img" class="img" style="float: left;border-left:0px;"></div>
+					</td>
+				</tr>
+		  <tr>
 		    <td colspan="4" class="td3" align="center">
-		    	<button type="button" class="button1" onclick="submitForm()">保存提交</button>
+		    	<button type="button" id="button1" class="button1">保存提交</button>
     			<button type="button" class="button2" onclick="history.go(-1)">取消返回</button>
 		    </td>
 		  </tr>

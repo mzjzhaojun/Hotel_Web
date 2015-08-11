@@ -25,7 +25,7 @@
 	
 	<tr>
 		<td width="200"><span>请求地址</span>
-		<td><input name="req_url" type="text" value="http://wappaygw.alipay.com/service/rest.htm" size="50" />固定值</td>
+		<td><input name="req_url" type="text" value="http://wappaygw.alipay.com/service/app.htm" size="50" />固定值</td>
 	</tr>
 
 	<tr>

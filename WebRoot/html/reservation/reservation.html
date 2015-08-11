@@ -33,6 +33,14 @@
 					$("#detail").html(data.result.successMsg.detail);
 					$("#address").html(RemoteUtil.replesecode(data.result.successMsg.address));
 					$("#remark").html(data.result.successMsg.remark);
+					 var roomimg = data.result.successMsg.img;
+						if(roomimg!=undefined && roomimg!=""){
+							var roomimgs = roomimg.split("|");
+							var len = roomimgs.length;
+							for(var i=0;i<len;i++){
+								$(".room_img").append($("<div class=\"room_img_1\"><img src=\"../../img/upload/"+roomimgs[i]+"\"></div>"));
+							}
+						}
 				}
 			}
 		}
@@ -69,6 +77,13 @@
 		    	<textArea name="remark" id="remark" cols="90%" rows="7" readonly="readonly"></textArea>
 		    </td>
 		  </tr>
+		  <tr>
+			<td class="td2">图片：</td>
+			<td colspan="3">
+				<div id="img" class="room_img">
+				</div>
+			</td>
+		</tr>
 		  <tr>
 		    <td colspan="4" class="td3" align="center">
     			<button type="button" class="button2" onclick="history.go(-1)">取消返回</button>

@@ -39,7 +39,11 @@ function callSubmitBack(data){
 			if(data.result.successMsg!=null && data.result.successMsg!="null"){
 				if(login=="room"){
 					onReservation("reservation/scheduled.html?title="+title+"&price="+price+"&indatetime="+indatetime+"&outdatetime="+outdatetime+"&count="+count+"&indays="+indays+"&sellprice="+sellprice+"&rowid="+rowid);
-				}else{
+				}else if(login=="sellcoupon"){
+					
+					onReservation("reservation/sellcoupon_schedule.html?name="+name+"&surplus="+surplus+"&price="+price+"&sellprice="+sellprice+"&detall="+detall+"&instructions="+instructions+"&img="+img+"&rowid="+rowid);
+				}
+				else{
 					//$(document).layer("登录成功！");//提示
 					$(".login").hide();
 					$(".jmember").show();

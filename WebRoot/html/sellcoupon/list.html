@@ -53,13 +53,16 @@
 				var table = $("<table width='100%' border='1' class='table'></table>");
 				var tr1 = $("<tr class='tr1'>"
 						+ "<td width='5%'><div align='center'>序号</div></td>"
-						+ "<td width='15%'><div align='center'>优惠劵码</div></td>"
+						+ "<td width='10%'><div align='center'>优惠劵码</div></td>"
+						+ "<td width='10%'><div align='center'>优惠名称</div></td>"
 						+ "<td width='7%'><div align='center'>发放日期</div></td>"
 						+ "<td width='7%'><div align='center'>到期日期</div></td>"
+						+ "<td width='7%'><div align='center'>兑换日期</div></td>"
 						+ "<td width='7%'><div align='center'>优惠劵类型</div></td>"
 						+ "<td width='7%'><div align='center'>状态</div></td>"
 						+ "<td width='7%'><div align='center'>优惠劵面值金额</div></td>"
-						+ "<td width='20%'><div align='center'>操作</div></td>"
+						+ "<td width='7%'><div align='center'>财务识别码</div></td>"
+						+ "<td width='15%'><div align='center'>操作</div></td>"
 						+ "</tr>");
 				table.append(tr1);
 				var list = data.result.successMsg.pageElements;
@@ -75,14 +78,20 @@
 							+ "<td width='7%'><div align='center'>"
 							+ (i + 1)
 							+ "</div></td>"
-							+ "<td width='15%'><div align='center'>"
+							+ "<td width='10%'><div align='center'>"
 							+ list[i].code
 							+ "</div></td>"
-							+ "<td width='15%'><div align='center'>"
+							+ "<td width='10%'><div align='center'>"
+							+ list[i].name
+							+ "</div></td>"
+							+ "<td width='7%'><div align='center'>"
 							+ list[i].issuedate
 							+ "</div></td>"
-							+ "<td width='15%'><div align='center'>"
+							+ "<td width='7%'><div align='center'>"
 							+ list[i].duedate
+							+ "</div></td>"
+							+ "<td width='7%'><div align='center'>"
+							+ list[i].exchangedate
 							+ "</div></td>"
 							+ "<td width='7%'><div align='center'>"
 							+ list[i].coupontype_name
@@ -90,6 +99,9 @@
 							+ "<td width='7%'><div align='center'>"+list[i].status_name+"</div></td>"
 							+ "<td width='7%'><div align='center'>"
 							+ list[i].price
+							+ "</div></td>"
+							+ "<td width='7%'><div align='center'>"
+							+ list[i].cwcode
 							+ "</div></td>"
 							+ "<td width='20%'><div align='center'>"
 							+ "<img src='../../img/lnk_detail.gif' title='查看' class='img' onclick=\"onclickCheck('"

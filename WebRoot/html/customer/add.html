@@ -87,7 +87,13 @@
 			var birthday = $("#birthday").val();
 			var phone = $("#phone").val();
 			var integral = $("#integral").val();
+			if(integral==""){
+				integral="0";
+			}
 			var rating = $("#rating").val();
+			if(rating==""){
+				rating="0";
+			}
 			var sex = $("#sex").val();
 			var cardtype = $("#cardtype").val();
 			var idcard = $("#idcard").val();
@@ -121,9 +127,9 @@
     	<table width="100%" border="0" class="table">
 		  <tr>
 		    <td class="td">客户昵称：</td>
-		    <td><input type="text" class="input_text required" id="nickname" name="nickname"><span class="span">*</span></td>
-		    <td class="td">客户真实姓名：</td>
 		    <td><input type="text" class="input_text required" id="name" name="name"><span class="span">*</span></td>
+		    <td class="td">客户真实姓名：</td>
+		    <td><input type="text" class="input_text required" id="nickname" name="nickname"><span class="span">*</span></td>
 		  </tr>
 		  <tr>
 		    <td class="td">账号：</td>

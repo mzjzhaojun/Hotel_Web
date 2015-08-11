@@ -40,16 +40,15 @@
 					for(var i=0;i<len;i++){
 						var roomimg = list[i].dningimg;
 						roomimg = roomimg.split("|"); 
-						var li = $("<li class='bac_white border_bottom many'><img src='../../../img/upload/"+roomimg[0]+"' alt='"+list[i].name+"' class='roompc float_left' style='max-height: 248px;'>"+					 
-							"<div class='roomdetail float_right'>"+
+						var li = $("<li class='bac_white border_bottom many'><img src='../../../img/upload/"+roomimg[0]+"' alt='"+list[i].name+"' class='roompc float_left' style='max-height: 248px;width: 38%;'>"+					 
+							"<div class='roomdetail float_right' style='width: 57%;'>"+
 							"<p class='roomname overflow'>"+
 							"<span onclick=\"tdetail('"+list[i].rowid+"')\" id='roomname' style=\"color:#689dad\">"+list[i].name+"</span>"+
-							"<span class='price color_orange float_right'>￥"+list[i].surplus+"<span style='font-size:0.7em'></span></span></p>"+
-							"<div class='lastline own2 overflow root_title'><label style=\"color:#000\">"+list[i].detail+"</label>"+
-							"</div>"+
-							"<div class=\"tlist_a clearfix\" align=\"right\">"+
+							"</p>"+
+							"<div class='lastline own2 overflow root_title'><label style=\"color:#689dad\">"+list[i].detail+"</label>"+
+							"</div>");/* <div class=\"tlist_a clearfix\" align=\"right\">"+
 			                    "<span class='status order small f_r color_white btn' onclick=\"sub(&#39;"+list[i].name+"&#39;,&#39;"+list[i].surplus+"&#39;,&#39;"+list[i].detail+"&#39;,&#39;"+roomimg[0]+"&#39;,&#39;"+list[i].rowid+"&#39;)\">购买</span>"+
-			                "</div>");
+			                "</div> */
 						$("#coupon").append(li);	
 					}
 					
@@ -123,7 +122,7 @@
 	<script>
 		var count = 1;
 	    function sub(name,surplus,detail,img,rowid) {
-	        window.location.href = "restaurant_schedule.html?name="+name+"&surplus="+surplus+"&detail="+detail+"&img="+img+"&rowid="+rowid;
+	        window.location.href = "restaurant_schedule.html?name="+name+"&surplus="+surplus+"&imgs="+img+"&rowid="+rowid;
 	    }
 	
 	    function hidewin(obj) {
@@ -150,23 +149,23 @@
 	       				
 	       				$("#name").html("");
 	       				$("#type").html("");
-	       				$("#babychair").html("");
-	       				$("#maxdinernum").html("");
+	       				//$("#babychair").html("");
+	       				//$("#maxdinernum").html("");
 	       				$("#detail").html("");
-	       				$("#lowest").html("");
+	       				//$("#lowest").html("");
 	       				$("#remark").html("");
 	       				$("#speclalty_name").html("");
 	       				$("#speclalty_name_1").html("");
 	       				var lunboHtml="";
-	       				lunboHtml += "<img class=\"roomkind_slideson slideson about_slideson1\" src=\"../../../img/upload/"+roomimgs[i]+"\" alt=\""+couponData[i].name+"\" style=\"width: 1349px;\"/>";
+	       				lunboHtml += "<img class=\"roomkind_slideson slideson about_slideson1\" src=\"../../../img/upload/"+roomimgs[0]+"\" alt=\""+couponData[i].name+"\" style=\"width: 1349px;\"/>";
 	       				$("#lunbo").html(lunboHtml);
 	       				
 	       				$("#name").html(couponData[i].name);
 	       				$("#type").html(couponData[i].type_name);
-	       				$("#babychair").html(couponData[i].babychair);
-	       				$("#maxdinernum").html(couponData[i].maxdinernum);
+	       				//$("#babychair").html(couponData[i].babychair);
+	       				//$("#maxdinernum").html(couponData[i].maxdinernum);
 	       				$("#detail").html(couponData[i].detail);
-	       				$("#lowest").html("￥"+couponData[i].lowest);
+	       				//$("#lowest").html("￥"+couponData[i].lowest);
 	       				$("#remark").html(couponData[i].remark);
 	       				$("#speclalty_name").html(couponData[i].name);
 	       				$("#speclalty_name_1").html(couponData[i].name);
@@ -257,30 +256,30 @@
 						</div>
 					</div>
 
-					<h4 class="padd color_black" style="background:#f8f8f8;clear: both;">名称</h4>
+					<h4 class="padd color_black" style="background:#f8f8f8;clear: both;">菜品名称</h4>
 					<ul class="pinlun bac_white small color_black ul_details">
 						<li class="padd border_bottom li_details"><span id="name"></span></li>
 					</ul>
-					<h4 class="padd color_black" style="background:#f8f8f8;clear: both;">餐位类型</h4>
+					<h4 class="padd color_black" style="background:#f8f8f8;clear: both;">菜品类型</h4>
 					<ul class="pinlun bac_white small color_black ul_details">
 						<li class="padd border_bottom li_details"><span id="type"></span></li>
 					</ul>
-					<h4 class="padd color_black" style="background:#f8f8f8;clear: both;">是否提供宝宝椅子</h4>
+					<!-- <h4 class="padd color_black" style="background:#f8f8f8;clear: both;">是否提供宝宝椅子</h4>
 					<ul class="pinlun bac_white small color_black ul_details">
 						<li class="padd border_bottom li_details"><span id="babychair"></span></li>
-					</ul>
-					<h4 class="padd color_black" style="background:#f8f8f8;clear: both;">最大容纳用餐人数</h4>
+					</ul> -->
+					<!-- <h4 class="padd color_black" style="background:#f8f8f8;clear: both;">最大容纳用餐人数</h4>
 					<ul class="pinlun bac_white small color_black ul_details">
 						<li class="padd border_bottom li_details"><span id="maxdinernum"></span></li>
-					</ul>
-					<h4 class="padd color_black" style="background:#f8f8f8;clear: both;">餐厅说明</h4>
+					</ul> -->
+					<h4 class="padd color_black" style="background:#f8f8f8;clear: both;">菜品说明</h4>
 					<ul class="pinlun bac_white small color_black ul_details">
 						<li class="padd border_bottom li_details"><span id="detail"></span></li>
 					</ul>
-					<h4 class="padd color_black" style="background:#f8f8f8;clear: both;">最低消费金额</h4>
+					<!-- <h4 class="padd color_black" style="background:#f8f8f8;clear: both;">最低消费金额</h4>
 					<ul class="pinlun bac_white small color_black ul_details">
 						<li class="padd border_bottom li_details"><span id="lowest"></span></li>
-					</ul>
+					</ul> -->
 					<h4 class="padd color_black" style="background:#f8f8f8;clear: both;">备注</h4>
 					<ul class="pinlun bac_white small color_black ul_details" style="margin-bottom:60px;">
 						<li class="padd border_bottom li_details"><span id="remark"></span></li>
